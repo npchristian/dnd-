@@ -4,8 +4,10 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+
 #define SIZE 50
 
+    /*********** DATA STRUCTURE ***********/
 typedef struct{
     char name[SIZE];
     
@@ -23,38 +25,38 @@ typedef struct{
     
 } Character;
 
-Character create_Character();
-Character get_Stats(Character new_Char);
-int get_int();
-void get_String(char new_string[], char string_type[]); //string type reminds user what they were asked to enter (name, equipment, etc.)
+    /*********** FUNCTION HEADERS***********/
+Character create_Character(); //creates a character
+Character get_Stats(Character new_Char); //get string
+int get_int(); //get a int, check against character, check against min/max bounds. 
+void get_String(char new_string[], char string_type[]); // string_type used to remind user of what was asked
+void four_d_6_drop_lowest(int stat_block[4]);
+int dice_roll(int sides);
 
+    /*********** MAIN***********/
 int main()
 {
     char name[SIZE];
     Character myCharacter;
+    puts("Welcome to the Dungeons and Dragons fifth edition character creation module.");
     myCharacter = create_Character();
     return 0;
 }
 
 Character create_Character(){
     int n, choice;
-    char junk;
+    char junk; //USED TO consume character for input buffer
     Character new_Character;
     
     /*********** GET NAME ***********/
-    printf("\nPlease enter your character's name: ");
+    puts("Please enter your character's name: ");
     get_String(new_Character.name, "character's name");
 
     /*********** GET LEVEL **********/
     printf("\nWhat level will %s be (1-20)? ", new_Character.name);
     new_Character.level = get_int(1, 20);
     
-    while (new_Character.level >20 || new_Character.level < 1)
-    {
-        printf("Error: %s's level cannot be %d.\n", new_Character.name, new_Character.level);
-        printf("Enter a level 1-20: ");
-        scanf("%d", &new_Character.level);
-    }
+    /*********** GET STATS ***********/
     new_Character = get_Stats(new_Character);
     
     return new_Character;
@@ -62,43 +64,41 @@ Character create_Character(){
 
 
 Character get_Stats(Character new_Char){
-    int d6_1, d6_2, d6_3, d6_4, choice;
-    bool flag;
-    srand(time(NULL));
-    printf("Please choose an option below: \n");
-    printf("1.\tInput your stats.\n2.\tSimulate your stats\n");
-    scanf("%d", &choice);
-    
-    while (choice == 1){
-        
-    do {
-            printf("Enter your charisma: ");
+    int four_d_6[4], choice, choice2 = 2, count;
+    while(choice2 ==2){
+        puts("We will begin by rolling your stats as if you were level 1. Stat modifiers due");
+        puts("to level, race, and other factors will be added later. You may roll your dice");
+        puts("(4d6 drop lowest) or the module can roll it for you.");
+        puts("How would you like to compute your stats?");
+        printf("1.\tI will roll and manually enter my stats.\n2.\tRoll my stats for me and let me choose.\n");
+        choice = get_int(1,2);
+        if (choice == 1){
+            puts("Enter your charisma:");
+            new_Char.charisma = get_int(3,18);
+            puts("Enter your dexterity:");
+            new_Char.dexterity = get_int(3,18);
+            puts("Enter your intelligence:");
+            new_Char.intelligence = get_int(3,18);
+            puts("Enter your strenth:");
+            new_Char.strength = get_int(3,18);
+            puts("Enter your wisdom:");
+            new_Char.wisdom = get_int(3,18);
+        }
+        else{
+            srand(time(NULL));
+            for(count =0; count<4; count++){
+                four_d_6_drop_lowest(four_d_6);
+            }
+        }
             
-            scanf("%d", &new_Char.charisma);
-            if (new_Char.charisma < 0 || new_Char.charisma > 20){
-                printf("Error: %s can't have a charisma of %d.\n", new_Char.name, new_Char.charisma);
-                printf("Stat boosts from race will be applied later.\n");
-            }
-        } while (new_Char.charisma < 0 || new_Char.charisma > 20);
-        
-    do {
-            printf("Enter your dexterity: ");
-            scanf("%d", &new_Char.dexterity);
-            if (new_Char.charisma < 0 || new_Char.charisma > 20){
-                printf("\nError: %s cn't have a charisma of %d.\n", new_Char.name, new_Char.charisma);
-                printf("Stat boosts from race will be applied later.\n");
-            }
-        } while (new_Char.charisma < 0 || new_Char.charisma > 20);
-
-
-
         printf("%s's stats are:\n", new_Char.name);
         printf("Charisma:\t%d\n", new_Char.charisma);
-        printf("Strength:\t%d\n", new_Char.charisma);
+        printf("Dexterity:\t%d\n", new_Char.dexterity);
+        printf("Intelligence:\t%d\n", new_Char.intelligence);
+        printf("Strength:\t%d\n", new_Char.strength);
         printf("Is this correct?\n1.\tYes.\n2.\tNo.");
-        scanf("%d", & choice);
+        choice2 = get_int(1,2);
     }
-
 }
 
 int get_int(int lower, int upper){
@@ -127,7 +127,6 @@ int get_int(int lower, int upper){
     }
     return choice;
 }
-
 void get_String(char new_string[], char string_type[]){
     int n, choice;
     char junk;
@@ -145,4 +144,21 @@ void get_String(char new_string[], char string_type[]){
             printf("Enter your %s again: \n", string_type);
 
     }while (choice != 1);
+}
+void four_d_6_drop_lowest(int stat_block[4]){
+    int count, temp, 
+    for (count = 0; count<4; count++){
+        dice[count]=dice_roll(6);
+        printf("%d ", dice[count]);
+        if(count!=0 && dice[count] >= dice[count-1])
+        {
+            temp=dice[count-1];
+            dice[count-1] = dice[count];
+            dice[count]=temp;
+        }
+    }
+    printf("\n");
+}
+int dice_roll(int sides){
+    return (1 + rand()% (sides+1-1));
 }
