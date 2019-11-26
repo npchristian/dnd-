@@ -1,0 +1,148 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <stdbool.h>
+#include <time.h>
+#define SIZE 50
+
+typedef struct{
+    char name[SIZE];
+    
+    int level;
+    int charisma;
+    int dexterity;
+    int intelligence;
+    int strength;
+    int wisdom;
+    
+    double weight;
+    double max_Carry;
+    
+    bool feats;
+    
+} Character;
+
+Character create_Character();
+Character get_Stats(Character new_Char);
+int get_int();
+void get_String(char new_string[], char string_type[]); //string type reminds user what they were asked to enter (name, equipment, etc.)
+
+int main()
+{
+    char name[SIZE];
+    Character myCharacter;
+    myCharacter = create_Character();
+    return 0;
+}
+
+Character create_Character(){
+    int n, choice;
+    char junk;
+    Character new_Character;
+    
+    /*********** GET NAME ***********/
+    printf("\nPlease enter your character's name: ");
+    get_String(new_Character.name, "character's name");
+
+    /*********** GET LEVEL **********/
+    printf("\nWhat level will %s be (1-20)? ", new_Character.name);
+    new_Character.level = get_int(1, 20);
+    
+    while (new_Character.level >20 || new_Character.level < 1)
+    {
+        printf("Error: %s's level cannot be %d.\n", new_Character.name, new_Character.level);
+        printf("Enter a level 1-20: ");
+        scanf("%d", &new_Character.level);
+    }
+    new_Character = get_Stats(new_Character);
+    
+    return new_Character;
+}
+
+
+Character get_Stats(Character new_Char){
+    int d6_1, d6_2, d6_3, d6_4, choice;
+    bool flag;
+    srand(time(NULL));
+    printf("Please choose an option below: \n");
+    printf("1.\tInput your stats.\n2.\tSimulate your stats\n");
+    scanf("%d", &choice);
+    
+    while (choice == 1){
+        
+    do {
+            printf("Enter your charisma: ");
+            
+            scanf("%d", &new_Char.charisma);
+            if (new_Char.charisma < 0 || new_Char.charisma > 20){
+                printf("Error: %s can't have a charisma of %d.\n", new_Char.name, new_Char.charisma);
+                printf("Stat boosts from race will be applied later.\n");
+            }
+        } while (new_Char.charisma < 0 || new_Char.charisma > 20);
+        
+    do {
+            printf("Enter your dexterity: ");
+            scanf("%d", &new_Char.dexterity);
+            if (new_Char.charisma < 0 || new_Char.charisma > 20){
+                printf("\nError: %s cn't have a charisma of %d.\n", new_Char.name, new_Char.charisma);
+                printf("Stat boosts from race will be applied later.\n");
+            }
+        } while (new_Char.charisma < 0 || new_Char.charisma > 20);
+
+
+
+        printf("%s's stats are:\n", new_Char.name);
+        printf("Charisma:\t%d\n", new_Char.charisma);
+        printf("Strength:\t%d\n", new_Char.charisma);
+        printf("Is this correct?\n1.\tYes.\n2.\tNo.");
+        scanf("%d", & choice);
+    }
+
+}
+
+int get_int(int lower, int upper){
+    int choice;
+    char junk;
+    bool flag = true;
+    
+    while(flag){
+        if(scanf("%d", &choice)){
+            if (choice > upper || choice < lower)
+            {
+                printf("Error: restrict input to %d - %d.\n", lower, upper);
+                printf("Try again: ");
+            }
+            else
+            {
+                printf("\n");
+                flag = false;
+            }
+        }
+        else
+        {
+            scanf("%c", &junk); //consumes the char mistakenly entered
+            printf("Error: restrict input to an integer (1, 2, 3, etc.)\n");
+        }
+    }
+    return choice;
+}
+
+void get_String(char new_string[], char string_type[]){
+    int n, choice;
+    char junk;
+    do{
+        fgets(new_string, SIZE, stdin);
+        for (n=0; n<50 && new_string[n] != "\0";n++)
+            if (new_string[n] == '\n')
+                new_string[n] = '\0';// eliminates the newline character
+
+        printf("You selected %s.", new_string);
+        printf("\nUse this for your %s?\n1.\tyes\n2.\tno\n", string_type);
+        choice = get_int(1,2);
+        scanf("%c", &junk); //consumes newline
+        if (choice ==2)
+            printf("Enter your %s again: \n", string_type);
+
+    }while (choice != 1);
+}
