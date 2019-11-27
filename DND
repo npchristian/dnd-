@@ -14,7 +14,7 @@ typedef struct{
     int armor;
     int level;
     int charisma;
-    int Chrisma_mod;
+    int char_mod;
     int class;
     int dexterity;
     int dex_mod;
@@ -24,11 +24,11 @@ typedef struct{
     int proficiency;
     int race;
     int strength;
-    int strength_mod;
+    int str_mod;
     int to_hit;
     int sub_race;
     int wisdom;
-    int wisdom_mod;
+    int wis_mod;
     
     double weight;
     double max_Carry;
@@ -46,11 +46,10 @@ int four_d_6_drop_lowest(); //sorts four dice rolls, drops lowest, and sums rema
 int get_class(); //returns the class chosen by user
 int get_int(); //returns an integer entered by user
 int get_race(); //returns the race chosen by user
-int get_stat_mods(character new_Char);
+int get_stat_mods(int stat);
 int get_sub_race(int race); // get the sub race
 
 void get_String(char new_string[], char string_type[]); //returns a string entered by user
-void print_stats(Character new_char);
 
 /*********** MAIN***********/
 int main(){
@@ -58,7 +57,6 @@ int main(){
     Character myCharacter; //create a character
     puts("Welcome to the Dungeons and Dragons fifth edition character creation module."); //welcome message
     myCharacter = create_Character(); //character creation call
-    printf("%d", check_stats(myCharacter));
     return 0;
 }
 
@@ -197,7 +195,11 @@ Character get_Stats(Character new_Char){
             }
         }
     }
-    new_char.charisma_mod
+    new_Char.char_mod = get_stat_mods(new_Char.charisma);
+    new_Char.dex_mod = get_stat_mods(new_Char.dexterity);
+    new_Char.intel_mod = get_stat_mods(new_Char.intelligence);
+    new_Char.str_mod = get_stat_mods(new_Char.strength);
+    new_Char.wis_mod = get_stat_mods(new_Char.wisdom);
     
     return new_Char;
 }
@@ -259,14 +261,18 @@ int get_race(){
         printf("10.\tGenasi\n11.\tGnome\n12.\tGoblin\n13.\tGoliath\n");
         printf("14.\tHobgoblin\n15.\tHalf-Elf\n16.\tHalfling\n17.\tHalf-Orc\n18.\tHuman\n19.\tKenku\n.20.\tKobold\n");
         printf("21.\tLizardfolk\n22.\tOrc\n23.\tTabaxi\n24.\tTiefling\n25.\tTriton\n26.\tYuan-ti Pureblood\n");
-        printf("27.\tWhere can I find more information?")
+        printf("27.\tWhere can I find more information?");
         choice = get_int(1,27);
         if (choice ==27)
         {
+            printf("Dragonborn, Dwarf, Elf, Gnome, Halfling, Half-Elf, Half-Orc, Human, Tiefling\n");
+            printf("->\tSee Player's Handboook page 17")
             printf("Aasimar,  Bugbear, Firbolg, Goliath, Goblin, Hobgoblin, Kenku, Kobold, Lizardfolk, Orc, Tabaxi, Triton\n");
-            printf("Yuan-ti Pureblood")
+            printf("Yuan-ti Pureblood");
             printf("->\tSee Volo's Guide to Monsters page 104 ");
-            printf("Aarakocra, Deep Gnome, Genasi, Goliath  -> See Elemental Evil Player's Companion page 3\n");
+            printf("Aarakocra, Deep Gnome, Genasi, Goliath  \n->\t See Elemental Evil Player's Companion page 3\n");
+            printf("Feral Tiefling\n->\tSee SwordCoast Adventurer's Guide page")
+            
         }
     }while(choice==27);
 }
@@ -284,7 +290,7 @@ int get_stat_mods(int stat){
         case 8 ... 9:
             return -1;
             break;
-        case 10 ... 11;
+        case 10 ... 11:
             return 0;
             break;
         case 12 ... 13:
@@ -299,7 +305,7 @@ int get_stat_mods(int stat){
         case 18 ... 19:
             return 4;
             break;
-        case 20 ... 21;
+        case 20 ... 21:
             return 5;
             break;
         case 22 ... 23:
@@ -312,29 +318,55 @@ int get_stat_mods(int stat){
 }
 int get_sub_race(int race){
     
-    if (race==1 || race = 5 || race = 13 || race == 9|| race == 19||race == 21
-        || race == 23|| race == 25 || race == 3 || race == 12 || race == 14 || race = 20
-        || race == 22 || race == 26)
+    if (race==1 || race == 5 || race == 13 || race == 9|| race == 19||race == 21
+        || race == 23|| race == 25 || race == 3 || race == 12 || race == 14 || race == 20
+        || race == 22 || race == 26 || race == 18 || race ==15 || race == 17)
         return 0; //has no sub-race
+    if (race == 6)
+    {
+        puts("Choose between the following (See Player's Handboook page 17):");
+        printf("1.\tHill Dwarf\n2.\tMountain Dwarf\n");
+        return (get_int(1,2));
+    }
+    if (race == 7)
+    {
+        puts("Choose between the following (See Player's Handboook page 17):");
+        printf("1.\tHigh-Elf\n2.\tWood-Elf\n3.\tDark-Elf (Drow)\n");
+        return (get_int(1,3));
+    }
     if (race ==10){
-        puts("Choose between the following (See Elemental Evil Player's Companion page 3):")
+        puts("Choose between the following (See Elemental Evil Player's Companion page 3):");
         printf("1.\tAir Genasi\n2.\tEarth Genasi\n3.\tFire Genasi\n4.\tWater Genasi\n");
         return (get_int(1,4));
     }
     if (race == 2)
     {
-        puts("Choose between the following (See Volo's Guide to Monsters page 104):")
+        puts("Choose between the following (See Volo's Guide to Monsters page 104):");
         printf("1.\tProtector Aasimar\n2.\tScourge Aasimar\n3.\tFallen Aasimar\n");
         return (get_int(1,3));
     }
-    
+    if (race == 16)
+    {
+        puts("Choose between the following (See Player's Handboook page 17):");
+        printf("1.\tLightfoot\n2.\tStout\n");
+        return (get_int(1,2));
+    }
+    if (race == 4)
+    {
+        puts("Choose between the following ancestries(See Player's Handboook page 17):");
+        printf("1.\tBlack\n2.\tBlue\n3.\tBrass\n4.\tBronze\n5.\tCopper\n6.\tGold\n7.\tGreen\n8.Red\n");
+        printf("9.\tSilver\n10.\tWhite\n");
+        return (get_int(1,10));
+    }
+        if (race == 11)
+    {
+        puts("Choose between the following (See Player's Handboook page 17):");
+        printf("1.\tForest Gnome\n2.\tRock Gnome\n");
+        return (get_int(1,2));
+    }
     /*********** GET SUB-RACE ***********/
     
-       printf("4.\tDragonborn\n");
-        printf("6.\tDwarf\n7.\tElf\n8.\tFeral Tiefling");
-        printf("11.\tGnome\n12");
-        printf("15.\tHalf-Elf\n16.\tHalfling\n17.\tHalf-Orc\n18.\tHuman\n.");
-        printf("24.\tTiefling\n);
+        printf("8.\tFeral Tiefling");
         return (get_int(1,26));
 }
 int four_d_6_drop_lowest(int stat_block[4]){
