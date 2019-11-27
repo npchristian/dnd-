@@ -9,54 +9,57 @@
 
 /*********** DATA STRUCTURE ***********/
 typedef struct{
-    char name[SIZE];
+    char name[SIZE];    //stores character name
     
-    int armor;
-    int level;
-    int charisma;
-    int char_mod;
-    int class;
-    int dexterity;
-    int dex_mod;
-    int hit_points;
-    int intelligence;
-    int intel_mod;
-    int proficiency;
-    int race;
-    int strength;
-    int str_mod;
-    int to_hit;
-    int sub_race;
-    int wisdom;
-    int wis_mod;
+    int armor;          //stores character armor
+    int level;          //stores character charisma
+    int charisma;       //stores character charism
+    int char_mod;       //stores character charisma mod
+    int class;          //stores character class
+    int sub_class;      //stores cahracter sub class
+    int constitution;   //stores character constitution
+    int con_mod;        //stores character constitution mod
+    int dexterity;      //stores character dexterity
+    int dex_mod;        //stores character dexterity mod
+    int hit_points;     //stores character hit points
+    int intelligence;   //stores character intelligence
+    int intel_mod;      //stores character intelligence mod
+    int proficiency;    //stores character proficiency
+    int race;           //stores character race
+    int sub_race;       //stores character sub-race
+    int strength;       //stores character strength
+    int str_mod;        //stores character strength mod
+    int to_hit;         //stores to-hit
+    int wisdom;         //stores character wisdom
+    int wis_mod;        //stores character wisdom mod
     
-    double weight;
-    double max_Carry;
+    double weight;      //stores character weight
+    double max_Carry;   //stores character max_carry
     
-    bool feats;
+    bool feats;         //stores whether character has feats
 } Character;
 
 /*********** FUNCTION HEADERS***********/
-Character create_Character(); //generic call to create a character
-Character get_Stats(Character new_Char); //gets the 5 stats for the character
+Character create_Character();               //generic call to create a character
+Character get_Stats(Character new_Char);    //gets the 5 stats for the character
 
-int check_stats(Character new_character); //checks that entered stats are correct
-int dice_roll(int sides); //roles an n sided dice
-int four_d_6_drop_lowest(); //sorts four dice rolls, drops lowest, and sums remaining 3
-int get_class(); //returns the class chosen by user
-int get_int(); //returns an integer entered by user
-int get_race(); //returns the race chosen by user
-int get_stat_mods(int stat);
-int get_sub_race(int race); // get the sub race
+int check_stats(Character new_character);               //checks that entered stats are correct
+int dice_roll(int sides);                               //roles an n sided dice
+int four_d_6_drop_lowest();                             //sorts four dice rolls, drops lowest, and sums remaining 3
+int get_class();                                        //returns the class chosen by user
+int get_int();                                          //returns an integer entered by user
+int get_race();                                         //returns the race chosen by user
+int get_stat_mods(int stat);                            //returns character stat mod for a given stat
+int get_sub_race(int race);                             // get the sub race
 
 void get_String(char new_string[], char string_type[]); //returns a string entered by user
 
 /*********** MAIN***********/
 int main(){
-    char name[SIZE]; //stores character name
-    Character myCharacter; //create a character
-    puts("Welcome to the Dungeons and Dragons fifth edition character creation module."); //welcome message
-    myCharacter = create_Character(); //character creation call
+    char name[SIZE];                                                                        //stores character name
+    Character myCharacter;                                                                  //create a character
+    puts("Welcome to the Dungeons and Dragons fifth edition character creation module.");   //welcome message
+    myCharacter = create_Character();                                                       //character creation call
     return 0;
 }
 
@@ -64,45 +67,47 @@ int main(){
 Character create_Character(){
     
     /*********** VARIABLE DECLARATIONS***********/
-    int choice; // choice used to store user decision
-    Character new_Character; //returned
+    int choice;                 // used to store user decision
+    Character new_Character;    // newly created character returned
     
     /*********** GET NAME ***********/
-    puts("Please enter your character's name: ");
-    get_String(new_Character.name, "character's name");
+    puts("Please enter your character's name: ");       //prompt character name
+    get_String(new_Character.name, "character's name"); //get name from user input
 
     /*********** GET LEVEL, CLASS, & RACE*********/
-    printf("What level will %s be (1-20)? ", new_Character.name);
-    new_Character.level = get_int(1, 20);
-    new_Character.class = get_class();
-    new_Character.race = get_race();
+    printf("What level will %s be (1-20)? ", new_Character.name);   //prompt for level
+    new_Character.level = get_int(1, 20);                           //get level
+    new_Character.class = get_class();                              //get class
+    new_Character.race = get_race();                                //get race
+    new_Character.sub_race = get_sub_race(new_Character.race);      //get sub-race
     
     /*********** GET STATS ***********/
-    new_Character = get_Stats(new_Character);
-    
-    /*********** GET STATS ***********/
-    return new_Character;
+    new_Character = get_Stats(new_Character);   //get stats
+
+    return new_Character; //return newly created character
 }
 Character get_Stats(Character new_Char){
     
     /*********** VARIABLE DECLARATIONS***********/
-    int stats[5]; //stores user stats
-    int choice, choice2 = 2, choice3; // stores user decisions
-    int count, count2; //used in for loops
-    int temp; //used to sort highest to lowest
+    int stats[6];                       //stores user stats
+    int choice, choice2 = 2, choice3;   // stores user decisions
+    int count, count2;                  //used in for loops
+    int temp;                           //used to sort highest to lowest
     
-        /*********** GET THE 5 STATS***********/
+    /*********** GET THE 6 STATS***********/
     while(choice2 ==2){
         puts("We will begin by rolling your stats as if you were level 1. Stat modifiers due");
         puts("to level, race, and other factors will be added later. You may roll your dice");
-        puts("(4d6 drop lowest) or the module can roll it for you.");
-        puts("How would you like to compute your stats?");
-        printf("1.\tI will roll and manually enter my stats.\n2.\tRoll my dice for me.\n");
-        choice = get_int(1,2); //Explain program and ask for input
+        puts("(4d6 drop lowest) or the module can roll it for you. How would you like to");
+        puts("compute your stats?");
+        printf("1.\tI will roll and manually enter my stats\n2.\tRoll my dice for me\n");
+        choice = get_int(1,2);  //Explain program and ask for input
         
-        while (choice2 == 2 && choice == 1){
+        while (choice2 == 2 && choice == 1){ //while user has not confirmed their choice(s)
             puts("Enter your charisma:");
             new_Char.charisma = get_int(3,18);
+            puts("Enter your Constitution:");
+            new_Char.constitution = get_int(3,18);
             puts("Enter your dexterity:");
             new_Char.dexterity = get_int(3,18);
             puts("Enter your intelligence:");
@@ -112,18 +117,18 @@ Character get_Stats(Character new_Char){
             puts("Enter your wisdom:");
             new_Char.wisdom = get_int(3,18);
             choice2=check_stats(new_Char);
-        } //get the 5 stats
+        } //prompt user for the stats
         
-        srand(time(NULL));
-        if (choice==2){
  
-            for(count =0; count<5; count++){
+        if (choice==2){
+            srand(time(NULL));
+            for(count =0; count<6; count++){
                 stats[count] = four_d_6_drop_lowest();
             } //if user wishes, roll dice for user
             
-            for(count=0; count<5; count++)
+            for(count=0; count<6; count++)
             {
-                for(count2=count+1; count2<5; count2++)
+                for(count2=count+1; count2<6; count2++)
                 {
                     if(stats[count] < stats[count2])
                     {
@@ -132,21 +137,23 @@ Character get_Stats(Character new_Char){
                         stats[count2] = temp;
                     }
                 }
-            }
-            for (count=0; count<5; count++) printf("%d ", stats[count]);
+            }   //loops to sort from highest to lowest
+            
             while (choice2==2){
-                new_Char.charisma=new_Char.dexterity=new_Char.intelligence=new_Char.strength=new_Char.wisdom = count = 0; //initialize to zero
-                puts("We will assign your stats from highest to lowest:");
-              
-                while(count<5){
+                new_Char.charisma=new_Char.constitution = new_Char.dexterity=new_Char.intelligence=new_Char.strength=new_Char.wisdom = 0;
+                count = 0;      //initialize values to zero
+                
+                puts("We will assign your stats from highest to lowest:"); 
+                while(count<6){
                     printf("Where will you assign your %d roll?\n", stats[count]);
-                    printf("1.\tCharisma\n2.\tDexterity\n3.\tIntelligence\n4.\tStrength\n5.\tWisdom\n");
-                    choice3=get_int(1,5);
+                    printf("1.\tCharisma\n2.\tConstitution\n3.\tDexterity\n4.\tIntelligence\n5.\tStrength\n6.\tWisdom\n");
+                        //prompt user for stat selections
+                        
+                    choice3=get_int(1,6);
                     
                     switch(choice3){
                         case 1:
-                            if (new_Char.charisma == 0)
-                                {
+                            if (new_Char.charisma == 0){
                                     new_Char.charisma = stats[count];
                                     count++;
                                 }
@@ -154,35 +161,39 @@ Character get_Stats(Character new_Char){
                                 printf("Error: charisma already given value: %d.\n", new_Char.charisma);
                             break;
                         case 2:
-                            if (new_Char.dexterity == 0)
-                                {
+                            if (new_Char.constitution == 0){
+                                    new_Char.constitution = stats[count];
+                                    count++;
+                                }
+                            else
+                                printf("Error: constitution already given value: %d.\n", new_Char.constitution);
+                            break;
+                        case 3:
+                            if (new_Char.dexterity == 0){
                                     new_Char.dexterity = stats[count];
                                     count++;
                                 }
                             else
                                 printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
                         break;
-                        case 3:
-                            if (new_Char.intelligence == 0)
-                                {
+                        case 4:
+                            if (new_Char.intelligence == 0){
                                     new_Char.intelligence = stats[count];
                                     count++;
                                 }
                             else
                                 printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
                         break;
-                        case 4:
-                            if (new_Char.strength == 0)
-                                {
+                        case 5:
+                            if (new_Char.strength == 0){
                                     new_Char.strength = stats[count];
                                     count++;
                                 }
                             else
                                 printf("Error: strength already given value: %d.\n", new_Char.strength);
                         break;
-                        case 5:
-                            if (new_Char.wisdom == 0)
-                                {
+                        case 6:
+                            if (new_Char.wisdom == 0){
                                     new_Char.wisdom = stats[count];
                                     count++;
                                 }
@@ -195,24 +206,19 @@ Character get_Stats(Character new_Char){
             }
         }
     }
-    new_Char.char_mod = get_stat_mods(new_Char.charisma);
-    new_Char.dex_mod = get_stat_mods(new_Char.dexterity);
-    new_Char.intel_mod = get_stat_mods(new_Char.intelligence);
-    new_Char.str_mod = get_stat_mods(new_Char.strength);
-    new_Char.wis_mod = get_stat_mods(new_Char.wisdom);
-    
-    return new_Char;
+    return new_Char; //return the new character & stats. 
 }
 
 int check_stats(Character new_character){
-        printf("%s's stats are:\n", new_character.name);
+        printf("%s's stats are:\n", new_character.name);            
         printf("Charisma:\t%d\n", new_character.charisma);
+        printf("Constitution:\t%d\n", new_character.constitution);
         printf("Dexterity:\t%d\n", new_character.dexterity);
         printf("Intelligence:\t%d\n", new_character.intelligence);
         printf("Strength:\t%d\n", new_character.strength);
         printf("Wisdom:\t\t%d\n", new_character.wisdom);
         printf("Is this correct?\n1.\tYes.\n2.\tNo.\n");
-        return (get_int(1,2)); 
+        return (get_int(1,2));  //print stats, ask if they are correct, and return the answer
 }
 int dice_roll(int sides){
     return (1 + rand()% (sides+1-1));
@@ -257,24 +263,24 @@ int get_race(){
     do{
         puts("What race will you play?");
         printf("1.\tAarakocra\n2.\tAasimar\n3\tBugbear\n.4.\tDragonborn\n");
-        printf("5.\tDeep Gnome\n6.\tDwarf\n7.\tElf\n8.\tFeral Tiefling\n9\tFirbolg\n");
-        printf("10.\tGenasi\n11.\tGnome\n12.\tGoblin\n13.\tGoliath\n");
-        printf("14.\tHobgoblin\n15.\tHalf-Elf\n16.\tHalfling\n17.\tHalf-Orc\n18.\tHuman\n19.\tKenku\n.20.\tKobold\n");
-        printf("21.\tLizardfolk\n22.\tOrc\n23.\tTabaxi\n24.\tTiefling\n25.\tTriton\n26.\tYuan-ti Pureblood\n");
-        printf("27.\tWhere can I find more information?");
-        choice = get_int(1,27);
-        if (choice ==27)
+        printf("5.\tDeep Gnome\n6.\tDwarf\n7.\tElf\n8\tFirbolg\n");
+        printf("9.\tGenasi\n10.\tGnome\n11.\tGoblin\n12.\tGoliath\n");
+        printf("13.\tHobgoblin\n14.\tHalf-Elf\n15.\tHalfling\n16.\tHalf-Orc\n17.\tHuman\n18.\tKenku\n.19.\tKobold\n");
+        printf("20.\tLizardfolk\n21.\tOrc\n22.\tTabaxi\n23.\tTiefling\n24.\tTriton\n25.\tYuan-ti Pureblood\n");
+        printf("26.\tWhere can I find more information?\n");
+        choice = get_int(1,26);
+        if (choice ==26)
         {
             printf("Dragonborn, Dwarf, Elf, Gnome, Halfling, Half-Elf, Half-Orc, Human, Tiefling\n");
-            printf("->\tSee Player's Handboook page 17")
+            printf("->\tSee Player's Handboook page 17");
             printf("Aasimar,  Bugbear, Firbolg, Goliath, Goblin, Hobgoblin, Kenku, Kobold, Lizardfolk, Orc, Tabaxi, Triton\n");
             printf("Yuan-ti Pureblood");
             printf("->\tSee Volo's Guide to Monsters page 104 ");
             printf("Aarakocra, Deep Gnome, Genasi, Goliath  \n->\t See Elemental Evil Player's Companion page 3\n");
-            printf("Feral Tiefling\n->\tSee SwordCoast Adventurer's Guide page")
-            
+            puts("See Sword-Coast Adventurer's guide page 103 for more information on these races and");
+            puts("additional content");
         }
-    }while(choice==27);
+    }while(choice==26);
 }
 int get_stat_mods(int stat){
     switch (stat){
@@ -317,77 +323,90 @@ int get_stat_mods(int stat){
     }
 }
 int get_sub_race(int race){
-    
-    if (race==1 || race == 5 || race == 13 || race == 9|| race == 19||race == 21
-        || race == 23|| race == 25 || race == 3 || race == 12 || race == 14 || race == 20
-        || race == 22 || race == 26 || race == 18 || race ==15 || race == 17)
-        return 0; //has no sub-race
-    if (race == 6)
+    switch(race)
     {
-        puts("Choose between the following (See Player's Handboook page 17):");
-        printf("1.\tHill Dwarf\n2.\tMountain Dwarf\n");
-        return (get_int(1,2));
-    }
-    if (race == 7)
-    {
-        puts("Choose between the following (See Player's Handboook page 17):");
-        printf("1.\tHigh-Elf\n2.\tWood-Elf\n3.\tDark-Elf (Drow)\n");
-        return (get_int(1,3));
-    }
-    if (race ==10){
-        puts("Choose between the following (See Elemental Evil Player's Companion page 3):");
-        printf("1.\tAir Genasi\n2.\tEarth Genasi\n3.\tFire Genasi\n4.\tWater Genasi\n");
-        return (get_int(1,4));
-    }
-    if (race == 2)
-    {
-        puts("Choose between the following (See Volo's Guide to Monsters page 104):");
-        printf("1.\tProtector Aasimar\n2.\tScourge Aasimar\n3.\tFallen Aasimar\n");
-        return (get_int(1,3));
-    }
-    if (race == 16)
-    {
-        puts("Choose between the following (See Player's Handboook page 17):");
-        printf("1.\tLightfoot\n2.\tStout\n");
-        return (get_int(1,2));
-    }
-    if (race == 4)
-    {
-        puts("Choose between the following ancestries(See Player's Handboook page 17):");
-        printf("1.\tBlack\n2.\tBlue\n3.\tBrass\n4.\tBronze\n5.\tCopper\n6.\tGold\n7.\tGreen\n8.Red\n");
-        printf("9.\tSilver\n10.\tWhite\n");
-        return (get_int(1,10));
-    }
-        if (race == 11)
-    {
-        puts("Choose between the following (See Player's Handboook page 17):");
-        printf("1.\tForest Gnome\n2.\tRock Gnome\n");
-        return (get_int(1,2));
-    }
-    /*********** GET SUB-RACE ***********/
-    
-        printf("8.\tFeral Tiefling");
-        return (get_int(1,26));
-}
-int four_d_6_drop_lowest(int stat_block[4]){
-    int count, temp, dice[4];
-    
-    for (count = 0; count<4; count++){
-        dice[count]=dice_roll(6);
-        if(count!=0 && dice[count] >= dice[count-1])
+        case 6:
         {
-            temp=dice[count-1];
-            dice[count-1] = dice[count];
-            dice[count]=temp;
+            puts("Choose between the following (See Player's Handboook page 17):");
+            printf("1.\tHill Dwarf\n2.\tMountain Dwarf\n3.\tShield Dwarves\n4.\tGold Dwarves\n5.\tGray Dwarves\n");
+            puts("6.\tDuergar");
+            puts("See Sword Coast Adventurer's Guide page 103 for options 3-6");
+            return (get_int(1,6));
         }
+
+        case 7:
+        {
+            puts("Choose between the following (See Player's Handboook page 17):");
+            printf("1.\tHigh-Elf\n2.\tWood-Elf\n3.\tDark-Elf (Drow)\n4.\tMoon Elf\n");
+            printf("5.\tSun Elf\n");
+            puts("See Sword Coast Adventurer's Guide page 103 for optioins 2-5");
+            return (get_int(1,5));
+        }
+        case 9:
+        {
+            puts("Choose between the following (See Elemental Evil Player's Companion page 3):");
+            printf("1.\tAir Genasi\n2.\tEarth Genasi\n3.\tFire Genasi\n4.\tWater Genasi\n");
+            return (get_int(1,4));
+        }
+        case 2:
+        {
+            puts("Choose between the following (See Volo's Guide to Monsters page 104):");
+            printf("1.\tProtector Aasimar\n2.\tScourge Aasimar\n3.\tFallen Aasimar\n");
+            return (get_int(1,3));
+        }
+        case 15:
+        {
+            puts("Choose between the following (See Player's Handboook page 17):");
+            printf("1.\tStout\n2.\tLightfoot\n3.\tStrongheart\n");
+            puts("See SwordCoast Adventurer's Guide page 103  for options 2-3");
+            return (get_int(1,3));
+        }
+        case 4:
+        {
+            puts("Choose between the following ancestries(See Player's Handboook page 17):");
+            printf("1.\tBlack\n2.\tBlue\n3.\tBrass\n4.\tBronze\n5.\tCopper\n6.\tGold\n7.\tGreen\n8.Red\n");
+            printf("9.\tSilver\n10.\tWhite\n");
+            return (get_int(1,10));
+        }
+        case 10:
+        {
+            puts("Choose between the following (See Player's Handboook page 17):");
+            printf("1.\tForest Gnome\n2.\tRock Gnome\n3.\tDeep Gnome\n4.\tSvirfneblin\n");
+            puts("See SwordCoast adventurer's Guide page page 103 for options 1-4");
+            return (get_int(1,2));
+        }
+        default:
+            return 0; // no sub-race in that race
     }
-    printf("You rolled: ");
-    for (count =0; count<4; count++)
-        printf("%d ", dice[count]);
-    printf("After dropping %d, the total is: %d.\n", dice[3], dice[0]+dice[1]+dice[2]);
-    return (dice[0]+dice[1]+dice[2]);
 }
 
+int four_d_6_drop_lowest(int stat_block[4]){
+    int count, count2;  //used in for loops
+    int temp;           //used to sort highest to lowest
+    int dice[4];        //stores dice rolls
+    
+    for (count = 0; count<4; count++)
+        dice[count]=dice_roll(6); //roll dice for stats
+    
+    for(count=0; count<4; count++) {
+                for(count2=count+1; count2<4; count2++)
+                {
+                    if(dice[count] < dice[count2])
+                    {
+                        temp = dice[count];
+                        dice[count] = dice[count2];
+                        dice[count2] = temp;
+                    }
+                }
+            }   //loops to sort from highest to lowest
+        
+    printf("You rolled: ");
+    for (count =0; count<4; count++)
+        printf("%d ", dice[count]); //displays dice results in order
+        
+    printf("After dropping %d, the total is: %d.\n", dice[3], dice[0]+dice[1]+dice[2]); //displays total
+    return (dice[0]+dice[1]+dice[2]); //return total
+}
 void get_String(char new_string[], char string_type[]){
     int n, choice;
     char junk;
