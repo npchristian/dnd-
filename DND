@@ -237,36 +237,47 @@ int get_int(int lower, int upper){
     return choice;
 }
 int get_race(){
+    /*********** VARIABLE DECLARATIONS***********/
+    int choice; //used to read user input
     /*********** GET RACE ***********/
+    do{
         puts("What race will you play?");
         printf("1.\tAarakocra\n2.\tAasimar\n3\tBugbear\n.4.\tDragonborn\n");
         printf("5.\tDeep Gnome\n6.\tDwarf\n7.\tElf\n8.\tFeral Tiefling\n9\tFirbolg\n");
         printf("10.\tGenasi\n11.\tGnome\n12.\tGoblin\n13.\tGoliath\n");
         printf("14.\tHobgoblin\n15.\tHalf-Elf\n16.\tHalfling\n17.\tHalf-Orc\n18.\tHuman\n19.\tKenku\n.20.\tKobold\n");
         printf("21.\tLizardfolk\n22.\tOrc\n23.\tTabaxi\n24.\tTiefling\n25.\tTriton\n26.\tYuan-ti Pureblood\n");
-        return (get_int(1,26));
+        printf("27.\tWhere can I find more information?")
+        choice = get_int(1,27);
+        if (choice ==27)
+        {
+            printf("Aasimar, Bugbear, Firbolg, Goblin, Hobgoblin, Kenku, Kobold, Lizardfolk, Orc, Tabaxi, Triton, Yuan-ti Pureblood\n");
+            printf("->\tSee Volo's Guide to Monsters page ");
+            printf("Aarakocra, Deep Gnome, Genasi, Goliath  -> See Elemental Evil Player's Companion page 3\n");
+        }
+    }while(choice==27);
 }
 int get_sub_race(int race){
     
     if (race==1 || race = 5 || race = 13)
         return 0; //has no sub-race
-    if (race ==9){
-        puts("Choose between the following: ");
+    if (race ==10){
+        puts("Choose between the following (See Elemental Evil Player's Companion page 3):")
         printf("1.\tAir Genasi\n2.\tEarth Genasi\n3.\tFire Genasi\n4.\tWater Genasi\n");
         return (get_int(1,4));
     }
-    
+    if (race == 2)
+    {
+        return (get_int(1,3));
     }
-    
     
     /*********** GET SUB-RACE ***********/
     
-        puts("What race will you play?");
-        printf("1.\tAarakocra\n2.\tAasimar\n3\tBugbear\n.4.\tDragonborn\n");
-        printf("5.\tDwarf\n6.\tElf\n7.\tFeral Tiefling\n8\tFirbolg\n");
-        printf("9.\tGenasi\n10.\tGnome\n11.\tGoblin\n12.\tGoliath\n");
-        printf("13.\tHobgoblin\n14.\tHalf-Elf\n15.\tHalfling\n16.\tHalf-Orc\n17.\tHuman\n18.\tKenku\n.19.\tKobold\n");
-        printf("20.\tLizardfolk\n21.\tOrc\n22.\tTabaxi\n23.\tTiefling\n24.\tTriton\n25.\tYuan-ti Pureblood\n");
+       printf("2.\tAasimar\n3\tBugbear\n.4.\tDragonborn\n");
+        printf("6.\tDwarf\n7.\tElf\n8.\tFeral Tiefling\n9\tFirbolg\n");
+        printf("11.\tGnome\n12.\tGoblin");
+        printf("14.\tHobgoblin\n15.\tHalf-Elf\n16.\tHalfling\n17.\tHalf-Orc\n18.\tHuman\n19.\tKenku\n.20.\tKobold\n");
+        printf("21.\tLizardfolk\n22.\tOrc\n23.\tTabaxi\n24.\tTiefling\n25.\tTriton\n26.\tYuan-ti Pureblood\n");
         return (get_int(1,26));
 }
 int four_d_6_drop_lowest(int stat_block[4]){
