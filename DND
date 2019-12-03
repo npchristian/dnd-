@@ -1,42 +1,1468 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+#include <stdbool.h>
+#include <time.h>
 
-   OnlineGDB beta
-online compiler and debugger for c/c++
-code. compile. run. debug. share.
-IDE
-My Projects
-Learn Programming
-Programming Questions
-Jobs new
-Sign Up
-Login
-51.9K
-ads via Carbon
-Grow customer love with our Marketing CRM.
-ADS VIA CARBON
-About • FAQ • Blog • Terms of Use • Contact Us • GDB Tutorial • Credits • Privacy
-© 2016 - 2019 GDB Online
-SPONSOR
-Slack — Bring your team together with Slack, the collaboration hub for work.
-       Language   
-main.c
-  
-  
-input
-stderr
-Compilation failed due to following error(s).main.c: In function ‘get_race’:
-main.c:932:1: error: expected ‘while’ before ‘int’
- int get_stat_mods(int stat) {
- ^~~
-main.c: In function ‘get_String’:
-main.c:1079:39: warning: comparison between pointer and integer
-   for (n = 0; n < 50 && new_string[n] != "\0"; n++)
-                                       ^~
-main.c: In function ‘get_race’:
-main.c:1338:1: error: expected declaration or statement at end of input
- }
- ^
-Call Stack
-Local Variables
-Registers
-Display Expressions
-Breakpoints and Watchpoints
+
+#define SIZE 50
+
+/*********** DATA STRUCTURE ***********/
+typedef struct {
+	char name[SIZE];        //stores character name 
+	char race[SIZE];
+	char sub_race[SIZE];    //stores race & sub_race
+
+	int armor;              //stores character armor
+	int level;              //stores character charisma
+	int charisma;           //stores character charism
+	int char_mod;           //stores character charisma mod
+	int class;              //stores character class
+	int sub_class;          //stores cahracter sub class
+	int constitution;       //stores character constitution
+	int con_mod;            //stores character constitution mod
+	int dexterity;          //stores character dexterity
+	int dex_mod;            //stores character dexterity mod
+	int hit_points;         //stores character hit points
+	int intelligence;       //stores character intelligence
+	int intel_mod;          //stores character intelligence mod
+	int proficiency;        //stores character proficiency
+	int race;               //stores character race
+	int sub_race;           //stores character sub-race
+	int strength;           //stores character strength
+	int str_mod;            //stores character strength mod
+	int to_hit;             //stores to-hit
+	int wisdom;             //stores character wisdom
+	int wis_mod;            //stores character wisdom mod
+
+	double weight;          //stores character weight
+	double max_Carry;       //stores character max_carry
+
+	bool feats;             //stores whether character has feats
+} Character;
+
+/*********** FUNCTION HEADERS***********/
+
+Character create_Character();							//generic call to create a character
+Character get_Stats(Character new_Char);				//gets the 5 stats for the character
+
+int check_stats(Character new_character);               //checks that entered stats are correct
+int dice_roll(int sides);                               //roles an n sided dice
+int four_d_6_drop_lowest();                             //sorts four dice rolls, drops lowest, and sums remaining 3
+int get_assignment(int score);							//used in the point buy process
+int get_class(); //ADD CLASSES FROM OTHER BOOKS         //returns the class chosen by user
+int get_int(int upper, int lower);						//returns an integer entered by user
+int get_race();                                         //returns the race chosen by user
+int get_stat_mods(int stat);                            //returns character stat mod for a given stat
+int get_sub_race(int race);                             // get the sub race
+int select_race();
+
+void get_String(char new_string[], char string_type[]); //returns a string entered by user
+void pause();
+void print_class(int class);							//prints the class for user verification
+void print_race(int race, int sub_race);				//prints the race and sub-race for user verification
+void sort_array(int arr_size, int arr[6]);
+
+/*********** MAIN***********/
+int main() {
+	Character myCharacter;                                                                  //create a character
+	puts("Welcome to the Dungeons and Dragons fifth edition character creation module.");   //welcome message
+	myCharacter = create_Character();                                                       //character creation call
+	return 0;
+}
+
+/*********** FUNCTION DEFINITIONS***********/
+
+
+Character create_Character() {
+
+	/*********** VARIABLE DECLARATIONS***********/
+	char junk;					//consumes newline character
+	Character new_Character;    // newly created character returned
+	
+	int choice;					// stores user decision
+
+	/*********** GET NAME ***********/
+	puts("Please enter your character's name: ");       //prompt character name
+	get_String(new_Character.name, "character's name"); //get name from user input
+
+	/*********** GET LEVEL*********/
+	printf("What level will %s be (1-20)? ", new_Character.name);   //prompt for level
+	new_Character.level = get_int(1, 20);                           //get level
+
+	/*********** GET CLASS*********/
+	new_Character.class = get_class();                              //get class
+
+	/*********** GET RACE*********/
+	new_Character.race = get_race();                                //get race
+	new_Character.sub_race = get_sub_race(new_Character.race);      //get sub-race
+
+	puts("You chose:");
+	printf("\nName:\t%s\nLevel\t%d\n", new_Character.name, new_Character.level);
+	print_class(new_Character.class);
+	print_race(new_Character.race, new_Character.sub_race);
+	printf("Is this correct?\n1.\tYes\n2.\tNo");
+	choice = get_int(1, 2);
+	if (choice == 2)
+		scanf("%c", &junk);
+	
+	/*********** GET STATS ***********/
+	new_Character = get_Stats(new_Character);   //get stats
+
+	return new_Character; //return newly created character
+}
+Character get_Stats(Character new_Char) {
+
+	/*********** VARIABLE DECLARATIONS***********/
+	bool stats_rolled = false;							//check if stats have already been rolled
+	int rolled_stats[6], stats[6];						//stores user stats
+	int method, roll_method, choice;					//stores user decisions
+	int	reset;											//initialize reset to false
+	int count, count2;									//used in for loops
+	int temp;											//used to sort highest to lowest
+	int points;											//used in the point buy system
+				/*********** GET THE 6 STATS***********/
+	do {
+		new_Char.charisma = new_Char.constitution = new_Char.dexterity = new_Char.intelligence = new_Char.strength = new_Char.wisdom = 0;
+		puts("Which method would you like to use to compute your stats?\n Bonuses due to race and other factors will be added later.");
+		printf("1.\tRoll for my stats\n2.\tPoint buy\n3.\tUse 15, 14, 13, 12, 10, 8\n");
+		method = get_int(1, 3);
+
+		switch (method) {
+
+		case 1: {
+			puts("We will begin by rolling your stats as if you were level 1. Stat modifiers due");
+			puts("to level, race, and other factors will be added later. You may roll your dice");
+			puts("(4d6 drop lowest) or the module can roll it for you. How would you like to");
+			puts("compute your stats?");
+			printf("1.\tI will roll and manually enter my stats\n2.\tRoll my dice for me\n");
+			roll_method = get_int(1, 2);  //Explain program and ask for input
+
+			if (roll_method == 1) {
+				puts("Enter your charisma:");
+				new_Char.charisma = get_int(3, 18);
+				puts("Enter your Constitution:");
+				new_Char.constitution = get_int(3, 18);
+				puts("Enter your dexterity:");
+				new_Char.dexterity = get_int(3, 18);
+				puts("Enter your intelligence:");
+				new_Char.intelligence = get_int(3, 18);
+				puts("Enter your strenth:");
+				new_Char.strength = get_int(3, 18);
+				puts("Enter your wisdom:");
+				new_Char.wisdom = get_int(3, 18);
+			} //prompt user for the stats
+
+			else {
+				if (!stats_rolled) {										//if stats have not already been rolled
+					srand(time(NULL));										//seed with time and rolla gain
+					for (count = 0; count < 6; count++)
+						rolled_stats[count] = four_d_6_drop_lowest();
+					stats_rolled = true;
+				}
+
+				new_Char.charisma = new_Char.constitution = new_Char.dexterity = new_Char.intelligence = new_Char.strength = new_Char.wisdom = 0;
+				
+				sort_array(6, rolled_stats);
+				puts("We will assign your stats from highest to lowest:");
+				count = 0;      //initialize values to zero
+				while (count < 6) {
+					printf("Where will you assign your %d roll?\n", rolled_stats[count]);
+					printf("1.\tCharisma\n2.\tConstitution\n3.\tDexterity\n4.\tIntelligence\n5.\tStrength\n6.\tWisdom\n");
+					//prompt user for stat selections
+
+					choice = get_int(1, 6);
+
+					switch (choice) {
+					case 1:
+						if (new_Char.charisma == 0) {
+							new_Char.charisma = rolled_stats[count];
+							count++;
+						}
+						else
+							printf("Error: charisma already given value: %d.\n", new_Char.charisma);
+						break;
+					case 2:
+						if (new_Char.constitution == 0) {
+							new_Char.constitution = rolled_stats[count];
+							count++;
+						}
+						else
+							printf("Error: constitution already given value: %d.\n", new_Char.constitution);
+						break;
+					case 3:
+						if (new_Char.dexterity == 0) {
+							new_Char.dexterity = rolled_stats[count];
+							count++;
+						}
+						else
+							printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
+						break;
+					case 4:
+						if (new_Char.intelligence == 0) {
+							new_Char.intelligence = rolled_stats[count];
+							count++;
+						}
+						else
+							printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
+						break;
+					case 5:
+						if (new_Char.strength == 0) {
+							new_Char.strength = rolled_stats[count];
+							count++;
+						}
+						else
+							printf("Error: strength already given value: %d.\n", new_Char.strength);
+						break;
+					case 6:
+						if (new_Char.wisdom == 0) {
+							new_Char.wisdom = rolled_stats[count];
+							count++;
+						}
+						else
+							printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
+						break;
+					}
+				}
+			}
+			break; }
+		case 2: {
+			points = 27;
+			count = 0;
+			puts("You have a total of 27 points to spend on your ability scores. The cost of each is displayed below. ");
+			while (count < 6) {
+				printf("You have %d points left\nWhat would you like to buy?\n", points);
+				printf("SELECTION\tSCORE\tCOST\n1.\t\t8\t0\n2.\t\t9\t1\n3.\t\t10\t2\n4.\t\t11\t3\n5.\t\t12\t4\n6.\t\t13\t5\n7.\t\t14\t6\n");
+				printf("8.\t\t15\t7\n");
+				choice = get_int(1, 8);
+				switch (choice) {
+				case 1:
+					switch (get_assignment(8)) {
+					case 1:
+						if (new_Char.charisma == 0) {
+							new_Char.charisma = 8;
+							count++;
+						}
+						else
+							printf("Error: charisma already given value: %d.\n", new_Char.charisma);
+						break;
+					case 2:
+						if (new_Char.constitution == 0) {
+							new_Char.constitution = 8;
+							count++;
+						}
+						else
+							printf("Error: constitution already given value: %d.\n", new_Char.constitution);
+						break;
+					case 3:
+						if (new_Char.dexterity == 0) {
+							new_Char.dexterity = 8;
+							count++;
+						}
+						else
+							printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
+						break;
+					case 4:
+						if (new_Char.intelligence == 0) {
+							new_Char.intelligence = 8;
+							count++;
+						}
+						else
+							printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
+						break;
+					case 5:
+						if (new_Char.strength == 0) {
+							new_Char.strength = 8;
+							count++;
+						}
+						else
+							printf("Error: strength already given value: %d.\n", new_Char.strength);
+						break;
+					case 6:
+						if (new_Char.wisdom == 0) {
+							new_Char.wisdom = 8;
+							count++;
+						}
+						else
+							printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
+						break;
+					}
+					break;
+				case 2: {
+					if (points < 1)
+						printf("Error: a score of 9 costs 1 point. You have no points left.\n");
+					else {
+						switch (get_assignment(9)) {
+						case 1:
+							if (new_Char.charisma == 0) {
+								new_Char.charisma = 9;
+								points = points - 1;
+								count++;
+							}
+							else
+								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
+							break;
+						case 2:
+							if (new_Char.constitution == 0) {
+								new_Char.constitution = 9;
+								points = points - 1;
+								count++;
+							}
+							else
+								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
+							break;
+						case 3:
+							if (new_Char.dexterity == 0) {
+								new_Char.dexterity = 9;
+								points = points - 1;
+								count++;
+							}
+							else
+								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
+							break;
+						case 4:
+							if (new_Char.intelligence == 0) {
+								new_Char.intelligence = 9;
+								points = points - 1;
+								count++;
+							}
+							else
+								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
+							break;
+						case 5:
+							if (new_Char.strength == 0) {
+								new_Char.strength = 9;
+								points = points - 1;
+								count++;
+							}
+							else
+								printf("Error: strength already given value: %d.\n", new_Char.strength);
+							break;
+						case 6:
+							if (new_Char.wisdom == 0) {
+								new_Char.wisdom = 9;
+								points = points - 1;
+								count++;
+							}
+							else
+								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
+							break;
+						}
+						break;
+					}
+					break; }
+				case 3: {
+					if (points < 2)
+						printf("Error: a score of 10 costs 2 points. You only have %d points.\n", points);
+					else {
+						switch (get_assignment(10)) {
+						case 1:
+							if (new_Char.charisma == 0) {
+								new_Char.charisma = 10;
+								points = points - 2;
+								count++;
+							}
+							else
+								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
+							break;
+						case 2:
+							if (new_Char.constitution == 0) {
+								new_Char.constitution = 10;
+								points = points - 2;
+								count++;
+							}
+							else
+								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
+							break;
+						case 3:
+							if (new_Char.dexterity == 0) {
+								new_Char.dexterity = 10;
+								points = points - 2;
+								count++;
+							}
+							else
+								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
+							break;
+						case 4:
+							if (new_Char.intelligence == 0) {
+								new_Char.intelligence = 10;
+								points = points - 2;
+								count++;
+							}
+							else
+								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
+							break;
+						case 5:
+							if (new_Char.strength == 0) {
+								new_Char.strength = 10;
+								points = points - 2;
+								count++;
+							}
+							else
+								printf("Error: strength already given value: %d.\n", new_Char.strength);
+							break;
+						case 6:
+							if (new_Char.wisdom == 0) {
+								new_Char.wisdom = 10;
+								points = points - 2;
+								count++;
+							}
+							else
+								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
+							break;
+						}
+					}
+					break; }
+				case 4: {
+					if (points < 3)
+						printf("Error: a score of 11 costs 3 points. You only have %d points.\n", points);
+					else {
+						switch (get_assignment(11)) {
+						case 1:
+							if (new_Char.charisma == 0) {
+								new_Char.charisma = 11;
+								points = points - 3;
+								count++;
+							}
+							else
+								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
+							break;
+						case 2:
+							if (new_Char.constitution == 0) {
+								new_Char.constitution = 11;
+								points = points - 3;
+								count++;
+							}
+							else
+								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
+							break;
+						case 3:
+							if (new_Char.dexterity == 0) {
+								new_Char.dexterity = 11;
+								points = points - 3;
+								count++;
+							}
+							else
+								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
+							break;
+						case 4:
+							if (new_Char.intelligence == 0) {
+								new_Char.intelligence = 11;
+								points = points - 3;
+								count++;
+							}
+							else
+								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
+							break;
+						case 5:
+							if (new_Char.strength == 0) {
+								new_Char.strength = 11;
+								points = points - 3;
+								count++;
+							}
+							else
+								printf("Error: strength already given value: %d.\n", new_Char.strength);
+							break;
+						case 6:
+							if (new_Char.wisdom == 0) {
+								new_Char.wisdom = 11;
+								points = points - 3;
+								count++;
+							}
+							else
+								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
+							break;
+						}
+					}
+					break; }
+				case 5: {
+					if (points < 4)
+						printf("Error: a score of 12 costs 4 points. You only have %d points.\n", points);
+					else {
+						switch (get_assignment(12)) {
+						case 1:
+							if (new_Char.charisma == 0) {
+								new_Char.charisma = 12;
+								points = points - 4;
+								count++;
+							}
+							else
+								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
+							break;
+						case 2:
+							if (new_Char.constitution == 0) {
+								new_Char.constitution = 12;
+								points = points - 4;
+								count++;
+							}
+							else
+								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
+							break;
+						case 3:
+							if (new_Char.dexterity == 0) {
+								new_Char.dexterity = 12;
+								points = points - 4;
+								count++;
+							}
+							else
+								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
+							break;
+						case 4:
+							if (new_Char.intelligence == 0) {
+								new_Char.intelligence = 12;
+								points = points - 4;
+								count++;
+							}
+							else
+								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
+							break;
+						case 5:
+							if (new_Char.strength == 0) {
+								new_Char.strength = 12;
+								points = points - 4;
+								count++;
+							}
+							else
+								printf("Error: strength already given value: %d.\n", new_Char.strength);
+							break;
+						case 6:
+							if (new_Char.wisdom == 0) {
+								new_Char.wisdom = 12;
+								points = points - 4;						points = points - 4;
+								count++;
+							}
+							else
+								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
+							break;
+						}
+					}
+					break; }
+				case 6: {
+					if (points < 5)
+						printf("Error: a score of 13 costs 5 points. You only have %d points.\n", points);
+					else {
+						switch (get_assignment(13)) {
+						case 1:
+							if (new_Char.charisma == 0) {
+								new_Char.charisma = 13;
+								points = points - 5;
+								count++;
+							}
+							else
+								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
+							break;
+						case 2:
+							if (new_Char.constitution == 0) {
+								new_Char.constitution = 13;
+								points = points - 5;
+								count++;
+							}
+							else
+								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
+							break;
+						case 3:
+							if (new_Char.dexterity == 0) {
+								new_Char.dexterity = 13;
+								points = points - 5;
+								count++;
+							}
+							else
+								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
+							break;
+						case 4:
+							if (new_Char.intelligence == 0) {
+								new_Char.intelligence = 13;
+								points = points - 5;
+								count++;
+							}
+							else
+								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
+							break;
+						case 5:
+							if (new_Char.strength == 0) {
+								new_Char.strength = 13;
+								points = points - 5;
+								count++;
+							}
+							else
+								printf("Error: strength already given value: %d.\n", new_Char.strength);
+							break;
+						case 6:
+							if (new_Char.wisdom == 0) {
+								new_Char.wisdom = 13;
+								points = points - 5;
+								count++;
+							}
+							else
+								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
+							break;
+						}
+					}
+					break; }
+				case 7: {
+					if (points < 7)
+						printf("Error: a score of 14 costs 7 points. You only have %d points.\n", points);
+					else {
+						switch (get_assignment(14)) {
+						case 1:
+							if (new_Char.charisma == 0) {
+								new_Char.charisma = 14;
+								points = points - 7;
+								count++;
+							}
+							else
+								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
+							break;
+						case 2:
+							if (new_Char.constitution == 0) {
+								new_Char.constitution = 14;
+								points = points - 7;
+								count++;
+							}
+							else
+								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
+							break;
+						case 3:
+							if (new_Char.dexterity == 0) {
+								new_Char.dexterity = 14;
+								points = points - 7;
+								count++;
+							}
+							else
+								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
+							break;
+						case 4:
+							if (new_Char.intelligence == 0) {
+								new_Char.intelligence = 14;
+								points = points - 7;
+								count++;
+							}
+							else
+								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
+							break;
+						case 5:
+							if (new_Char.strength == 0) {
+								new_Char.strength = 14;
+								points = points - 7;
+								count++;
+							}
+							else
+								printf("Error: strength already given value: %d.\n", new_Char.strength);
+							break;
+						case 6:
+							if (new_Char.wisdom == 0) {
+								new_Char.wisdom = 14;
+								points = points - 7;
+								count++;
+							}
+							else
+								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
+							break;
+						}
+					}
+					break; }
+				case 8:
+					if (points < 9)
+						printf("Error: a score of 15 costs 9 points. You only have %d points.\n", points);
+					else {
+
+						switch (get_assignment(15)) {
+						case 1:
+							if (new_Char.charisma == 0) {
+								new_Char.charisma = 15;
+								points = points - 9;
+								count++;
+							}
+							else
+								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
+							break;
+						case 2:
+							if (new_Char.constitution == 0) {
+								new_Char.constitution = 15;
+								points = points - 9;
+								count++;
+							}
+							else
+								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
+							break;
+						case 3:
+							if (new_Char.dexterity == 0) {
+								new_Char.dexterity = 15;
+								points = points - 9;
+								count++;
+							}
+							else
+								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
+							break;
+						case 4:
+							if (new_Char.intelligence == 0) {
+								new_Char.intelligence = 15;
+								points = points - 9;
+								count++;
+							}
+							else
+								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
+							break;
+						case 5:
+							if (new_Char.strength == 0) {
+								new_Char.strength = 15;
+								points = points - 9;
+								count++;
+							}
+							else
+								printf("Error: strength already given value: %d.\n", new_Char.strength);
+							break;
+						case 6:
+							if (new_Char.wisdom == 0) {
+								new_Char.wisdom = 15;
+								points = points - 9;
+								count++;
+							}
+							else
+								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
+							break;
+						}
+					}
+					break;
+				}
+			}
+			break; }
+		case 3:
+			count = 0;
+			stats[0] = 15; stats[1] = 14; stats[2] = 13; stats[3] = 12; stats[4] = 10; stats[5] = 8;
+			while (count < 6) {
+				printf("Where will you assign your %d roll?\n", stats[count]);
+				printf("1.\tCharisma\n2.\tConstitution\n3.\tDexterity\n4.\tIntelligence\n5.\tStrength\n6.\tWisdom\n");
+				//prompt user for stat selections
+
+				choice = get_int(1, 6);
+
+				switch (choice) {
+				case 1:
+					if (new_Char.charisma == 0) {
+						new_Char.charisma = stats[count];
+						count++;
+					}
+					else
+						printf("Error: charisma already given value: %d.\n", new_Char.charisma);
+					break;
+				case 2:
+					if (new_Char.constitution == 0) {
+						new_Char.constitution = stats[count];
+						count++;
+					}
+					else
+						printf("Error: constitution already given value: %d.\n", new_Char.constitution);
+					break;
+				case 3:
+					if (new_Char.dexterity == 0) {
+						new_Char.dexterity = stats[count];
+						count++;
+					}
+					else
+						printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
+					break;
+				case 4:
+					if (new_Char.intelligence == 0) {
+						new_Char.intelligence = stats[count];
+						count++;
+					}
+					else
+						printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
+					break;
+				case 5:
+					if (new_Char.strength == 0) {
+						new_Char.strength = stats[count];
+						count++;
+					}
+					else
+						printf("Error: strength already given value: %d.\n", new_Char.strength);
+					break;
+				case 6:
+					if (new_Char.wisdom == 0) {
+						new_Char.wisdom = stats[count];
+						count++;
+					}
+					else
+						printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
+					break;
+				}
+			}
+		break;
+		}
+	reset = check_stats(new_Char);
+	} while (reset == 2);
+
+	return new_Char; //return the new character & stats.
+}
+
+int check_stats(Character new_character) {
+	printf("%s's stats are:\n", new_character.name);
+	printf("Charisma:\t%d\n", new_character.charisma);
+	printf("Constitution:\t%d\n", new_character.constitution);
+	printf("Dexterity:\t%d\n", new_character.dexterity);
+	printf("Intelligence:\t%d\n", new_character.intelligence);
+	printf("Strength:\t%d\n", new_character.strength);
+	printf("Wisdom:\t\t%d\n", new_character.wisdom);
+	printf("Is this correct?\n1.\tYes.\n2.\tNo\n");
+	return (get_int(1, 2));  //print stats, ask if they are correct, and return the answer
+}
+int dice_roll(int sides) {
+	return (1 + rand() % (sides + 1 - 1));
+}
+int get_assignment(int score) {
+	printf("Where will you assign your %d?\n", score);
+	printf("1.\tCharisma\n2.\tConstitution\n3.\tDexterity\n4.\tIntelligence\n5.\tStrength\n6.\tWisdom\n");
+	//prompt user for stat selections
+	return(get_int(1, 6));
+}
+int get_class() {
+	/*********** GET CLASS ***********/
+	puts("What class will you play?");
+	printf("1.\tBarbarian\n2.\tBard\n3.\tCleric\n4.\tDruid\n5.\tFighter\n");
+	printf("6.\tMonk\n7.\tPaladin\n8.\tRanger\n9.\tSorcerer\n10.\tWarlock\n11.\tWizard\n");
+	return (get_int(1, 11));
+}
+int get_int(int lower, int upper) {
+	int choice;
+	char junk;
+	bool flag = true;
+
+	while (flag) {
+		if (scanf("%d", &choice)) {
+			if (choice > upper || choice < lower)
+			{
+				printf("Error: restrict input to %d - %d.\n", lower, upper);
+				printf("Try again: ");
+			}
+			else
+			{
+				printf("\n");
+				flag = false;
+			}
+		}
+		else
+		{
+			scanf("%c", &junk); //consumes the char mistakenly entered
+			printf("Error: restrict input to an integer (1, 2, 3, etc.)\n");
+		}
+	}
+	return choice;
+}
+int get_race() {
+	/*********** VARIABLE DECLARATIONS***********/
+	int choice_race, choice_info, choice_other; //used to read user input
+
+	/*********** GET RACE ***********/
+	do {
+		choice_race = select_race();
+		if (choice_race == 31)
+		{
+			puts("Give me more information on:");
+			puts("1. Ability scores");
+			puts("2. Race and sub-Race characteristics");
+			puts("3. Other");
+			puts("4. Where to find more information")
+			puts("5. Go back")
+			choice_info = get_int(1, 5);
+			if (choice_info <5)
+				switch(choice_info){
+    				case 1: {
+    					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
+    					printf("Aarakocra\t\t0\t0\t+2\t0\t0\t\1\n");
+    					printf("Aasimar, Fallen\t0\t\t0\t0\t0\t+1\t0\n");
+    					printf("Aasimar, Protctor\t\t0\t0\t0\t0\t0\t+1\n");
+    					printf("Aasimar, Scourge\t\t0\t+1\t0\t0\t0\t0\n");
+    					printf("Bugbear\t\t0\t0\t+1\t0\t+2\t0\n");
+    					printf("Changeling\t\t+1\t0\t+1\t0\t0\t0\n");
+    					printf("Dragonborn\t\t+1\t0\t0\t0\t+2\t0\n");
+    					printf("Deep Gnome\t\t0\t0\t+1\t+2\t0\t0\n");
+    					printf("Dwarf, Gold\t\t0\t+2\t0\t0\t0\t+1\n");
+    					printf("Dwarf, Gray\t\t0\t+2\t0\t0\t+1\t0\n");
+    					printf("Dwarf, Hill\t\t0\t+2\t0\t0\t0\t+1\n");
+    					printf("Dwarf, Mountain\t\t0\t+2\t0\t0\t+2\t0\n");
+    					printf("Dwarf, Shield\t\t0\t+2\t0\t0\t+2\t0\n");
+    					printf("Elf, Dark\t\t+1\t0\t+2\t0\t0\t0\n");
+    					printf("Elf, High\t\t0\t0\t+2\t+1\t0\t0\n");
+    					printf("Elf, Moon\t\t0\t0\t+2\t+1\t0\t0\n");
+    					printf("Elf, Sun\t\t0\t0\t+2\t+1\t0\t0\n");
+    					printf("Elf, Wood\t\t0\t0\t+2\t0\t0\t+1\n");
+    
+    					pause();
+    					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
+    					printf("Firbolg\t\t0\t0\t0\t0\t+1\t+2\n");
+    					printf("Genasi, Air\t\t0\t+2\t+1\t0\t0\t0\n");
+    					printf("Genasi, Earth\t\t0\t+2\t0\t0\t+1\t0\n");
+    					printf("Genasi, Fire\t\t0\t+2\t0\t+1\t0\t0\n");
+    					printf("Genasi, Water\t\t0\t+2\t0\t0\t0\t+1\n");
+    					printf("Gnome, Forest\t\t0\t0\t+1\t+2\t0\t0\n");
+    					printf("Gnome, Rock\t\t0\t+1\t0\t+2\t0\t0\n");
+    					printf("Gnome, Svirfneblin\t\t0\t0\t0\t+2\t0\t0\n");
+    					printf("Goblin\t\t0\t+1\t+2\t0\t0\t0\n");
+    					printf("Goliath\t\t0\t+1\t0\t0\t+2\t0\n");
+    					printf("Hobgoblin\t\t0\t+2\t0\t+1\t0\t0\n");
+    					printf("Half-Elf\t\t+2\t0\t0\t0\t0\t0->Choose two different abilities to increase by one\n");
+    					printf("Halfling, Lightfoot\t\t+1\t0\t+2\t0\t0\t0\n");
+    					printf("Halfling, Stout\t\t0\t+1\t+2\t0\t0\t0\n");
+    					printf("Halfling, Strongheart\t\t0\t+1\t+2\t0\t0\t0\n");
+    					printf("Half-Orc\t\t0\t+1\t0\t0\t+2\t0\n");
+    					printf("Human\t\t+1\t+1\t+1\t+1\t+1\t+1\n");
+    					printf("Human, Variant\t\t0\t0\t0\t0\t0\t0->Choose two different abilities to increase by one\n");
+    
+    					pause();
+    					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
+    					printf("Kenku\t\t0\t0\t+2\t0\t0\t+1\n");
+    					printf("Kobold\t\t0\t0\t+2\t0\t-2\t0\n");
+    					printf("Lizardfolk\t\t0\t+2\t0\t0\t0\t+1\n");
+    					printf("MInotaur\t\t0\t0\t0\t0\t0\t+1\t0\n");
+    					printf("Orc\t\t0\t+1\t0\t-2\t+2\t0\n");
+    					printf("Shifter, Beasthide\t\t0\t+1\t+1\t0\t0\t0");
+    					printf("Shifter, Cliffwalk\t\t0\t0\t+2\t0\t0\t0");
+    					printf("Shifter, Longstride\t\t0\t0\t+2\t0\t0\t0");
+    					printf("Shifter, Longtooth\t\t0\t0\t+1\t0\t+1\t0");
+    					printf("Shifter, Razorclaw\t\t0\t0\t+2\t0\t0\t0");
+    					printf("Shifter, Wildhunt\t\t0\t0\t+1\t0\t0\t+1");
+    					printf("Tabaxi\t\t+1\t0\t+2\t0\t0\t0\n");
+    					printf("Tiefling\t\t+2\t0\t0\t+1\t0\t0\n");
+    					printf("Triton\t\t+1\t+1\t0\t0\t+1\t0\n");
+    					printf("Warforged\t\t0\t+1\t0\t0\t+1\t0");
+    					printf("Yuan-Ti Pureblood\t\t+2\t0\t0\t+1\t0\t0\n");
+    
+    				break;} //end case 1 race abilities
+    				case 2: {
+				    puts("Show me more information about:");
+				    puts("1. Cantrips and abilities");
+				    puts("2. Feats");
+				    puts("3. Languages");
+				    puts("4. Proficiencies and Tools");
+				    puts("5. Other");
+				    puts("6. Go back");
+				    switch(get_int(1,6){
+				        case 1:{
+				            printf("\t\t\tAarakocra\n");
+				            printf("Unarmed strikes: Aarakocra are proficient and deal 1d4 slashing damage with talons\n\n");
+				            
+				            printf("\t\t\tDeep Gnome\n");
+				            puts("Deep Gnome: advantage on int, wis, and cha, saving throws");
+				            puts("Deep Gnome: advantge on stealth checks to hide in rocky terrain\n\n");
+				            puts("Deep Gnome: Blindness/deafness (once per long rest)");
+				            puts("Deep Gnome: Blur (once per long rest)");
+				            puts("Deep Gnome: Disguise Self: (once per long rest)");
+				            printf("Deep Gnome: Nondetection (on self)\n\n");
+				            
+				            printf("\t\t\tDragonborn\n");
+				            puts("Dragonborne, all: breath weapon 2d6-5d6 damage and type based on level and color");
+				            puts("Dragonborn, all: resistance to damage type based on color")
+				            printf("->\tSee Player's handbook page 34\n\n");
+				            
+				            printf("\t\t\tDwarves\n");
+				            printf("Dwarf: advantage on saving throws against poison\n\n");
+				            
+				            printf("\t\t\tElves\n");
+				            puts("Elf, all: advantage on saving throws against charmed");
+				            puts("Elf, all: cannot be put to sleep by non-magical means");
+				            puts("Elf, all: do not sleep, instead 4 hour meditation");
+				            puts("Elf, Dark (Drow): darkness (at 5th level, once per day)");
+				            puts("Elf, Dark (Drow): dancing Lights (at 3rd level)");
+				            puts("Elf, Dark (Drow): Faerie Fire (once per day)");
+				            puts("Elf, Dark (Drow): disadvantage on attack roles in direct sunlight");
+				            printf("->\tspell-casting modifier is charisma\n");
+				            puts("Elf, High: one cantrip from wizard spell list");
+				            printf("->\tspell-casting modifier is intelligence\n");
+				            printf("Elf, Wood: may attempt to hide when lightly obscured by natural phenomena\n\n");
+				            
+				            pause();
+				            printf("\t\t\tGenasi\n");
+				            puts("Genasi, Air: can hold breath indefinitely unless incapacitated");
+				            puts("Genasi, Air: Levitate (once per long rest)");
+				            puts("Genasi, Earth: Cast Without Trace (once per long rest)")
+				            puts("Genasi, Earth: ignore difficult terrain made of earth or stone");
+				            puts("Genasi, Fire: Burning Hands (once per long rest, at 3rd level)");
+				            puts("Genasi, Fire: Produce Flame");
+				            puts("Genasi, Fire: resistance to fire damage");
+				            puts("Genasi, Water: can breath in air and water");
+				            puts("Genasi, Water: resistance to acid damage")
+				            puts("Genasi, Water: Shape Water");
+				            puts("Genasi, Water: Create or Destroy Water (once per long rest)");
+				            printf("->\tspell-casting modifier is constitution\n\n");
+				            
+				            printf("\t\t\tGnomes\n");
+				            puts("Gnome, all: advantage on int, wis, and cha, saving throws");
+				            puts("Gnome, Forest: Minor Illusion (uses intelligence)");
+				            puts("Gnome, Forest: Speak with small beasts");
+				            puts("Gnome, Rock: Double proficiency bonus on history checks on alchemy, device, or magic items");
+				            printf("Gnome, Rock: May create a tiny clockwork device(1HP 5AC\n\n");
+				            
+				            printf("\t\t\tGoliath\n");
+				            puts("Goliath: as a reaction, reduce damage taken by 1d12 + con mod (once per short rest)");
+				            puts("Goliath: count as one size larger when calculating carrying capacity and weight moved");
+				            printf("Goliath: naturally adapted to cold and high altitude\n\n");
+				            
+
+				            printf("\t\t\tHalf-Elf\n")
+				            puts("Half-Elf: advantage on saving throws against charmed");
+				            printf("Half-Elf: cannot be put to sleep by non-magical means\n\n");
+				            printf("\t\t\tHalflings\n");
+				            puts("Halfling, all: can re-roll 1s on ability checks, attacks, and saving throws (once)");
+				            puts("Halfling, all: advantage on saving throws against being frightened");
+				            puts("Halfling, all: can move through occupied space of any medium or larger creature");
+				            puts("Halfling, Lightfoot: May attempt to hide when obscured by any medium or larger creature");
+				            puts("Halfling, Stout advantage on saving throws against pison");
+				            printf("Halfling, Stout resistance resistance to poison damage\n\n");
+				            
+				            pause();
+				            
+				            printf("\t\t\tHalf-Orc\n");
+				            puts("Half-Orc: when reduced to 0hp you may drop to 1hp instead (once per long rest)");
+				            printf("Half-Orc: When you score a critical hit, roll an extra damage dice\n\n");
+				            
+				            printf("\t\t\tTiefling\n");
+				            puts("Tiefling: resistance to fire damage");
+				            puts("Tiefling: Thaumaturgy");
+				            puts("Tiefling: Hellish Rebuke (once per day, 2nd level spell, at 3rd level");
+				            puts("Tiefling: Darkness (once per day, at 5th level ");
+				            printf("->\tspell-casting modifier is charisma\n\n");
+				        break;}//end sub case cantrips and other abilities
+				        case 2:{
+				            
+				        break;}//end sub case feats
+				        case 3:{
+				            
+				        break} //end sub case languages
+				        case 4:{
+				            
+				        }//end sub case prof and tools
+				        case 5:{
+				    break;} //end sub case other
+				        default:{
+				        break;} //end sub case go back
+			    	}
+			    	break;} //end case 2 race and subrace characteristics
+				} //end switch(choice_info)
+
+			puts("Dragonborn, Dwarf, Elf, Gnome, Halfling, Half-Elf, Half-Orc, Human, Tiefling");
+			printf("->\tPlayer's Handboook page 17\n\n");
+			printf("Aasimar,  Bugbear, Firbolg, Goliath, Goblin, Hobgoblin, Kenku, Kobold, Lizardfolk, Orc, Tabaxi, Triton, ");
+			printf("\n and Yuan-ti Pureblood\n");
+			printf("->\tVolo's Guide to Monsters page 104\n\n");
+			printf("Aarakocra, Deep Gnome, Genasi, Goliath  \n->\tElemental Evil Player's Companion page 3\n\n");
+			puts("See Sword-Coast Adventurer's guide page 103 for more information on all of these races and ");
+			puts("additional content\n\n");
+			pause();
+		}
+	} while (choice_race == 31);
+}
+int get_stat_mods(int stat) {
+	switch (stat) {
+	case 3:
+		return -4;
+		break;
+	case 4:
+	case 5:
+		return -3;
+		break;
+	case 6:
+	case 7:
+		return -2;
+		break;
+	case 8:
+	case 9:
+		return -1;
+		break;
+	case 10:
+	case 11:
+		return 0;
+		break;
+	case 12:
+	case 13:
+		return 1;
+		break;
+	case 14:
+	case 15:
+		return 2;
+		break;
+	case 16:
+	case 17:
+		return 3;
+		break;
+	case 18:
+	case 19:
+		return 4;
+		break;
+	case 20:
+	case 21:
+		return 5;
+		break;
+	case 22:
+	case 23:
+		return 6;
+		break;
+	case 24:
+	case 25:
+		return 7;
+		break;
+	}
+}
+int get_sub_race(int race) {
+	switch (race)	{
+    case 2:{
+		puts("Choose between the following:");
+		printf("1.\tProtector Aasimar -> See Volo's Guide to Monsters P.104\n");
+		printf("2.\tScourge Aasimar -> See Volo's Guide to Monsters P.104\n");
+		printf("3.\tFallen Aasimar -> See Volo's Guide to Monsters P.104\n");
+		printf("4.\tRevenant\n");
+		return (get_int(1, 4));
+	}//end case 2 Aasimar
+	case 5:{
+		puts("Choose between the following ancestries(See Player's Handboook page 17):");
+		printf("1.\tBlack\n2.\tBlue\n3.\tBrass\n4.\tBronze\n5.\tCopper\n6.\tGold\n7.\tGreen\n8.\tRed\n");
+		printf("9.\tSilver\n10.\tWhite\n");
+		return (get_int(1, 10));
+	} //end case 5 dragonborn
+	case 7:{
+		puts("Choose between the following (See Player's Handboook page 17 and \nSword Coast Adventurer's Guide page 103 for options 3-5):");
+		printf("1.\tHill Dwarf\n2.\tMountain Dwarf\n3.\t*Shield Dwarves\n4.\t*Gold Dwarves\n5.\t*Gray Dwarves\n6.\t*Revenant\n");
+		return (get_int(1, 6));
+	} // end case 7 dwarves
+	case 8:	{
+		puts("Choose between the following (See Player's Handboook page 17 and \nSword Coast Adventurer's Guide page 103 for optioins 2-5):");
+		printf("1.\tHigh-Elf\n2.\tWood-Elf\n3.\tDark-Elf (Drow)\n4.\t*Moon Elf\n5.\t*Sun Elf\n6.\t*Revenant\n");
+		return (get_int(1, 6));
+	} //end case 8 elves
+	case 10:{
+		puts("Choose between the following (See Elemental Evil Player's Companion page 3):");
+		printf("1.\tAir Genasi\n2.\tEarth Genasi\n3.\tFire Genasi\n4.\tWater Genasi\n5.\tRevenant\n");
+		return (get_int(1, 5));
+	} //end case 10 genasi
+	case 11:{
+		puts("Choose between the following (See Player's Handboook page 17 and \nSwordCoast adventurer's Guide page page 103 for options 1-4):");
+		printf("1.\tForest Gnome\n2.\tRock Gnome\n3.\t*Deep Gnome\n4.\t*Svirfneblin\t5.\t*Revenant\n");
+		return (get_int(1, 5));
+	} //end case 11 gnomes
+	case 16:{
+		puts("Choose between the following");
+		printf("1.\tStout -> See Player's Handbook P.17 SwordCoast Adv. Guide P. 103\n");
+		printf("2.\tLightfoot -> See Player's Handbook P.17 & SwordCoast Adv. Guide P. 103\n");
+		printf("3.\tStrongheart -> See Player's Handbook P.17 & SwordCoast Adv. Guide P. 103\n");
+		printf("4.\t*Revenant -> See Codex: Unearthed Arcana P. 3\n");
+		return (get_int(1, 4));
+	} //end case 16 halflings
+	case 25:{
+	    puts("Choose between the following (See Player's Handboook page 17 and \nSwordCoast adventurer's Guide page page 103 for options 1-4):");
+		printf("1.\tBeasthide\n2.\tCliffwalk\n3.\tLongstride\n4.\tLongtooth\n5.\tRazorclaw\n6.\tRevenant\n7.\tWildhunt\n");
+		return (get_int(1, 7));
+	    puts("Choose between the following (See Player's Handboook page 17 and \nSwordCoast adventurer's Guide page page 103 for options 1-4):");
+		printf("1.\tBeasthide\n2.\tCliffwalk\n3.\tLongstride\n4.\tLongtooth\n5.\tRazorclaw\n6.\tRevenant\n7.\tWildhunt\n");
+		return (get_int(1, 7));
+	} //end case 25 Shifters
+	case 28:{
+	    
+	}
+	default:
+		return 0; // no sub-race in that race
+	}//end switch(race)
+}
+int four_d_6_drop_lowest() {
+	int count, count2;  //used in for loops
+	int temp;           //used to sort highest to lowest
+	int dice[4];        //stores dice rolls
+
+	for (count = 0; count < 4; count++)
+		dice[count] = dice_roll(6); //roll dice for stats
+
+	for (count = 0; count < 4; count++) {
+		for (count2 = count + 1; count2 < 4; count2++)
+		{
+			if (dice[count] < dice[count2])
+			{
+				temp = dice[count];
+				dice[count] = dice[count2];
+				dice[count2] = temp;
+			}
+		}
+	}   //loops to sort from highest to lowest
+
+	printf("You rolled: ");
+	for (count = 0; count < 4; count++)
+		printf("%d ", dice[count]); //displays dice results in order
+
+	printf("After dropping %d, the total is: %d.\n", dice[3], dice[0] + dice[1] + dice[2]); //displays total
+	return (dice[0] + dice[1] + dice[2]); //return total
+}
+int select_race() {
+	printf("What race will you play?\nRaces marked with an * may not be allowed. Consult your DM\n");
+	printf("1.\t*Aarakocra\n2.\t*Aasimar\n3.\t*Bugbear\n4.\t*Changeling\n5.\tDragonborn\n");
+	printf("6.\t*Deep Gnome\n7.\tDwarf\n8.\tElf\n9\t*Firbolg\n");
+	printf("10.\t*Genasi\n11.\tGnome\n12.\t*Goblin\n13.\t*Goliath\n");
+	printf("14.\t*Hobgoblin\n15.\tHalf-Elf\n16.\tHalfling\n17.\tHalf-Orc\n18.\tHuman\n19.\t*Human, Variant\n20.\t*Kenku\n21.\t*Kobold\n");
+	printf("22.\t*Lizardfolk\n23.\t*Minotaur*\n24.\t*Orc\n25.\t*Shifter*\n26.\t*Tabaxi\n27.\tTiefling\n28.\t*Tiefling, Variant\n29.\t*Triton\n30.\t*Warforged\n");
+	printf("31.\t*Yuan-ti Pureblood\n32.\tI need more info\n");
+	return(get_int(1, 32));
+}
+
+void get_String(char new_string[], char string_type[]) {
+	int n, choice;
+	char junk;
+	do {
+		fgets(new_string, SIZE, stdin);
+		for (n = 0; n < 50 && new_string[n] != "\0"; n++)
+			if (new_string[n] == '\n')
+				new_string[n] = '\0';// eliminates the newline character
+
+		printf("You selected %s.", new_string);
+		printf("\nUse this for your %s?\n1.\tyes\n2.\tno\n", string_type);
+		choice = get_int(1, 2);
+		scanf("%c", &junk); //consumes newline
+		if (choice == 2)
+			printf("Enter your %s again: \n", string_type);
+
+	} while (choice != 1);
+}
+void pause() {
+	puts("Press [Enter] to continue . . .");
+		getchar();
+		getchar();
+}
+void print_class(int class) {
+	switch (class) {
+		case 1:
+			printf("Class:\tBarbarian\n");
+			break;
+		case 2:
+			printf("Class:\tBard\n");
+			break;
+		case 3:
+			printf("Class:\tCleric\n");
+			break;
+		case 4:
+			printf("Class:\tDruid\n");
+			break;
+		case 5:
+			printf("Class:\tFighter\n");
+			break;
+		case 6:
+			printf("Class:\tMonk\n");
+			break;
+		case 7:
+			printf("Class:\tPaladin\n");
+			break;
+		case 8:
+			printf("Class:\tRanger\n");
+			break;
+		case 9:
+			printf("Class:\tSorcerer\n");
+			break;
+		case 10:
+			printf("Class:\tWarlock\n");
+			break;
+		case 11:
+			printf("Class:\tWizard\n");
+			break;
+	}
+}
+void print_race(int race_int, int sub_race_int) {
+	switch (race_int) {
+	case 1:
+		printf("Race: Aarakocra\nSub Race: N/A\n");
+		break;
+	case 2:
+		printf("Race: Aasimar\n");
+		switch (sub_race_int) {
+		case 1:
+			printf("Sub Race: Protector Aasimar\n");
+			break;
+		case 2:
+			printf("Sub Race: Scourge Aasimar\n");
+			break;
+		case 3:
+			printf("Sub Race: Fallen Aasimar\n");
+			break;
+		}
+		break;
+	case 3:
+		printf("Race: Bugbear\nSub Race: N/A\n");
+		break;
+	case 4:
+		printf("Race: Dragonborn\n");
+		switch (sub_race_int) {
+		case 1:
+			printf("Sub Race: black\n");
+			break;
+		case 2:
+			printf("Sub Race: Blue\n");
+			break;
+		case 3:
+			printf("Sub Race: Brass\n");
+			break;
+		case 4:
+			printf("Sub Race: Bronze\n");
+			break;
+		case 5:
+			printf("Sub Race: Copper\n");
+			break;
+		case 6:
+			printf("Sub Race: Gold\n");
+			break;
+		case 7:
+			printf("Sub Race: Green\n");
+			break;
+		case 8:
+			printf("Sub Race: Red\n");
+			break;
+		case 9:
+			printf("Sub Race: Silver\n");
+			break;
+		case 10:
+			printf("Sub Race: White\n");
+			break;
+		}
+		break;
+	case 5:
+		printf("Race: Deep Gnome\nSub Race: N/A\n");
+		break;
+	case 6:
+		printf("Race: Dwarf\n");
+		switch (sub_race_int) {
+		case 1:
+			printf("Sub Race: Hill Dwarf\n");
+			break;
+		case 2:
+			printf("Sub Race: Mountain Dwarf\n");
+			break;
+		case 3:
+			printf("Sub Race: Shield Dwarf\n");
+			break;
+		case 4:
+			printf("Sub Race: Gold Dwarf\n");
+			break;
+		case 5:
+			printf("Sub Race: Gray Dwarf\n");
+			break;
+		}
+		break;
+	case 7:
+		printf("Race: Elf\n");
+		switch (sub_race_int) {
+		case 1:
+			printf("Sub Race: High-Elf\n");
+			break;
+		case 2:
+			printf("Sub Race : Wood-Elf\n");
+			break;
+		case 3:
+			printf("Sub Race: Dark-Elf (Drow)\n");
+			break;
+		case 4:
+			printf("Sub Race: Moon-Elf\n");
+			break;
+		case 5:
+			printf("Sub Race: Sun-Elf\n");
+			break;
+		}
+		break;
+	case 8:
+		printf("Race: Firbolg\nSub Race: N/A\n");
+		break;
+	case 9:
+		printf("Race: Genasi\n");
+		switch (sub_race_int) {
+		case 1:
+			printf("Sub Race: Air Genasi\n");
+			break;
+		case 2:
+			printf("Sub Race: Earth Genasi\n");
+			break;
+		case 3:
+			printf("Sub Race: Fire Genasi\n");
+			break;
+		case 4:
+			printf("Sub Race: Water Genasi\n");
+			break;
+		}
+		break;
+	case 10:
+		printf("Race: Gnome\n");
+		switch (sub_race_int) {
+		case 1:
+			printf("Sub Race: Forest Gnome\n");
+			break;
+		case 2:
+			printf("Sub Race: Rock Gnome\n");
+			break;
+		case 3:
+			printf("Sub Race: Deep Gnome\n");
+			break;
+		case 4:
+			printf("Sub Race: Svirfneblin\n");
+			break;
+		}
+		break;
+	case 11:
+		printf("Race: Goblin\nSub Race: N/A\n");
+		break;
+	case 12:
+		printf("Race: Goliath\nSub Race: N/A\n");
+		break;
+	case 13:
+		printf("Race: Hobgoblin\nSub Race: N/A\n");
+		break;
+	case 14:
+		printf("Race: Half-Elf\nSub Race: N/A\n");
+		break;
+	case 15:
+		printf("Race: Halfling\n");
+		switch (sub_race_int) {
+		case 1:
+			printf("Sub Race: Stout\n");
+			break;
+		case 2:
+			printf("Sub Race: Lightfoot\n");
+			break;
+		case 3:
+			printf("Sub Race: Strongheart\n");
+			break;
+		}
+		break;
+	case 16:
+		printf("Race: Half-Orc\nSub Race: N/A\n");
+		break;
+	case 17:
+		printf("Race: Human\nSub Race: N/A\n");
+		break;
+	case 18:
+		printf("Race: Kenku\nSub Race: N/A\n");
+		break;
+	case 19:
+		printf("Race: Kobold\nSub Race: N/A\n");
+		break;
+	case 20:
+		printf("Race: Lizardfolk\nSub Race: N/A\n");
+		break;
+	case 21:
+		printf("Race: Orc\nSub Race: N/A\n");
+		break;
+	case 22:
+		printf("Race: Tabaxi\nSub Race: N/A\n");
+		break;
+	case 23:
+		printf("Race: Tiefling\nSub Race: N/A\n");
+		break;
+	case 24:
+		printf("Race: Triton\nSub Race: N/A\n");;
+		break;
+	case 25:
+		printf("Race: Yuan-Ti Pureblood\nSub Race: N/A\n");
+		break;
+	}
+}
+void sort_array(int arr_size, int arr[6]){
+    int count, count2, temp;
+	for (count = 0; count < arr_size; count++)
+			for (count2 = count + 1; count2 < arr_size; count2++)
+				if (arr[count] < arr[count2])	{
+					temp = arr[count];
+					arr[count] = arr[count2];
+					arr[count2] = temp;
+				}
+}
