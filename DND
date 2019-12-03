@@ -49,7 +49,7 @@ int check_stats(Character new_character);               //checks that entered st
 int dice_roll(int sides);                               //roles an n sided dice
 int four_d_6_drop_lowest();                             //sorts four dice rolls, drops lowest, and sums remaining 3
 int get_assignment(int score);							//used in the point buy process
-int get_class();                                        //returns the class chosen by user
+int get_class(); //ADD CLASSES FROM OTHER BOOKS         //returns the class chosen by user
 int get_int(int upper, int lower);						//returns an integer entered by user
 int get_race();                                         //returns the race chosen by user
 int get_stat_mods(int stat);                            //returns character stat mod for a given stat
@@ -60,6 +60,7 @@ void get_String(char new_string[], char string_type[]); //returns a string enter
 void pause();
 void print_class(int class);							//prints the class for user verification
 void print_race(int race, int sub_race);				//prints the race and sub-race for user verification
+void sort_array(int arr_size, int arr[6]);
 
 /*********** MAIN***********/
 int main() {
@@ -160,20 +161,8 @@ Character get_Stats(Character new_Char) {
 				}
 
 				new_Char.charisma = new_Char.constitution = new_Char.dexterity = new_Char.intelligence = new_Char.strength = new_Char.wisdom = 0;
-
-				for (count = 0; count < 6; count++)
-				{
-					for (count2 = count + 1; count2 < 6; count2++)
-					{
-						if (rolled_stats[count] < rolled_stats[count2])
-						{
-							temp = rolled_stats[count];
-							rolled_stats[count] = rolled_stats[count2];
-							rolled_stats[count2] = temp;
-						}
-					} //make a sort func
-				}														  //loops to sort from highest to lowest
-
+				
+				sort_array(6, rolled_stats);
 				puts("We will assign your stats from highest to lowest:");
 				count = 0;      //initialize values to zero
 				while (count < 6) {
@@ -861,75 +850,95 @@ int get_int(int lower, int upper) {
 }
 int get_race() {
 	/*********** VARIABLE DECLARATIONS***********/
-	int choice, choice2; //used to read user input
+	int choice_race, choice_info, choice_other; //used to read user input
 
 	/*********** GET RACE ***********/
 	do {
-		choice = select_race();
-		if (choice == 26)
+		choice_race = select_race();
+		if (choice_race == 26)
 		{
 			puts("Give me more information on:");
 			puts("1. Ability scores");
 			puts("2. Languages, feats, cantrips, and other information");
-			puts("3. More information");
-			choice2 = get_int(1, 2);
-				switch(choice2){
-				case 1: {
-					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
-					printf("Aarakocra\t\t0\t0\t+2\t0\t0\t\1\n");
-					printf("Aasimar, Fallen\t0\t\t0\t0\t0\t+1\t0\n");
-					printf("Aasimar, Protctor\t\t0\t0\t0\t0\t0\t+1\n");
-					printf("Aasimar, Scourge\t\t0\t+1\t0\t0\t0\t0\n");
-					printf("Bugbear\t\t0\t0\t+1\t0\t+2\t0\n");
-					printf("Dragonborn\t\t+1\t0\t0\t0\t+2\t0\n");
-					printf("Deep Gnome\t\t0\t0\t+1\t+2\t0\t0\n");
-					printf("Dwarf, Gold\t\t0\t+2\t0\t0\t0\t+1\n");
-					printf("Dwarf, Gray\t\t0\t+2\t0\t0\t+1\t0\n");
-					printf("Dwarf, Hill\t\t0\t+2\t0\t0\t0\t+1\n");
-					printf("Dwarf, Mountain\t\t0\t+2\t0\t0\t+2\t0\n");
-					printf("Dwarf, Shield\t\t0\t+2\t0\t0\t+2\t0\n");
-					printf("Elf, Dark\t\t+1\t0\t+2\t0\t0\t0\n");
-					printf("Elf, High\t\t0\t0\t+2\t+1\t0\t0\n");
-					printf("Elf, Moon\t\t0\t0\t+2\t+1\t0\t0\n");
-					printf("Elf, Sun\t\t0\t0\t+2\t+1\t0\t0\n");
-					printf("Elf, Wood\t\t0\t0\t+2\t0\t0\t+1\n");
-
-					pause();
-					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
-					printf("Firbolg\t\t0\t0\t0\t0\t+1\t+2\n");
-					printf("Genasi, Air\t\t0\t+2\t+1\t0\t0\t0\n");
-					printf("Genasi, Earth\t\t0\t+2\t0\t0\t+1\t0\n");
-					printf("Genasi, Fire\t\t0\t+2\t0\t+1\t0\t0\n");
-					printf("Genasi, Water\t\t0\t+2\t0\t0\t0\t+1\n");
-					printf("Gnome, Forest\t\t0\t0\t+1\t+2\t0\t0\n");
-					printf("Gnome, Rock\t\t0\t+1\t0\t+2\t0\t0\n");
-					printf("Gnome, Svirfneblin\t\t0\t0\t0\t+2\t0\t0\n");
-					printf("Goblin\t\t0\t+1\t+2\t0\t0\t0\n");
-					printf("Goliath\t\t0\t+1\t0\t0\t+2\t0\n");
-					printf("Hobgoblin\t\t0\t+2\t0\t+1\t0\t0\n");
-					printf("Half-Elf\t\t+2\t0\t0\t0\t0\t0->Choose two different abilities to increase by one\n");
-					printf("Halfling, Lightfoot\t\t+1\t0\t+2\t0\t0\t0\n");
-					printf("Halfling, Stout\t\t0\t+1\t+2\t0\t0\t0\n");
-					printf("Halfling, Strongheart\t\t0\t+1\t+2\t0\t0\t0\n");
-					printf("Half-Orc\t\t0\t+1\t0\t0\t+2\t0\n");
-					printf("Human\t\t+1\t+1\t+1\t+1\t+1\t+1\n");
-					printf("Human, Variant\t\t0\t0\t0\t0\t0\t0->Choose two different abilities to increase by one\n");
-
-					pause();
-					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
-					printf("Kenku\t\t0\t0\t+2\t0\t0\t+1\n");
-					printf("Kobold\t\t0\t0\t+2\t0\t-2\t0\n");
-					printf("Lizardfolk\t\t0\t+2\t0\t0\t0\t+1\n");
-					printf("Orc\t\t0\t+1\t0\t-2\t+2\t0\n");
-					printf("Tabaxi\t\t+1\t0\t+2\t0\t0\t0\n");
-					printf("Tiefling\t\t+2\t0\t0\t+1\t0\t0\n");
-					printf("Triton\t\t+1\t+1\t0\t0\t+1\t0\n");
-					printf("Yuan-Ti Pureblood\t\t+2\t0\t0\t+1\t0\t0\n");
-
-				break;}
-				case 2:{
-					
-
+			puts("3. Other");
+			puts("4. Go back")
+			choice_info = get_int(1, 4);
+			if (choice_info <4){
+				switch(choice_info){
+    				case 1: {
+    					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
+    					printf("Aarakocra\t\t0\t0\t+2\t0\t0\t\1\n");
+    					printf("Aasimar, Fallen\t0\t\t0\t0\t0\t+1\t0\n");
+    					printf("Aasimar, Protctor\t\t0\t0\t0\t0\t0\t+1\n");
+    					printf("Aasimar, Scourge\t\t0\t+1\t0\t0\t0\t0\n");
+    					printf("Bugbear\t\t0\t0\t+1\t0\t+2\t0\n");
+    					printf("Dragonborn\t\t+1\t0\t0\t0\t+2\t0\n");
+    					printf("Deep Gnome\t\t0\t0\t+1\t+2\t0\t0\n");
+    					printf("Dwarf, Gold\t\t0\t+2\t0\t0\t0\t+1\n");
+    					printf("Dwarf, Gray\t\t0\t+2\t0\t0\t+1\t0\n");
+    					printf("Dwarf, Hill\t\t0\t+2\t0\t0\t0\t+1\n");
+    					printf("Dwarf, Mountain\t\t0\t+2\t0\t0\t+2\t0\n");
+    					printf("Dwarf, Shield\t\t0\t+2\t0\t0\t+2\t0\n");
+    					printf("Elf, Dark\t\t+1\t0\t+2\t0\t0\t0\n");
+    					printf("Elf, High\t\t0\t0\t+2\t+1\t0\t0\n");
+    					printf("Elf, Moon\t\t0\t0\t+2\t+1\t0\t0\n");
+    					printf("Elf, Sun\t\t0\t0\t+2\t+1\t0\t0\n");
+    					printf("Elf, Wood\t\t0\t0\t+2\t0\t0\t+1\n");
+    
+    					pause();
+    					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
+    					printf("Firbolg\t\t0\t0\t0\t0\t+1\t+2\n");
+    					printf("Genasi, Air\t\t0\t+2\t+1\t0\t0\t0\n");
+    					printf("Genasi, Earth\t\t0\t+2\t0\t0\t+1\t0\n");
+    					printf("Genasi, Fire\t\t0\t+2\t0\t+1\t0\t0\n");
+    					printf("Genasi, Water\t\t0\t+2\t0\t0\t0\t+1\n");
+    					printf("Gnome, Forest\t\t0\t0\t+1\t+2\t0\t0\n");
+    					printf("Gnome, Rock\t\t0\t+1\t0\t+2\t0\t0\n");
+    					printf("Gnome, Svirfneblin\t\t0\t0\t0\t+2\t0\t0\n");
+    					printf("Goblin\t\t0\t+1\t+2\t0\t0\t0\n");
+    					printf("Goliath\t\t0\t+1\t0\t0\t+2\t0\n");
+    					printf("Hobgoblin\t\t0\t+2\t0\t+1\t0\t0\n");
+    					printf("Half-Elf\t\t+2\t0\t0\t0\t0\t0->Choose two different abilities to increase by one\n");
+    					printf("Halfling, Lightfoot\t\t+1\t0\t+2\t0\t0\t0\n");
+    					printf("Halfling, Stout\t\t0\t+1\t+2\t0\t0\t0\n");
+    					printf("Halfling, Strongheart\t\t0\t+1\t+2\t0\t0\t0\n");
+    					printf("Half-Orc\t\t0\t+1\t0\t0\t+2\t0\n");
+    					printf("Human\t\t+1\t+1\t+1\t+1\t+1\t+1\n");
+    					printf("Human, Variant\t\t0\t0\t0\t0\t0\t0->Choose two different abilities to increase by one\n");
+    
+    					pause();
+    					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
+    					printf("Kenku\t\t0\t0\t+2\t0\t0\t+1\n");
+    					printf("Kobold\t\t0\t0\t+2\t0\t-2\t0\n");
+    					printf("Lizardfolk\t\t0\t+2\t0\t0\t0\t+1\n");
+    					printf("Orc\t\t0\t+1\t0\t-2\t+2\t0\n");
+    					printf("Tabaxi\t\t+1\t0\t+2\t0\t0\t0\n");
+    					printf("Tiefling\t\t+2\t0\t0\t+1\t0\t0\n");
+    					printf("Triton\t\t+1\t+1\t0\t0\t+1\t0\n");
+    					printf("Yuan-Ti Pureblood\t\t+2\t0\t0\t+1\t0\t0\n");
+    
+    				break;}
+    				case 2: {
+				    puts("Show me more information about:");
+				    puts("1. Cantrips");
+				    puts("2. Feats");
+				    puts("3. Languages");
+				    puts("4. Other");
+				    puts("5. Go back");
+				    switch(get_int(1,5){
+				        case 1:{
+				            puts("Dark-Elf (Drow): Darkness (at 5th level, once per day)")
+				            puts("Dark-Elf (Drow): Dancing Lights (at 3rd level)")
+				            puts("Dark-Elf (Drow): Faerie Fire (once per day)");
+				            puts("->\tSpell-casting modifier is charisma");
+            
+				            puts("High-Elf: One cantrip from the Wizard Spell List");
+				            
+				            
+				            
+				        }
+				    }
+			    	}
 
 			puts("Dragonborn, Dwarf, Elf, Gnome, Halfling, Half-Elf, Half-Orc, Human, Tiefling");
 			printf("->\tPlayer's Handboook page 17\n\n");
@@ -941,7 +950,7 @@ int get_race() {
 			puts("additional content\n\n");
 			pause();
 		}
-	} while (choice < 26);
+	} while (choice == 26);
 }
 int get_stat_mods(int stat) {
 	switch (stat) {
@@ -1084,7 +1093,6 @@ int select_race() {
 	printf("26.\tWhere can I find more information?\n");
 	return(get_int(1, 26));
 }
-
 
 void get_String(char new_string[], char string_type[]) {
 	int n, choice;
@@ -1340,4 +1348,14 @@ void print_race(int race_int, int sub_race_int) {
 		printf("Race: Yuan-Ti Pureblood\nSub Race: N/A\n");
 		break;
 	}
+}
+void sort_array(int arr_size, int arr[6]){
+    int count, count2, temp;
+	for (count = 0; count < arr_size; count++)
+			for (count2 = count + 1; count2 < arr_size; count2++)
+				if (arr[count] < arr[count2])	{
+					temp = arr[count];
+					arr[count] = arr[count2];
+					arr[count2] = temp;
+				}
 }
