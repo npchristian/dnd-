@@ -1103,56 +1103,51 @@ int get_stat_mods(int stat) {
 	}
 }
 int get_sub_race(int race) {
-	switch (race)
-	{
-	case 6:
-	{
-		puts("Choose between the following (See Player's Handboook page 17 and \nSword Coast Adventurer's Guide page 103 for options 3-5):");
-		printf("1.\tHill Dwarf\n2.\tMountain Dwarf\n3.\tShield Dwarves\n4.\tGold Dwarves\n5.\tGray Dwarves\n");
-		return (get_int(1, 5));
-	}
-
-	case 7:
-	{
-		puts("Choose between the following (See Player's Handboook page 17 and \nSword Coast Adventurer's Guide page 103 for optioins 2-5):");
-		printf("1.\tHigh-Elf\n2.\tWood-Elf\n3.\tDark-Elf (Drow)\n4.\tMoon Elf\n");
-		printf("5.\tSun Elf\n");
-		return (get_int(1, 5));
-	}
-	case 9:
-	{
-		puts("Choose between the following (See Elemental Evil Player's Companion page 3):");
-		printf("1.\tAir Genasi\n2.\tEarth Genasi\n3.\tFire Genasi\n4.\tWater Genasi\n");
-		return (get_int(1, 4));
-	}
-	case 2:
-	{
+	switch (race)	{
+    case 2:{
 		puts("Choose between the following (See Volo's Guide to Monsters page 104):");
-		printf("1.\tProtector Aasimar\n2.\tScourge Aasimar\n3.\tFallen Aasimar\n");
-		return (get_int(1, 3));
-	}
-	case 15:
-	{
-		puts("Choose between the following (See Player's Handboook page 17 and \nSwordCoast Adventurer's Guide page 103  for options 2-3):");
-		printf("1.\tStout\n2.\tLightfoot\n3.\tStrongheart\n");
-		return (get_int(1, 3));
-	}
-	case 4:
-	{
+		printf("1.\tProtector Aasimar\n2.\tScourge Aasimar\n3.\tFallen Aasimar\n4.\t*Revenant\n");
+		return (get_int(1, 4));
+	}//end case 2 Aasimar
+	case 5:{
 		puts("Choose between the following ancestries(See Player's Handboook page 17):");
 		printf("1.\tBlack\n2.\tBlue\n3.\tBrass\n4.\tBronze\n5.\tCopper\n6.\tGold\n7.\tGreen\n8.\tRed\n");
 		printf("9.\tSilver\n10.\tWhite\n");
 		return (get_int(1, 10));
-	}
-	case 10:
-	{
+	} //end case 5 dragonborn
+	case 7:{
+		puts("Choose between the following (See Player's Handboook page 17 and \nSword Coast Adventurer's Guide page 103 for options 3-5):");
+		printf("1.\tHill Dwarf\n2.\tMountain Dwarf\n3.\t*Shield Dwarves\n4.\t*Gold Dwarves\n5.\t*Gray Dwarves\n6.\t*Revenant\n");
+		return (get_int(1, 6));
+	} // end case 7 dwarves
+	case 8:	{
+		puts("Choose between the following (See Player's Handboook page 17 and \nSword Coast Adventurer's Guide page 103 for optioins 2-5):");
+		printf("1.\tHigh-Elf\n2.\tWood-Elf\n3.\tDark-Elf (Drow)\n4.\t*Moon Elf\n5.\t*Sun Elf\n6.\t*Revenant\n");
+		return (get_int(1, 6));
+	} //end case 8 elves
+	case 10:{
+		puts("Choose between the following (See Elemental Evil Player's Companion page 3):");
+		printf("1.\tAir Genasi\n2.\tEarth Genasi\n3.\tFire Genasi\n4.\tWater Genasi\n5.\tRevenant\n");
+		return (get_int(1, 5));
+	} //end case 10 genasi
+	case 11:{
 		puts("Choose between the following (See Player's Handboook page 17 and \nSwordCoast adventurer's Guide page page 103 for options 1-4):");
-		printf("1.\tForest Gnome\n2.\tRock Gnome\n3.\tDeep Gnome\n4.\tSvirfneblin\n");
-		return (get_int(1, 2));
-	}
+		printf("1.\tForest Gnome\n2.\tRock Gnome\n3.\t*Deep Gnome\n4.\t*Svirfneblin\t5.\t*Revenant\n");
+		return (get_int(1, 5));
+	} //end case 11 gnomes
+	case 16:{
+		puts("Choose between the following (See Player's Handboook page 17 and \nSwordCoast Adventurer's Guide page 103  for options 2-3):");
+		printf("1.\tStout\n2.\tLightfoot\n3.\tStrongheart\n");
+		return (get_int(1, 3));
+	} //end case 16 halflings
+	case 25:{
+	    puts("Choose between the following (See Player's Handboook page 17 and \nSwordCoast adventurer's Guide page page 103 for options 1-4):");
+		printf("1.\tBeasthide\n2.\tCliffwalk\n3.\tLongstride\n4.\tLongtooth\n5.\tRazorclaw\n6.\tWildhunt\n");
+		return (get_int(1, 6));
+	} //end case 25 Shifters
 	default:
 		return 0; // no sub-race in that race
-	}
+	}//end switch(race)
 }
 int four_d_6_drop_lowest() {
 	int count, count2;  //used in for loops
@@ -1187,9 +1182,9 @@ int select_race() {
 	printf("6.\t*Deep Gnome\n7.\tDwarf\n8.\tElf\n9\t*Firbolg\n");
 	printf("10.\t*Genasi\n11.\tGnome\n12.\t*Goblin\n13.\t*Goliath\n");
 	printf("14.\t*Hobgoblin\n15.\tHalf-Elf\n16.\tHalfling\n17.\tHalf-Orc\n18.\tHuman\n19.\t*Human, Variant\n20.\t*Kenku\n21.\t*Kobold\n");
-	printf("22.\t*Lizardfolk\n23.\t*Minotaur*\n24.\t*Orc\n25.\t*Shifter*\n26.\t*Tabaxi\n27.\tTiefling\n28.\t*Triton\n29.\t*Yuan-ti Pureblood\n");
-	printf("30.\tI need more info\n");
-	return(get_int(1, 30));
+	printf("22.\t*Lizardfolk\n23.\t*Minotaur*\n24.\t*Orc\n25.\t*Shifter*\n26.\t*Tabaxi\n27.\tTiefling\n28.\t*Triton\n29.\t*Warforged\n");
+	printf("30.\t*Yuan-ti Pureblood\n31.\tI need more info\n");
+	return(get_int(1, 31));
 }
 
 void get_String(char new_string[], char string_type[]) {
