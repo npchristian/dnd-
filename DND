@@ -874,22 +874,21 @@ int get_race(int mode) {
 		choice_race = select_race();
 		if (choice_race == 31)
 		{
+		    {
 			puts("What would you like to know more about?:");
 			puts("1. Ability scores");
 			puts("2. Race and sub-Race characteristics");
-			puts("3. Languages");
-			puts("4. Other");
-			puts("5. Where to find more information")
-			puts("6. Go back")
-			
-			switch (get_int(1, 6);) {
+			puts("3. Other");
+			puts("4. Where to find more information")
+			puts("5. I'm ready to choose")} //print message
+			switch (get_int(1, 5);) {
 				case 1: {
 					printf("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS\n");
-					printf("Aarakocra\t\t0\t0\t+2\t0\t0\t\1\n");
-					printf("Aasimar, Fallen\t0\t\t0\t0\t0\t+1\t0\n");
-					printf("Aasimar, Protctor\t\t0\t0\t0\t0\t0\t+1\n");
+					printf("Aarakocra\t\t0\t0\t+2\t0\t0\t\1\n"); //
+					printf("Aasimar, Fallen\t\t0\t\t0\t0\t0\t+1\t0\n");//
+					printf("Aasimar, Protctor\t\t0\t0\t0\t0\t0\t+1\n"); //
 					printf("Aasimar, Revenant\t\t0\t+1\t0\t0\t0\t0\n");//
-					printf("Aasimar, Scourge\t\t0\t+1\t0\t0\t0\t0\n");
+					printf("Aasimar, Scourge\t\t0\t+1\t0\t0\t0\t0\n"); //
 					printf("Bugbear\t\t0\t0\t+1\t0\t+2\t0\n");
 					printf("Changeling\t\t+1\t0\t+1\t0\t0\t0\n");//
 					printf("Dragonborn\t\t+1\t0\t0\t0\t+2\t0\n");
@@ -949,24 +948,21 @@ int get_race(int mode) {
 
 					break; } //end case 1 race abilities
 				case 2: {
+				    {
 					puts("Show me more information about:");
-					puts("1. Cantrips and abilities");
+					puts("1. Racial properties");
 					puts("2. Feats");
 					puts("3. Languages");
-					puts("4. Proficiencies and Tools");
-					puts("5. Other");
-					puts("6. Go back");
-					switch (get_int(1, 6) {
+					puts("4. I'm ready to choose");} //print statement
+					switch (get_int(1, 4) {
 					case 1: {
-						printf("\t\t\tAarakocra\n");
-						printf("Unarmed strikes: Aarakocra are proficient and deal 1d4 slashing damage with talons\n\n");
+						printf("\t\t\tAarakocra\n"); //
+						printf("Unarmed strikes: Aarakocra are proficient and deal 1d4 slashing damage with talons\n\n"); //
 						
-						printf("\t\t\t\n");
-
 						printf("\t\t\tDragonborn\n");
 						puts("Dragonborne: breath weapon 2d6-5d6 damage and type based on level and color");
-						puts("Dragonborn: resistance to damage type based on color")
-							printf("->\tsee Player's handbook P.34\n");
+						puts("Dragonborn: resistance to damage type based on color");
+						printf("->\tsee Player's handbook P.34\n");
 						puts("Dragonborn, Revenant: breath weapon 2d6-5d6 necrotic damage");
 						puts("Dragonborn, Revenant: resistance to necrotic damage");
 						puts("Dragonborn, Revenant: special circumstances and requirements");
@@ -1021,8 +1017,8 @@ int get_race(int mode) {
 						printf("Goliath: naturally adapted to cold and high altitude\n\n");
 
 
-						printf("\t\t\tHalf-Elf\n")
-							puts("Half-Elf: advantage on saving throws against charmed");
+						printf("\t\t\tHalf-Elf\n");
+						puts("Half-Elf: advantage on saving throws against charmed");
 						printf("Half-Elf: cannot be put to sleep by non-magical means\n\n");
 						printf("\t\t\tHalflings\n");
 						puts("Halfling, all: can re-roll 1s on ability checks, attacks, and saving throws (once)");
@@ -1044,40 +1040,34 @@ int get_race(int mode) {
 						puts("Tiefling: Hellish Rebuke (once per day, 2nd level spell, at 3rd level");
 						puts("Tiefling: Darkness (once per day, at 5th level ");
 						printf("->\tspell-casting modifier is charisma\n\n");
-						break; }//end sub case cantrips and other abilities
+						break; }//end sub case 1 racial properties
 					case 2: {
 
 						break; }//end sub case feats
-					case 3: {
-
-						break} //end sub case languages
-					case 4: {
-
-					}//end sub case prof and tools
-					case 5: {
-						break; } //end sub case other
-					default: {
-						break; } //end sub case go back
-					}
-					break; } //end case 2 race and subrace characteristics
+                    case 3: {
+				        puts("Aarakocra: Common, Aarakocra, and Auran");
+        			break;} //end sub case 3 languages
+					case 4: break; //end case 4 go back
+					} //end sub-switch
+				break; } //end case 2 race and subrace characteristics
 				case 3: {
-				    puts("Aarakocra: Common, Aarakocra, and Auran\n");
-				break;} //end case 3 languages
-				case 4: {
-				    printf("RACE\t\t\tAGE\tSIZE\tspeed\n");
-				    printf("Aarakocra\t\t\t3-30\tmed\t25, 50(fly)\t\n");
+				    printf("RACE\t\t\tAGE\tSIZE\tSPEED\n");
+				    printf("Aarakocra\t\t\t3-30\tmed\t25, 50(fly)\n"); //
+				    printf("Aasimar, ")
 				    
-				break;} // end case 4 other
-				case 5: {
+				break;} // end case 3 other
+				case 4: {
 					puts("Dragonborn, Dwarf, Elf, Gnome, Halfling, Half-Elf, Half-Orc, Human, Tiefling");
         			printf("->\tPlayer's Handboook page 17\n\n");
 			        printf("Aasimar,  Bugbear, Firbolg, Goliath, Goblin, Hobgoblin, Kenku, Kobold, Lizardfolk, Orc, Tabaxi, Triton, ");
         			printf("\n and Yuan-ti Pureblood\n");
         			printf("->\tVolo's Guide to Monsters page 104\n\n");
 			        printf("Aarakocra//, Deep Gnome, Genasi, Goliath  \n->\tElemental Evil Player's Companion page 3\n\n");
+			        puts("All Revenant sub-classes");
+			        printf("->\tCodex: Uneathed Arcana P.3\n\n"); //
 				break;} //end case 5 get more info
-				case 6: break; //ends switch and returns to loop
-			} //end switch(get_int(1, 6);)
+				case 5: break; //ends switch and returns to loop
+			} //end switch(get_int(1, 5);)
 			
 
 
