@@ -80,7 +80,7 @@ Character create_Character() {
 	/*********** VARIABLE DECLARATIONS***********/
 	char junk;					//consumes newline character
 	Character new_Character;    // newly created character returned
-	
+
 	int choice;					// stores user decision
 
 	/*********** GET NAME ***********/
@@ -106,7 +106,7 @@ Character create_Character() {
 	choice = get_int(1, 2);
 	if (choice == 2)
 		scanf("%c", &junk);
-	
+
 	/*********** GET STATS ***********/
 	new_Character = get_Stats(new_Character);   //get stats
 
@@ -163,7 +163,7 @@ Character get_Stats(Character new_Char) {
 				}
 
 				new_Char.charisma = new_Char.constitution = new_Char.dexterity = new_Char.intelligence = new_Char.strength = new_Char.wisdom = 0;
-				
+
 				sort_array(6, rolled_stats);
 				puts("We will assign your stats from highest to lowest:");
 				count = 0;      //initialize values to zero
@@ -789,9 +789,9 @@ Character get_Stats(Character new_Char) {
 					break;
 				}
 			}
-		break;
+			break;
 		}
-	reset = check_stats(new_Char);
+		reset = check_stats(new_Char);
 	} while (reset == 2);
 
 	return new_Char; //return the new character & stats.
@@ -864,181 +864,181 @@ int get_race() {
 			puts("2. Race and sub-Race characteristics");
 			puts("3. Other");
 			puts("4. Where to find more information")
-			puts("5. Go back")
-			choice_info = get_int(1, 5);
-			if (choice_info <5)
-				switch(choice_info){
-    				case 1: {
-    					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
-    					printf("Aarakocra\t\t0\t0\t+2\t0\t0\t\1\n");
-    					printf("Aasimar, Fallen\t0\t\t0\t0\t0\t+1\t0\n");
-    					printf("Aasimar, Protctor\t\t0\t0\t0\t0\t0\t+1\n");
-    					printf("Aasimar, Scourge\t\t0\t+1\t0\t0\t0\t0\n");
-    					printf("Bugbear\t\t0\t0\t+1\t0\t+2\t0\n");
-    					printf("Changeling\t\t+1\t0\t+1\t0\t0\t0\n");
-    					printf("Dragonborn\t\t+1\t0\t0\t0\t+2\t0\n");
-    					printf("Deep Gnome\t\t0\t0\t+1\t+2\t0\t0\n");
-    					printf("Dwarf, Gold\t\t0\t+2\t0\t0\t0\t+1\n");
-    					printf("Dwarf, Gray\t\t0\t+2\t0\t0\t+1\t0\n");
-    					printf("Dwarf, Hill\t\t0\t+2\t0\t0\t0\t+1\n");
-    					printf("Dwarf, Mountain\t\t0\t+2\t0\t0\t+2\t0\n");
-    					printf("Dwarf, Shield\t\t0\t+2\t0\t0\t+2\t0\n");
-    					printf("Elf, Dark\t\t+1\t0\t+2\t0\t0\t0\n");
-    					printf("Elf, High\t\t0\t0\t+2\t+1\t0\t0\n");
-    					printf("Elf, Moon\t\t0\t0\t+2\t+1\t0\t0\n");
-    					printf("Elf, Sun\t\t0\t0\t+2\t+1\t0\t0\n");
-    					printf("Elf, Wood\t\t0\t0\t+2\t0\t0\t+1\n");
-    
-    					pause();
-    					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
-    					printf("Firbolg\t\t0\t0\t0\t0\t+1\t+2\n");
-    					printf("Genasi, Air\t\t0\t+2\t+1\t0\t0\t0\n");
-    					printf("Genasi, Earth\t\t0\t+2\t0\t0\t+1\t0\n");
-    					printf("Genasi, Fire\t\t0\t+2\t0\t+1\t0\t0\n");
-    					printf("Genasi, Water\t\t0\t+2\t0\t0\t0\t+1\n");
-    					printf("Gnome, Forest\t\t0\t0\t+1\t+2\t0\t0\n");
-    					printf("Gnome, Rock\t\t0\t+1\t0\t+2\t0\t0\n");
-    					printf("Gnome, Svirfneblin\t\t0\t0\t0\t+2\t0\t0\n");
-    					printf("Goblin\t\t0\t+1\t+2\t0\t0\t0\n");
-    					printf("Goliath\t\t0\t+1\t0\t0\t+2\t0\n");
-    					printf("Hobgoblin\t\t0\t+2\t0\t+1\t0\t0\n");
-    					printf("Half-Elf\t\t+2\t0\t0\t0\t0\t0->Choose two different abilities to increase by one\n");
-    					printf("Halfling, Lightfoot\t\t+1\t0\t+2\t0\t0\t0\n");
-    					printf("Halfling, Stout\t\t0\t+1\t+2\t0\t0\t0\n");
-    					printf("Halfling, Strongheart\t\t0\t+1\t+2\t0\t0\t0\n");
-    					printf("Half-Orc\t\t0\t+1\t0\t0\t+2\t0\n");
-    					printf("Human\t\t+1\t+1\t+1\t+1\t+1\t+1\n");
-    					printf("Human, Variant\t\t0\t0\t0\t0\t0\t0->Choose two different abilities to increase by one\n");
-    
-    					pause();
-    					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
-    					printf("Kenku\t\t0\t0\t+2\t0\t0\t+1\n");
-    					printf("Kobold\t\t0\t0\t+2\t0\t-2\t0\n");
-    					printf("Lizardfolk\t\t0\t+2\t0\t0\t0\t+1\n");
-    					printf("MInotaur\t\t0\t0\t0\t0\t0\t+1\t0\n");
-    					printf("Orc\t\t0\t+1\t0\t-2\t+2\t0\n");
-    					printf("Shifter, Beasthide\t\t0\t+1\t+1\t0\t0\t0");
-    					printf("Shifter, Cliffwalk\t\t0\t0\t+2\t0\t0\t0");
-    					printf("Shifter, Longstride\t\t0\t0\t+2\t0\t0\t0");
-    					printf("Shifter, Longtooth\t\t0\t0\t+1\t0\t+1\t0");
-    					printf("Shifter, Razorclaw\t\t0\t0\t+2\t0\t0\t0");
-    					printf("Shifter, Wildhunt\t\t0\t0\t+1\t0\t0\t+1");
-    					printf("Tabaxi\t\t+1\t0\t+2\t0\t0\t0\n");
-    					printf("Tiefling\t\t+2\t0\t0\t+1\t0\t0\n");
-    					printf("Triton\t\t+1\t+1\t0\t0\t+1\t0\n");
-    					printf("Warforged\t\t0\t+1\t0\t0\t+1\t0");
-    					printf("Yuan-Ti Pureblood\t\t+2\t0\t0\t+1\t0\t0\n");
-    
-    				break;} //end case 1 race abilities
-    				case 2: {
-				    puts("Show me more information about:");
-				    puts("1. Cantrips and abilities");
-				    puts("2. Feats");
-				    puts("3. Languages");
-				    puts("4. Proficiencies and Tools");
-				    puts("5. Other");
-				    puts("6. Go back");
-				    switch(get_int(1,6){
-				        case 1:{
-				            printf("\t\t\tAarakocra\n");
-				            printf("Unarmed strikes: Aarakocra are proficient and deal 1d4 slashing damage with talons\n\n");
-				            
-				            printf("\t\t\tDeep Gnome\n");
-				            puts("Deep Gnome: advantage on int, wis, and cha, saving throws");
-				            puts("Deep Gnome: advantge on stealth checks to hide in rocky terrain\n\n");
-				            puts("Deep Gnome: Blindness/deafness (once per long rest)");
-				            puts("Deep Gnome: Blur (once per long rest)");
-				            puts("Deep Gnome: Disguise Self: (once per long rest)");
-				            printf("Deep Gnome: Nondetection (on self)\n\n");
-				            
-				            printf("\t\t\tDragonborn\n");
-				            puts("Dragonborne, all: breath weapon 2d6-5d6 damage and type based on level and color");
-				            puts("Dragonborn, all: resistance to damage type based on color")
-				            printf("->\tSee Player's handbook page 34\n\n");
-				            
-				            printf("\t\t\tDwarves\n");
-				            printf("Dwarf: advantage on saving throws against poison\n\n");
-				            
-				            printf("\t\t\tElves\n");
-				            puts("Elf, all: advantage on saving throws against charmed");
-				            puts("Elf, all: cannot be put to sleep by non-magical means");
-				            puts("Elf, all: do not sleep, instead 4 hour meditation");
-				            puts("Elf, Dark (Drow): darkness (at 5th level, once per day)");
-				            puts("Elf, Dark (Drow): dancing Lights (at 3rd level)");
-				            puts("Elf, Dark (Drow): Faerie Fire (once per day)");
-				            puts("Elf, Dark (Drow): disadvantage on attack roles in direct sunlight");
-				            printf("->\tspell-casting modifier is charisma\n");
-				            puts("Elf, High: one cantrip from wizard spell list");
-				            printf("->\tspell-casting modifier is intelligence\n");
-				            printf("Elf, Wood: may attempt to hide when lightly obscured by natural phenomena\n\n");
-				            
-				            pause();
-				            printf("\t\t\tGenasi\n");
-				            puts("Genasi, Air: can hold breath indefinitely unless incapacitated");
-				            puts("Genasi, Air: Levitate (once per long rest)");
-				            puts("Genasi, Earth: Cast Without Trace (once per long rest)")
-				            puts("Genasi, Earth: ignore difficult terrain made of earth or stone");
-				            puts("Genasi, Fire: Burning Hands (once per long rest, at 3rd level)");
-				            puts("Genasi, Fire: Produce Flame");
-				            puts("Genasi, Fire: resistance to fire damage");
-				            puts("Genasi, Water: can breath in air and water");
-				            puts("Genasi, Water: resistance to acid damage")
-				            puts("Genasi, Water: Shape Water");
-				            puts("Genasi, Water: Create or Destroy Water (once per long rest)");
-				            printf("->\tspell-casting modifier is constitution\n\n");
-				            
-				            printf("\t\t\tGnomes\n");
-				            puts("Gnome, all: advantage on int, wis, and cha, saving throws");
-				            puts("Gnome, Forest: Minor Illusion (uses intelligence)");
-				            puts("Gnome, Forest: Speak with small beasts");
-				            puts("Gnome, Rock: Double proficiency bonus on history checks on alchemy, device, or magic items");
-				            printf("Gnome, Rock: May create a tiny clockwork device(1HP 5AC\n\n");
-				            
-				            printf("\t\t\tGoliath\n");
-				            puts("Goliath: as a reaction, reduce damage taken by 1d12 + con mod (once per short rest)");
-				            puts("Goliath: count as one size larger when calculating carrying capacity and weight moved");
-				            printf("Goliath: naturally adapted to cold and high altitude\n\n");
-				            
+				puts("5. Go back")
+				choice_info = get_int(1, 5);
+			if (choice_info < 5)
+				switch (choice_info) {
+				case 1: {
+					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
+					printf("Aarakocra\t\t0\t0\t+2\t0\t0\t\1\n");
+					printf("Aasimar, Fallen\t0\t\t0\t0\t0\t+1\t0\n");
+					printf("Aasimar, Protctor\t\t0\t0\t0\t0\t0\t+1\n");
+					printf("Aasimar, Scourge\t\t0\t+1\t0\t0\t0\t0\n");
+					printf("Bugbear\t\t0\t0\t+1\t0\t+2\t0\n");
+					printf("Changeling\t\t+1\t0\t+1\t0\t0\t0\n");
+					printf("Dragonborn\t\t+1\t0\t0\t0\t+2\t0\n");
+					printf("Deep Gnome\t\t0\t0\t+1\t+2\t0\t0\n");
+					printf("Dwarf, Gold\t\t0\t+2\t0\t0\t0\t+1\n");
+					printf("Dwarf, Gray\t\t0\t+2\t0\t0\t+1\t0\n");
+					printf("Dwarf, Hill\t\t0\t+2\t0\t0\t0\t+1\n");
+					printf("Dwarf, Mountain\t\t0\t+2\t0\t0\t+2\t0\n");
+					printf("Dwarf, Shield\t\t0\t+2\t0\t0\t+2\t0\n");
+					printf("Elf, Dark\t\t+1\t0\t+2\t0\t0\t0\n");
+					printf("Elf, High\t\t0\t0\t+2\t+1\t0\t0\n");
+					printf("Elf, Moon\t\t0\t0\t+2\t+1\t0\t0\n");
+					printf("Elf, Sun\t\t0\t0\t+2\t+1\t0\t0\n");
+					printf("Elf, Wood\t\t0\t0\t+2\t0\t0\t+1\n");
 
-				            printf("\t\t\tHalf-Elf\n")
-				            puts("Half-Elf: advantage on saving throws against charmed");
-				            printf("Half-Elf: cannot be put to sleep by non-magical means\n\n");
-				            printf("\t\t\tHalflings\n");
-				            puts("Halfling, all: can re-roll 1s on ability checks, attacks, and saving throws (once)");
-				            puts("Halfling, all: advantage on saving throws against being frightened");
-				            puts("Halfling, all: can move through occupied space of any medium or larger creature");
-				            puts("Halfling, Lightfoot: May attempt to hide when obscured by any medium or larger creature");
-				            puts("Halfling, Stout advantage on saving throws against pison");
-				            printf("Halfling, Stout resistance resistance to poison damage\n\n");
-				            
-				            pause();
-				            
-				            printf("\t\t\tHalf-Orc\n");
-				            puts("Half-Orc: when reduced to 0hp you may drop to 1hp instead (once per long rest)");
-				            printf("Half-Orc: When you score a critical hit, roll an extra damage dice\n\n");
-				            
-				            printf("\t\t\tTiefling\n");
-				            puts("Tiefling: resistance to fire damage");
-				            puts("Tiefling: Thaumaturgy");
-				            puts("Tiefling: Hellish Rebuke (once per day, 2nd level spell, at 3rd level");
-				            puts("Tiefling: Darkness (once per day, at 5th level ");
-				            printf("->\tspell-casting modifier is charisma\n\n");
-				        break;}//end sub case cantrips and other abilities
-				        case 2:{
-				            
-				        break;}//end sub case feats
-				        case 3:{
-				            
-				        break} //end sub case languages
-				        case 4:{
-				            
-				        }//end sub case prof and tools
-				        case 5:{
-				    break;} //end sub case other
-				        default:{
-				        break;} //end sub case go back
-			    	}
-			    	break;} //end case 2 race and subrace characteristics
+					pause();
+					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
+					printf("Firbolg\t\t0\t0\t0\t0\t+1\t+2\n");
+					printf("Genasi, Air\t\t0\t+2\t+1\t0\t0\t0\n");
+					printf("Genasi, Earth\t\t0\t+2\t0\t0\t+1\t0\n");
+					printf("Genasi, Fire\t\t0\t+2\t0\t+1\t0\t0\n");
+					printf("Genasi, Water\t\t0\t+2\t0\t0\t0\t+1\n");
+					printf("Gnome, Forest\t\t0\t0\t+1\t+2\t0\t0\n");
+					printf("Gnome, Rock\t\t0\t+1\t0\t+2\t0\t0\n");
+					printf("Gnome, Svirfneblin\t\t0\t0\t0\t+2\t0\t0\n");
+					printf("Goblin\t\t0\t+1\t+2\t0\t0\t0\n");
+					printf("Goliath\t\t0\t+1\t0\t0\t+2\t0\n");
+					printf("Hobgoblin\t\t0\t+2\t0\t+1\t0\t0\n");
+					printf("Half-Elf\t\t+2\t0\t0\t0\t0\t0->Choose two different abilities to increase by one\n");
+					printf("Halfling, Lightfoot\t\t+1\t0\t+2\t0\t0\t0\n");
+					printf("Halfling, Stout\t\t0\t+1\t+2\t0\t0\t0\n");
+					printf("Halfling, Strongheart\t\t0\t+1\t+2\t0\t0\t0\n");
+					printf("Half-Orc\t\t0\t+1\t0\t0\t+2\t0\n");
+					printf("Human\t\t+1\t+1\t+1\t+1\t+1\t+1\n");
+					printf("Human, Variant\t\t0\t0\t0\t0\t0\t0->Choose two different abilities to increase by one\n");
+
+					pause();
+					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
+					printf("Kenku\t\t0\t0\t+2\t0\t0\t+1\n");
+					printf("Kobold\t\t0\t0\t+2\t0\t-2\t0\n");
+					printf("Lizardfolk\t\t0\t+2\t0\t0\t0\t+1\n");
+					printf("MInotaur\t\t0\t0\t0\t0\t0\t+1\t0\n");
+					printf("Orc\t\t0\t+1\t0\t-2\t+2\t0\n");
+					printf("Shifter, Beasthide\t\t0\t+1\t+1\t0\t0\t0");
+					printf("Shifter, Cliffwalk\t\t0\t0\t+2\t0\t0\t0");
+					printf("Shifter, Longstride\t\t0\t0\t+2\t0\t0\t0");
+					printf("Shifter, Longtooth\t\t0\t0\t+1\t0\t+1\t0");
+					printf("Shifter, Razorclaw\t\t0\t0\t+2\t0\t0\t0");
+					printf("Shifter, Wildhunt\t\t0\t0\t+1\t0\t0\t+1");
+					printf("Tabaxi\t\t+1\t0\t+2\t0\t0\t0\n");
+					printf("Tiefling\t\t+2\t0\t0\t+1\t0\t0\n");
+					printf("Triton\t\t+1\t+1\t0\t0\t+1\t0\n");
+					printf("Warforged\t\t0\t+1\t0\t0\t+1\t0");
+					printf("Yuan-Ti Pureblood\t\t+2\t0\t0\t+1\t0\t0\n");
+
+					break; } //end case 1 race abilities
+				case 2: {
+					puts("Show me more information about:");
+					puts("1. Cantrips and abilities");
+					puts("2. Feats");
+					puts("3. Languages");
+					puts("4. Proficiencies and Tools");
+					puts("5. Other");
+					puts("6. Go back");
+					switch (get_int(1, 6) {
+					case 1: {
+						printf("\t\t\tAarakocra\n");
+						printf("Unarmed strikes: Aarakocra are proficient and deal 1d4 slashing damage with talons\n\n");
+
+						printf("\t\t\tDeep Gnome\n");
+						puts("Deep Gnome: advantage on int, wis, and cha, saving throws");
+						puts("Deep Gnome: advantge on stealth checks to hide in rocky terrain\n\n");
+						puts("Deep Gnome: Blindness/deafness (once per long rest)");
+						puts("Deep Gnome: Blur (once per long rest)");
+						puts("Deep Gnome: Disguise Self: (once per long rest)");
+						printf("Deep Gnome: Nondetection (on self)\n\n");
+
+						printf("\t\t\tDragonborn\n");
+						puts("Dragonborne, all: breath weapon 2d6-5d6 damage and type based on level and color");
+						puts("Dragonborn, all: resistance to damage type based on color")
+							printf("->\tSee Player's handbook page 34\n\n");
+
+						printf("\t\t\tDwarves\n");
+						printf("Dwarf: advantage on saving throws against poison\n\n");
+
+						printf("\t\t\tElves\n");
+						puts("Elf, all: advantage on saving throws against charmed");
+						puts("Elf, all: cannot be put to sleep by non-magical means");
+						puts("Elf, all: do not sleep, instead 4 hour meditation");
+						puts("Elf, Dark (Drow): darkness (at 5th level, once per day)");
+						puts("Elf, Dark (Drow): dancing Lights (at 3rd level)");
+						puts("Elf, Dark (Drow): Faerie Fire (once per day)");
+						puts("Elf, Dark (Drow): disadvantage on attack roles in direct sunlight");
+						printf("->\tspell-casting modifier is charisma\n");
+						puts("Elf, High: one cantrip from wizard spell list");
+						printf("->\tspell-casting modifier is intelligence\n");
+						printf("Elf, Wood: may attempt to hide when lightly obscured by natural phenomena\n\n");
+
+						pause();
+						printf("\t\t\tGenasi\n");
+						puts("Genasi, Air: can hold breath indefinitely unless incapacitated");
+						puts("Genasi, Air: Levitate (once per long rest)");
+						puts("Genasi, Earth: Cast Without Trace (once per long rest)")
+							puts("Genasi, Earth: ignore difficult terrain made of earth or stone");
+						puts("Genasi, Fire: Burning Hands (once per long rest, at 3rd level)");
+						puts("Genasi, Fire: Produce Flame");
+						puts("Genasi, Fire: resistance to fire damage");
+						puts("Genasi, Water: can breath in air and water");
+						puts("Genasi, Water: resistance to acid damage")
+							puts("Genasi, Water: Shape Water");
+						puts("Genasi, Water: Create or Destroy Water (once per long rest)");
+						printf("->\tspell-casting modifier is constitution\n\n");
+
+						printf("\t\t\tGnomes\n");
+						puts("Gnome, all: advantage on int, wis, and cha, saving throws");
+						puts("Gnome, Forest: Minor Illusion (uses intelligence)");
+						puts("Gnome, Forest: Speak with small beasts");
+						puts("Gnome, Rock: Double proficiency bonus on history checks on alchemy, device, or magic items");
+						printf("Gnome, Rock: May create a tiny clockwork device(1HP 5AC\n\n");
+
+						printf("\t\t\tGoliath\n");
+						puts("Goliath: as a reaction, reduce damage taken by 1d12 + con mod (once per short rest)");
+						puts("Goliath: count as one size larger when calculating carrying capacity and weight moved");
+						printf("Goliath: naturally adapted to cold and high altitude\n\n");
+
+
+						printf("\t\t\tHalf-Elf\n")
+							puts("Half-Elf: advantage on saving throws against charmed");
+						printf("Half-Elf: cannot be put to sleep by non-magical means\n\n");
+						printf("\t\t\tHalflings\n");
+						puts("Halfling, all: can re-roll 1s on ability checks, attacks, and saving throws (once)");
+						puts("Halfling, all: advantage on saving throws against being frightened");
+						puts("Halfling, all: can move through occupied space of any medium or larger creature");
+						puts("Halfling, Lightfoot: May attempt to hide when obscured by any medium or larger creature");
+						puts("Halfling, Stout advantage on saving throws against pison");
+						printf("Halfling, Stout resistance resistance to poison damage\n\n");
+
+						pause();
+
+						printf("\t\t\tHalf-Orc\n");
+						puts("Half-Orc: when reduced to 0hp you may drop to 1hp instead (once per long rest)");
+						printf("Half-Orc: When you score a critical hit, roll an extra damage dice\n\n");
+
+						printf("\t\t\tTiefling\n");
+						puts("Tiefling: resistance to fire damage");
+						puts("Tiefling: Thaumaturgy");
+						puts("Tiefling: Hellish Rebuke (once per day, 2nd level spell, at 3rd level");
+						puts("Tiefling: Darkness (once per day, at 5th level ");
+						printf("->\tspell-casting modifier is charisma\n\n");
+						break; }//end sub case cantrips and other abilities
+					case 2: {
+
+						break; }//end sub case feats
+					case 3: {
+
+						break} //end sub case languages
+					case 4: {
+
+					}//end sub case prof and tools
+					case 5: {
+						break; } //end sub case other
+					default: {
+						break; } //end sub case go back
+					}
+					break; } //end case 2 race and subrace characteristics
 				} //end switch(choice_info)
 
 			puts("Dragonborn, Dwarf, Elf, Gnome, Halfling, Half-Elf, Half-Orc, Human, Tiefling");
@@ -1105,42 +1105,47 @@ int get_stat_mods(int stat) {
 	}
 }
 int get_sub_race(int race) {
-	switch (race)	{
-    case 2:{
+	switch (race) {
+	case 2: {
 		puts("Choose between the following:");
 		printf("1.\tProtector Aasimar -> See Volo's Guide to Monsters P.104\n");
 		printf("2.\tScourge Aasimar -> See Volo's Guide to Monsters P.104\n");
 		printf("3.\tFallen Aasimar -> See Volo's Guide to Monsters P.104\n");
-		printf("4.\tRevenant\n");
+		printf("4.\tRevenant -> See Unearthed Arcana Page 300\n");
 		return (get_int(1, 4));
 	}//end case 2 Aasimar
-	case 5:{
+	case 5: {
 		puts("Choose between the following ancestries(See Player's Handboook page 17):");
 		printf("1.\tBlack\n2.\tBlue\n3.\tBrass\n4.\tBronze\n5.\tCopper\n6.\tGold\n7.\tGreen\n8.\tRed\n");
 		printf("9.\tSilver\n10.\tWhite\n");
 		return (get_int(1, 10));
 	} //end case 5 dragonborn
-	case 7:{
-		puts("Choose between the following (See Player's Handboook page 17 and \nSword Coast Adventurer's Guide page 103 for options 3-5):");
-		printf("1.\tHill Dwarf\n2.\tMountain Dwarf\n3.\t*Shield Dwarves\n4.\t*Gold Dwarves\n5.\t*Gray Dwarves\n6.\t*Revenant\n");
+	case 7: {
+		puts("Choose between the following");
+		printf("1.\tHill Dwarf -> See Player's Handbook P.17\n");
+		printf("2.\tMountain Dwarf -> See Sword Coast Adv. Guide P. 103\n");
+		printf("3.\t* Shield Dwarves -> See Sword Coast Adv. Guide P. 103\n");
+		printf("4.\t* Gold Dwarves -> See Sword Coast Adv. Guide P. 103\n");
+		printf("5.\t* Gray Dwarves -> See Sword Coast Adv. Guide P. 103\n");
+		printf("6.\t* Revenant -> See Codex: Unearthed Arcana P. 3\n");
 		return (get_int(1, 6));
 	} // end case 7 dwarves
-	case 8:	{
+	case 8: {
 		puts("Choose between the following (See Player's Handboook page 17 and \nSword Coast Adventurer's Guide page 103 for optioins 2-5):");
 		printf("1.\tHigh-Elf\n2.\tWood-Elf\n3.\tDark-Elf (Drow)\n4.\t*Moon Elf\n5.\t*Sun Elf\n6.\t*Revenant\n");
 		return (get_int(1, 6));
 	} //end case 8 elves
-	case 10:{
+	case 10: {
 		puts("Choose between the following (See Elemental Evil Player's Companion page 3):");
 		printf("1.\tAir Genasi\n2.\tEarth Genasi\n3.\tFire Genasi\n4.\tWater Genasi\n5.\tRevenant\n");
 		return (get_int(1, 5));
 	} //end case 10 genasi
-	case 11:{
+	case 11: {
 		puts("Choose between the following (See Player's Handboook page 17 and \nSwordCoast adventurer's Guide page page 103 for options 1-4):");
 		printf("1.\tForest Gnome\n2.\tRock Gnome\n3.\t*Deep Gnome\n4.\t*Svirfneblin\t5.\t*Revenant\n");
 		return (get_int(1, 5));
 	} //end case 11 gnomes
-	case 16:{
+	case 16: {
 		puts("Choose between the following");
 		printf("1.\tStout -> See Player's Handbook P.17 SwordCoast Adv. Guide P. 103\n");
 		printf("2.\tLightfoot -> See Player's Handbook P.17 & SwordCoast Adv. Guide P. 103\n");
@@ -1148,16 +1153,16 @@ int get_sub_race(int race) {
 		printf("4.\t*Revenant -> See Codex: Unearthed Arcana P. 3\n");
 		return (get_int(1, 4));
 	} //end case 16 halflings
-	case 25:{
-	    puts("Choose between the following (See Player's Handboook page 17 and \nSwordCoast adventurer's Guide page page 103 for options 1-4):");
+	case 25: {
+		puts("Choose between the following (See Player's Handboook page 17 and \nSwordCoast adventurer's Guide page page 103 for options 1-4):");
 		printf("1.\tBeasthide\n2.\tCliffwalk\n3.\tLongstride\n4.\tLongtooth\n5.\tRazorclaw\n6.\tRevenant\n7.\tWildhunt\n");
 		return (get_int(1, 7));
-	    puts("Choose between the following (See Player's Handboook page 17 and \nSwordCoast adventurer's Guide page page 103 for options 1-4):");
+		puts("Choose between the following (See Player's Handboook page 17 and \nSwordCoast adventurer's Guide page page 103 for options 1-4):");
 		printf("1.\tBeasthide\n2.\tCliffwalk\n3.\tLongstride\n4.\tLongtooth\n5.\tRazorclaw\n6.\tRevenant\n7.\tWildhunt\n");
 		return (get_int(1, 7));
 	} //end case 25 Shifters
-	case 28:{
-	    
+	case 28: {
+
 	}
 	default:
 		return 0; // no sub-race in that race
@@ -1221,44 +1226,44 @@ void get_String(char new_string[], char string_type[]) {
 }
 void pause() {
 	puts("Press [Enter] to continue . . .");
-		getchar();
-		getchar();
+	getchar();
+	getchar();
 }
 void print_class(int class) {
 	switch (class) {
-		case 1:
-			printf("Class:\tBarbarian\n");
-			break;
-		case 2:
-			printf("Class:\tBard\n");
-			break;
-		case 3:
-			printf("Class:\tCleric\n");
-			break;
-		case 4:
-			printf("Class:\tDruid\n");
-			break;
-		case 5:
-			printf("Class:\tFighter\n");
-			break;
-		case 6:
-			printf("Class:\tMonk\n");
-			break;
-		case 7:
-			printf("Class:\tPaladin\n");
-			break;
-		case 8:
-			printf("Class:\tRanger\n");
-			break;
-		case 9:
-			printf("Class:\tSorcerer\n");
-			break;
-		case 10:
-			printf("Class:\tWarlock\n");
-			break;
-		case 11:
-			printf("Class:\tWizard\n");
-			break;
+	case 1:
+		printf("Class:\tBarbarian\n");
+		break;
+	case 2:
+		printf("Class:\tBard\n");
+		break;
+	case 3:
+		printf("Class:\tCleric\n");
+		break;
+	case 4:
+		printf("Class:\tDruid\n");
+		break;
+	case 5:
+		printf("Class:\tFighter\n");
+		break;
+	case 6:
+		printf("Class:\tMonk\n");
+		break;
+	case 7:
+		printf("Class:\tPaladin\n");
+		break;
+	case 8:
+		printf("Class:\tRanger\n");
+		break;
+	case 9:
+		printf("Class:\tSorcerer\n");
+		break;
+	case 10:
+		printf("Class:\tWarlock\n");
+		break;
+	case 11:
+		printf("Class:\tWizard\n");
+		break;
 	}
 }
 void print_race(int race_int, int sub_race_int) {
@@ -1456,13 +1461,13 @@ void print_race(int race_int, int sub_race_int) {
 		break;
 	}
 }
-void sort_array(int arr_size, int arr[6]){
-    int count, count2, temp;
+void sort_array(int arr_size, int arr[6]) {
+	int count, count2, temp;
 	for (count = 0; count < arr_size; count++)
-			for (count2 = count + 1; count2 < arr_size; count2++)
-				if (arr[count] < arr[count2])	{
-					temp = arr[count];
-					arr[count] = arr[count2];
-					arr[count2] = temp;
-				}
+		for (count2 = count + 1; count2 < arr_size; count2++)
+			if (arr[count] < arr[count2]) {
+				temp = arr[count];
+				arr[count] = arr[count2];
+				arr[count2] = temp;
+			}
 }
