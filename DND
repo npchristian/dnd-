@@ -1,3 +1,6 @@
+/**********5e Character creation and modificaiton module*********/{
+
+/*********** LIBRARIES ***********/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -5,21 +8,31 @@
 #include <stdbool.h>
 #include <time.h>
 
-
+/*********** GLOBAL VARIABLES ***********/
 #define SIZE 50
 
 /*********** DATA STRUCTURE ***********/
 typedef struct {
+    /*********** BASIC CHARACTER INFO***********/
 	char name[SIZE];        //stores character name 
 	char race[SIZE];
 	char sub_race[SIZE];    //stores race & sub_race
-
+    int age;                //stores character's age
+    int class;              //stores character class
+    int level;              //stores character level
+    int race;               //stores character race
+    char class[SIZE];       //stores name of class
+    int sub_class;          //stores int of sub_class
+    char sub_class[SIZE];   //stores name of sub_class
+    
+    /*********** CHARACTER STATS***********/
+	bool feats;             //stores whether character has feats
+	
 	int armor;              //stores character armor
 	int level;              //stores character charisma
+	
 	int charisma;           //stores character charism
 	int char_mod;           //stores character charisma mod
-	int class;              //stores character class
-	int sub_class;          //stores cahracter sub class
 	int constitution;       //stores character constitution
 	int con_mod;            //stores character constitution mod
 	int dexterity;          //stores character dexterity
@@ -28,18 +41,17 @@ typedef struct {
 	int intelligence;       //stores character intelligence
 	int intel_mod;          //stores character intelligence mod
 	int proficiency;        //stores character proficiency
-	int race;               //stores character race
-	int sub_race;           //stores character sub-race
 	int strength;           //stores character strength
 	int str_mod;            //stores character strength mod
 	int to_hit;             //stores to-hit
 	int wisdom;             //stores character wisdom
 	int wis_mod;            //stores character wisdom mod
 
+    
 	double weight;          //stores character weight
 	double max_Carry;       //stores character max_carry
 
-	bool feats;             //stores whether character has feats
+	
 } Character;
 
 /*********** FUNCTION HEADERS***********/
@@ -56,7 +68,7 @@ int get_int(int upper, int lower);						//returns an integer entered by user
 int get_race();                                         //returns the race chosen by user
 int get_stat_mods(int stat);                            //returns character stat mod for a given stat
 int get_sub_race(int race);                             // get the sub race
-int select_race();
+int select_race(char subrace[SIZE]);
 
 void get_String(char new_string[], char string_type[]); //returns a string entered by user
 void pause();
@@ -824,6 +836,7 @@ int get_class() {
 	printf("6.\tMonk\n7.\tPaladin\n8.\tRanger\n9.\tSorcerer\n10.\tWarlock\n11.\tWizard\n");
 	return (get_int(1, 11));
 }
+int get_class_name(int class);
 int get_int(int lower, int upper) {
 	int choice;
 	char junk;
@@ -850,8 +863,10 @@ int get_int(int lower, int upper) {
 	}
 	return choice;
 }
-int get_race() {
+int get_race(int mode) {
+    
 	/*********** VARIABLE DECLARATIONS***********/
+	
 	int choice_race, choice_info, choice_other; //used to read user input
 
 	/*********** GET RACE ***********/
@@ -859,24 +874,26 @@ int get_race() {
 		choice_race = select_race();
 		if (choice_race == 31)
 		{
-			puts("Give me more information on:");
+			puts("What would you like to know more about?:");
 			puts("1. Ability scores");
 			puts("2. Race and sub-Race characteristics");
-			puts("3. Other");
-			puts("4. Where to find more information")
-				puts("5. Go back")
-				choice_info = get_int(1, 5);
-			if (choice_info < 5)
-				switch (choice_info) {
+			puts("3. Languages");
+			puts("4. Other");
+			puts("5. Where to find more information")
+			puts("6. Go back")
+			
+			switch (get_int(1, 6);) {
 				case 1: {
-					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
+					printf("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS\n");
 					printf("Aarakocra\t\t0\t0\t+2\t0\t0\t\1\n");
 					printf("Aasimar, Fallen\t0\t\t0\t0\t0\t+1\t0\n");
 					printf("Aasimar, Protctor\t\t0\t0\t0\t0\t0\t+1\n");
+					printf("Aasimar, Revenant\t\t0\t+1\t0\t0\t0\t0\n");//
 					printf("Aasimar, Scourge\t\t0\t+1\t0\t0\t0\t0\n");
 					printf("Bugbear\t\t0\t0\t+1\t0\t+2\t0\n");
-					printf("Changeling\t\t+1\t0\t+1\t0\t0\t0\n");
+					printf("Changeling\t\t+1\t0\t+1\t0\t0\t0\n");//
 					printf("Dragonborn\t\t+1\t0\t0\t0\t+2\t0\n");
+					printf("Dragonborn, Revenant\t\t+1\t0\t0\t0\t+1\t0\n");//
 					printf("Deep Gnome\t\t0\t0\t+1\t+2\t0\t0\n");
 					printf("Dwarf, Gold\t\t0\t+2\t0\t0\t0\t+1\n");
 					printf("Dwarf, Gray\t\t0\t+2\t0\t0\t+1\t0\n");
@@ -887,10 +904,11 @@ int get_race() {
 					printf("Elf, High\t\t0\t0\t+2\t+1\t0\t0\n");
 					printf("Elf, Moon\t\t0\t0\t+2\t+1\t0\t0\n");
 					printf("Elf, Sun\t\t0\t0\t+2\t+1\t0\t0\n");
+					
+					pause();
+					printf("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS\n");
 					printf("Elf, Wood\t\t0\t0\t+2\t0\t0\t+1\n");
 
-					pause();
-					puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
 					printf("Firbolg\t\t0\t0\t0\t0\t+1\t+2\n");
 					printf("Genasi, Air\t\t0\t+2\t+1\t0\t0\t0\n");
 					printf("Genasi, Earth\t\t0\t+2\t0\t0\t+1\t0\n");
@@ -915,18 +933,18 @@ int get_race() {
 					printf("Kenku\t\t0\t0\t+2\t0\t0\t+1\n");
 					printf("Kobold\t\t0\t0\t+2\t0\t-2\t0\n");
 					printf("Lizardfolk\t\t0\t+2\t0\t0\t0\t+1\n");
-					printf("MInotaur\t\t0\t0\t0\t0\t0\t+1\t0\n");
+					printf("MInotaur\t\t0\t0\t0\t0\t0\t+1\t0\n");//
 					printf("Orc\t\t0\t+1\t0\t-2\t+2\t0\n");
-					printf("Shifter, Beasthide\t\t0\t+1\t+1\t0\t0\t0");
-					printf("Shifter, Cliffwalk\t\t0\t0\t+2\t0\t0\t0");
-					printf("Shifter, Longstride\t\t0\t0\t+2\t0\t0\t0");
-					printf("Shifter, Longtooth\t\t0\t0\t+1\t0\t+1\t0");
-					printf("Shifter, Razorclaw\t\t0\t0\t+2\t0\t0\t0");
-					printf("Shifter, Wildhunt\t\t0\t0\t+1\t0\t0\t+1");
+					printf("Shifter, Beasthide\t\t0\t+1\t+1\t0\t0\t0");//
+					printf("Shifter, Cliffwalk\t\t0\t0\t+2\t0\t0\t0");//
+					printf("Shifter, Longstride\t\t0\t0\t+2\t0\t0\t0");//
+					printf("Shifter, Longtooth\t\t0\t0\t+1\t0\t+1\t0");//
+					printf("Shifter, Razorclaw\t\t0\t0\t+2\t0\t0\t0");//
+					printf("Shifter, Wildhunt\t\t0\t0\t+1\t0\t0\t+1");//
 					printf("Tabaxi\t\t+1\t0\t+2\t0\t0\t0\n");
 					printf("Tiefling\t\t+2\t0\t0\t+1\t0\t0\n");
 					printf("Triton\t\t+1\t+1\t0\t0\t+1\t0\n");
-					printf("Warforged\t\t0\t+1\t0\t0\t+1\t0");
+					printf("Warforged\t\t0\t+1\t0\t0\t+1\t0");//
 					printf("Yuan-Ti Pureblood\t\t+2\t0\t0\t+1\t0\t0\n");
 
 					break; } //end case 1 race abilities
@@ -942,20 +960,18 @@ int get_race() {
 					case 1: {
 						printf("\t\t\tAarakocra\n");
 						printf("Unarmed strikes: Aarakocra are proficient and deal 1d4 slashing damage with talons\n\n");
-
-						printf("\t\t\tDeep Gnome\n");
-						puts("Deep Gnome: advantage on int, wis, and cha, saving throws");
-						puts("Deep Gnome: advantge on stealth checks to hide in rocky terrain\n\n");
-						puts("Deep Gnome: Blindness/deafness (once per long rest)");
-						puts("Deep Gnome: Blur (once per long rest)");
-						puts("Deep Gnome: Disguise Self: (once per long rest)");
-						printf("Deep Gnome: Nondetection (on self)\n\n");
+						
+						printf("\t\t\t\n");
 
 						printf("\t\t\tDragonborn\n");
-						puts("Dragonborne, all: breath weapon 2d6-5d6 damage and type based on level and color");
-						puts("Dragonborn, all: resistance to damage type based on color")
-							printf("->\tSee Player's handbook page 34\n\n");
-
+						puts("Dragonborne: breath weapon 2d6-5d6 damage and type based on level and color");
+						puts("Dragonborn: resistance to damage type based on color")
+							printf("->\tsee Player's handbook P.34\n");
+						puts("Dragonborn, Revenant: breath weapon 2d6-5d6 necrotic damage");
+						puts("Dragonborn, Revenant: resistance to necrotic damage");
+						puts("Dragonborn, Revenant: special circumstances and requirements");
+						printf("->\tsee Codex: Unearthed Arcana P.9\n\n");
+						
 						printf("\t\t\tDwarves\n");
 						printf("Dwarf: advantage on saving throws against poison\n\n");
 
@@ -989,12 +1005,17 @@ int get_race() {
 
 						printf("\t\t\tGnomes\n");
 						puts("Gnome, all: advantage on int, wis, and cha, saving throws");
+						puts("Deep Gnome: advantage on int, wis, and cha, saving throws");
+						puts("Deep Gnome: advantge on stealth checks to hide in rocky terrain\n\n");
+						puts("Deep Gnome: Blindness/deafness (once per long rest)");
+						puts("Deep Gnome: Blur (once per long rest)");
+						puts("Deep Gnome: Disguise Self: (once per long rest)");
+						printf("Deep Gnome: Nondetection (on self)\n\n");
 						puts("Gnome, Forest: Minor Illusion (uses intelligence)");
 						puts("Gnome, Forest: Speak with small beasts");
 						puts("Gnome, Rock: Double proficiency bonus on history checks on alchemy, device, or magic items");
 						printf("Gnome, Rock: May create a tiny clockwork device(1HP 5AC\n\n");
-
-						printf("\t\t\tGoliath\n");
+                        printf("\t\t\tGoliath\n");
 						puts("Goliath: as a reaction, reduce damage taken by 1d12 + con mod (once per short rest)");
 						puts("Goliath: count as one size larger when calculating carrying capacity and weight moved");
 						printf("Goliath: naturally adapted to cold and high altitude\n\n");
@@ -1039,16 +1060,27 @@ int get_race() {
 						break; } //end sub case go back
 					}
 					break; } //end case 2 race and subrace characteristics
-				} //end switch(choice_info)
+				case 3: {
+				    puts("Aarakocra: Common, Aarakocra, and Auran\n");
+				break;} //end case 3 languages
+				case 4: {
+				    printf("RACE\t\t\tAGE\tSIZE\tspeed\n");
+				    printf("Aarakocra\t\t\t3-30\tmed\t25, 50(fly)\t\n");
+				    
+				break;} // end case 4 other
+				case 5: {
+					puts("Dragonborn, Dwarf, Elf, Gnome, Halfling, Half-Elf, Half-Orc, Human, Tiefling");
+        			printf("->\tPlayer's Handboook page 17\n\n");
+			        printf("Aasimar,  Bugbear, Firbolg, Goliath, Goblin, Hobgoblin, Kenku, Kobold, Lizardfolk, Orc, Tabaxi, Triton, ");
+        			printf("\n and Yuan-ti Pureblood\n");
+        			printf("->\tVolo's Guide to Monsters page 104\n\n");
+			        printf("Aarakocra//, Deep Gnome, Genasi, Goliath  \n->\tElemental Evil Player's Companion page 3\n\n");
+				break;} //end case 5 get more info
+				case 6: break; //ends switch and returns to loop
+			} //end switch(get_int(1, 6);)
+			
 
-			puts("Dragonborn, Dwarf, Elf, Gnome, Halfling, Half-Elf, Half-Orc, Human, Tiefling");
-			printf("->\tPlayer's Handboook page 17\n\n");
-			printf("Aasimar,  Bugbear, Firbolg, Goliath, Goblin, Hobgoblin, Kenku, Kobold, Lizardfolk, Orc, Tabaxi, Triton, ");
-			printf("\n and Yuan-ti Pureblood\n");
-			printf("->\tVolo's Guide to Monsters page 104\n\n");
-			printf("Aarakocra, Deep Gnome, Genasi, Goliath  \n->\tElemental Evil Player's Companion page 3\n\n");
-			puts("See Sword-Coast Adventurer's guide page 103 for more information on all of these races and ");
-			puts("additional content\n\n");
+
 			pause();
 		}
 	} while (choice_race == 31);
@@ -1195,15 +1227,14 @@ int four_d_6_drop_lowest() {
 	printf("After dropping %d, the total is: %d.\n", dice[3], dice[0] + dice[1] + dice[2]); //displays total
 	return (dice[0] + dice[1] + dice[2]); //return total
 }
-int select_race() {
-	printf("What race will you play?\nRaces marked with an * may not be allowed. Consult your DM\n");
-	printf("1.\t*Aarakocra\n2.\t*Aasimar\n3.\t*Bugbear\n4.\t*Changeling\n5.\tDragonborn\n");
-	printf("6.\t*Deep Gnome\n7.\tDwarf\n8.\tElf\n9\t*Firbolg\n");
-	printf("10.\t*Genasi\n11.\tGnome\n12.\t*Goblin\n13.\t*Goliath\n");
-	printf("14.\t*Hobgoblin\n15.\tHalf-Elf\n16.\tHalfling\n17.\tHalf-Orc\n18.\tHuman\n19.\t*Human, Variant\n20.\t*Kenku\n21.\t*Kobold\n");
-	printf("22.\t*Lizardfolk\n23.\t*Minotaur*\n24.\t*Orc\n25.\t*Shifter*\n26.\t*Tabaxi\n27.\tTiefling\n28.\t*Tiefling, Variant\n29.\t*Triton\n30.\t*Warforged\n");
-	printf("31.\t*Yuan-ti Pureblood\n32.\tI need more info\n");
-	return(get_int(1, 32));
+int select_race(char subrace[SIZE]) {
+	printf("What race will you play?\nRaces marked with an * may not be allowed\nConsult your DM\n");
+	printf("1.\t*Aarakocra//\n2.\t*Aasimar\n3.\t*Bugbear\n4.\t*Changeling\n5.\tDragonborn\n");
+	printf("6.\tDwarf\n7.\tElf\n8\t*Firbolg\n9.\t*Genasi\n10.\tGnome\n11.\t*Goblin\n12.\t*Goliath\n");
+	printf("13.\t*Hobgoblin\n14.\tHalf-Elf\n15.\tHalfling\n16.\tHalf-Orc\n17.\tHuman\n18.\t*Human, Variant\n19.\t*Kenku\n20.\t*Kobold\n");
+	printf("21.\t*Lizardfolk\n22.\t*Minotaur*\n23.\t*Orc\n24.\t*Shifter*\n25.\t*Tabaxi\n26.\tTiefling\n27.\t*Tiefling, Variant\n28.\t*Triton\n29.\t*Warforged\n");
+	printf("30.\t*Yuan-ti Pureblood\n31.\tI need more info\n");
+	return(get_int(1, 31));
 }
 
 void get_String(char new_string[], char string_type[]) {
