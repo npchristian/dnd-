@@ -11,7 +11,7 @@
 /*********** GLOBAL VARIABLES ***********/
 #define SIZE 50
 
-/*********** DATA STRUCTURE ***********/
+/*********** DATA STRUCTURES ***********/
 typedef struct {
     /*********** BASIC CHARACTER INFO***********/
 	char name[SIZE];        //stores character name 
@@ -57,16 +57,16 @@ typedef struct {
 /*********** FUNCTION HEADERS***********/
 
 Character create_Character();							//generic call to create a character
-Character get_Stats(Character new_Char);				//gets the 5 stats for the character
+Character get_Abilities(Character new_Char);				//gets the 5 stats for the character
 
-int check_stats(Character new_character);               //checks that entered stats are correct
+int Check_Abilities(Character new_character);               //checks that entered stats are correct
 int dice_roll(int sides);                               //roles an n sided dice
 int four_d_6_drop_lowest();                             //sorts four dice rolls, drops lowest, and sums remaining 3
 int get_assignment(int score);							//used in the point buy process
 int get_class(); //ADD CLASSES FROM OTHER BOOKS         //returns the class chosen by user
 int get_int(int upper, int lower);						//returns an integer entered by user
 int get_race();                                         //returns the race chosen by user
-int get_stat_mods(int stat);                            //returns character stat mod for a given stat
+int get_Abil_Mods(int stat);                            //returns character stat mod for a given stat
 int get_sub_race(int race);                             // get the sub race
 int select_race(char subrace[SIZE]);
 
@@ -86,47 +86,56 @@ int main() {
 
 /*********** FUNCTION DEFINITIONS***********/
 
-
-Character create_Character() {
-
+Character create_Character(){
 	/*********** VARIABLE DECLARATIONS***********/
 	char junk;					//consumes newline character
-	Character new_Character;    // newly created character returned
+	Character new_Character;    //newly created character returned
 
-	int choice;					// stores user decision
+	int choice=0;               //stores user decision
+	
+	/********** GET THE STATS ******************/
+    do{
+        /*********** GET NAME ***********/
+        if (choice == 0 || choice == 1){
+    	puts("Please enter your character's name: ");
+    	get_String(new_Character.name, "character's name");
+    	}
+    	
+    	/*********** GET LEVEL*********/
+    	if (choice == 0 || choice == 2){
+    	printf("What level will %s be (1-20)? ", new_Character.name);   //prompt for level
+    	new_Character.level = get_int(1, 20);                           //get level
+    	}
+    	
+    	/*********** GET RACE*********/
+        if (choice == 0 || choice == 3)
+        	new_Character.race = get_race();                                //get race
+	
+    	/*********** GET SUBRACE*********/
+        if (choice == 0 || choice == 4)
+        	new_Character.sub_race = get_sub_race(new_Character.race);      //get sub-race
 
-	/*********** GET NAME ***********/
-	puts("Please enter your character's name: ");       //prompt character name
-	get_String(new_Character.name, "character's name"); //get name from user input
-
-	/*********** GET LEVEL*********/
-	printf("What level will %s be (1-20)? ", new_Character.name);   //prompt for level
-	new_Character.level = get_int(1, 20);                           //get level
-
-	/*********** GET CLASS*********/
-	new_Character.class = get_class();                              //get class
-
-	/*********** GET RACE*********/
-	new_Character.race = get_race();                                //get race
-	new_Character.sub_race = get_sub_race(new_Character.race);      //get sub-race
-
-	puts("You chose:");
-	printf("\nName:\t%s\nLevel\t%d\n", new_Character.name, new_Character.level);
-	print_class(new_Character.class);
-	print_race(new_Character.race, new_Character.sub_race);
-	printf("Is this correct?\n1.\tYes\n2.\tNo");
-	choice = get_int(1, 2);
-	if (choice == 2)
-		scanf("%c", &junk);
-
-	/*********** GET STATS ***********/
-	new_Character = get_Stats(new_Character);   //get stats
+    	/*********** GET CLASS*********/
+        if (choice == 0 || choice == 5)
+        	new_Character.class = get_class();                              //get class
+	
+    	/*********** GET ABILITIES ***********/
+    	if (choice == 0 || choice == 6)
+            new_Character = get_Abilities(new_Character);
+        
+        
+        /********** PRINT FINAL STATS *******/
+        choice = get_int(print_Sats(new_Character))
+        
+        } while(choice != 7);
 
 	return new_Character; //return newly created character
-}
-Character get_Stats(Character new_Char) {
+
+} //COMPLETE
+Character get_Abilities(Character new_Char){
 
 	/*********** VARIABLE DECLARATIONS***********/
+	
 	bool stats_rolled = false;							//check if stats have already been rolled
 	int rolled_stats[6], stats[6];						//stores user stats
 	int method, roll_method, choice;					//stores user decisions
@@ -134,7 +143,9 @@ Character get_Stats(Character new_Char) {
 	int count, count2;									//used in for loops
 	int temp;											//used to sort highest to lowest
 	int points;											//used in the point buy system
-				/*********** GET THE 6 STATS***********/
+	
+	
+	/*********** GET 6 ABILITIES***********/
 	do {
 		new_Char.charisma = new_Char.constitution = new_Char.dexterity = new_Char.intelligence = new_Char.strength = new_Char.wisdom = 0;
 		puts("Which method would you like to use to compute your stats?\n Bonuses due to race and other factors will be added later.");
@@ -803,13 +814,13 @@ Character get_Stats(Character new_Char) {
 			}
 			break;
 		}
-		reset = check_stats(new_Char);
+		reset = check_Abilities(new_Char);
 	} while (reset == 2);
 
 	return new_Char; //return the new character & stats.
-}
+} //COMPLETE
 
-int check_stats(Character new_character) {
+int check_Abilities(Character new_character){
 	printf("%s's stats are:\n", new_character.name);
 	printf("Charisma:\t%d\n", new_character.charisma);
 	printf("Constitution:\t%d\n", new_character.constitution);
@@ -819,25 +830,25 @@ int check_stats(Character new_character) {
 	printf("Wisdom:\t\t%d\n", new_character.wisdom);
 	printf("Is this correct?\n1.\tYes.\n2.\tNo\n");
 	return (get_int(1, 2));  //print stats, ask if they are correct, and return the answer
-}
-int dice_roll(int sides) {
+} //COMPLETE
+int dice_roll(int sides){
 	return (1 + rand() % (sides + 1 - 1));
-}
-int get_assignment(int score) {
+} //COMPLETE
+int get_assignment(int score){
 	printf("Where will you assign your %d?\n", score);
 	printf("1.\tCharisma\n2.\tConstitution\n3.\tDexterity\n4.\tIntelligence\n5.\tStrength\n6.\tWisdom\n");
 	//prompt user for stat selections
 	return(get_int(1, 6));
-}
-int get_class() {
+} //COMPLETE
+int get_class(){
 	/*********** GET CLASS ***********/
 	puts("What class will you play?");
 	printf("1.\tBarbarian\n2.\tBard\n3.\tCleric\n4.\tDruid\n5.\tFighter\n");
 	printf("6.\tMonk\n7.\tPaladin\n8.\tRanger\n9.\tSorcerer\n10.\tWarlock\n11.\tWizard\n");
 	return (get_int(1, 11));
-}
-int get_class_name(int class);
-int get_int(int lower, int upper) {
+} //add classes from other resources & more information
+int get_class_name(int class); //implent this
+int get_int(int lower, int upper){
 	int choice;
 	char junk;
 	bool flag = true;
@@ -862,26 +873,30 @@ int get_int(int lower, int upper) {
 		}
 	}
 	return choice;
-}
-int get_race(int mode) {
+} //COMPLETE
+int get_race(int mode){
     
+    /*********** FUNCTION INFORMATION***********
+    * CALLS SELECT_RACE TO ALLOW USER TO CHOOSE WHICH RACE TO PLAY
+    
+    * DO 1: LOOPS UNTIL USER SELECTS THE "IM READY" OPTION
+    * SWITCH 1: PRINTS INFORMATION BASED ON USER CHOICE (INFO ON RACES)
 	/*********** VARIABLE DECLARATIONS***********/
 	
 	int choice_race, choice_info, choice_other; //used to read user input
 
 	/*********** GET RACE ***********/
-	do {
+	do { // DO 1
 		choice_race = select_race();
-		if (choice_race == 31)
-		{
-		    {
+		if (choice_race == 31){
 			puts("What would you like to know more about?:");
 			puts("1. Ability scores");
 			puts("2. Race and sub-Race characteristics");
 			puts("3. Other");
 			puts("4. Where to find more information")
 			puts("5. I'm ready to choose")} //print message
-			switch (get_int(1, 5);) {
+			choice_info = get_int(1, 5);
+			switch (choice_info) { //SWITCH 1
 				case 1: {
 					printf("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS\n");
 					printf("Aarakocra\t\t0\t0\t+2\t0\t0\t\1\n"); //
@@ -907,7 +922,6 @@ int get_race(int mode) {
 					pause();
 					printf("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS\n");
 					printf("Elf, Wood\t\t0\t0\t+2\t0\t0\t+1\n");
-
 					printf("Firbolg\t\t0\t0\t0\t0\t+1\t+2\n");
 					printf("Genasi, Air\t\t0\t+2\t+1\t0\t0\t0\n");
 					printf("Genasi, Earth\t\t0\t+2\t0\t0\t+1\t0\n");
@@ -948,12 +962,11 @@ int get_race(int mode) {
 
 					break; } //end case 1 race abilities
 				case 2: {
-				    {
 					puts("Show me more information about:");
 					puts("1. Racial properties");
 					puts("2. Feats");
 					puts("3. Languages");
-					puts("4. I'm ready to choose");} //print statement
+					puts("4. I'm ready to choose"); //print statement
 					switch (get_int(1, 4) {
 					case 1: {
 						printf("\t\t\tAarakocra\n"); //
@@ -1047,14 +1060,13 @@ int get_race(int mode) {
                     case 3: {
 				        puts("Aarakocra: Common, Aarakocra, and Auran");
         			break;} //end sub case 3 languages
-					case 4: break; //end case 4 go back
+					case 4: choice = break; //end case 4 go back
 					} //end sub-switch
 				break; } //end case 2 race and subrace characteristics
 				case 3: {
 				    printf("RACE\t\t\tAGE\tSIZE\tSPEED\n");
 				    printf("Aarakocra\t\t\t3-30\tmed\t25, 50(fly)\n"); //
-				    printf("Aasimar, ")
-				    
+				    printf("Aasimar, ");
 				break;} // end case 3 other
 				case 4: {
 					puts("Dragonborn, Dwarf, Elf, Gnome, Halfling, Half-Elf, Half-Orc, Human, Tiefling");
@@ -1066,16 +1078,15 @@ int get_race(int mode) {
 			        puts("All Revenant sub-classes");
 			        printf("->\tCodex: Uneathed Arcana P.3\n\n"); //
 				break;} //end case 5 get more info
-				case 5: break; //ends switch and returns to loop
+				case 5: {
+				    choice_info = 5;
+				break; //ends switch and returns to loop
+				} // end case 5 ready
 			} //end switch(get_int(1, 5);)
-			
-
-
 			pause();
-		}
 	} while (choice_race == 31);
 }
-int get_stat_mods(int stat) {
+int get_Abil_Mods(int stat){
 	switch (stat) {
 	case 3:
 		return -4;
@@ -1125,8 +1136,8 @@ int get_stat_mods(int stat) {
 		return 7;
 		break;
 	}
-}
-int get_sub_race(int race) {
+} //COMPLETE
+int get_sub_race(int race){
 	switch (race) {
 	case 2: {
 		puts("Choose between the following:");
@@ -1189,8 +1200,8 @@ int get_sub_race(int race) {
 	default:
 		return 0; // no sub-race in that race
 	}//end switch(race)
-}
-int four_d_6_drop_lowest() {
+} //fix formatting and get sub-races
+int four_d_6_drop_lowest(){
 	int count, count2;  //used in for loops
 	int temp;           //used to sort highest to lowest
 	int dice[4];        //stores dice rolls
@@ -1216,8 +1227,8 @@ int four_d_6_drop_lowest() {
 
 	printf("After dropping %d, the total is: %d.\n", dice[3], dice[0] + dice[1] + dice[2]); //displays total
 	return (dice[0] + dice[1] + dice[2]); //return total
-}
-int select_race(char subrace[SIZE]) {
+} //COMPLETE
+int select_race(char subrace[SIZE]){
 	printf("What race will you play?\nRaces marked with an * may not be allowed\nConsult your DM\n");
 	printf("1.\t*Aarakocra//\n2.\t*Aasimar\n3.\t*Bugbear\n4.\t*Changeling\n5.\tDragonborn\n");
 	printf("6.\tDwarf\n7.\tElf\n8\t*Firbolg\n9.\t*Genasi\n10.\tGnome\n11.\t*Goblin\n12.\t*Goliath\n");
@@ -1225,9 +1236,9 @@ int select_race(char subrace[SIZE]) {
 	printf("21.\t*Lizardfolk\n22.\t*Minotaur*\n23.\t*Orc\n24.\t*Shifter*\n25.\t*Tabaxi\n26.\tTiefling\n27.\t*Tiefling, Variant\n28.\t*Triton\n29.\t*Warforged\n");
 	printf("30.\t*Yuan-ti Pureblood\n31.\tI need more info\n");
 	return(get_int(1, 31));
-}
+} //COMPLETE
 
-void get_String(char new_string[], char string_type[]) {
+void get_String(char new_string[], char string_type[]){
 	int n, choice;
 	char junk;
 	do {
@@ -1244,13 +1255,13 @@ void get_String(char new_string[], char string_type[]) {
 			printf("Enter your %s again: \n", string_type);
 
 	} while (choice != 1);
-}
-void pause() {
+} //COMPLETE
+void pause(){
 	puts("Press [Enter] to continue . . .");
 	getchar();
 	getchar();
-}
-void print_class(int class) {
+} //COMPLETE
+void print_class(int class){
 	switch (class) {
 	case 1:
 		printf("Class:\tBarbarian\n");
@@ -1286,8 +1297,8 @@ void print_class(int class) {
 		printf("Class:\tWizard\n");
 		break;
 	}
-}
-void print_race(int race_int, int sub_race_int) {
+} //modify after adding all classes
+void print_race(int race_int, int sub_race_int){
 	switch (race_int) {
 	case 1:
 		printf("Race: Aarakocra\nSub Race: N/A\n");
@@ -1481,8 +1492,8 @@ void print_race(int race_int, int sub_race_int) {
 		printf("Race: Yuan-Ti Pureblood\nSub Race: N/A\n");
 		break;
 	}
-}
-void sort_array(int arr_size, int arr[6]) {
+} //modify after adding all races and sub races
+void sort_array(int arr_size, int arr[6]){
 	int count, count2, temp;
 	for (count = 0; count < arr_size; count++)
 		for (count2 = count + 1; count2 < arr_size; count2++)
