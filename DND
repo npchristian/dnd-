@@ -803,8 +803,7 @@ int dice_roll(int sides) {
 } //COMPLETE
 int get_assignment(int score) {
 	printf("Where will you assign your %d?\n", score);
-	printf("1.\tCharisma\n2.\tConstitution\n3.\tDexterity\n4.\tIntelligence\n5.\tStrength\n6.\tWisdom\n");
-	//prompt user for stat selections
+	printf("1.\tCharisma.\n2.\tConstitution.\n3.\tDexterity.\n4.\tIntelligence.\n5.\tStrength.\n6.\tWisdom.\n");
 	return(get_int(1, 6));
 } //COMPLETE
 int get_class() {
@@ -821,24 +820,21 @@ int get_int(int lower, int upper){
 	bool flag = true;
 
 	while (flag) {
-		if (scanf("%d", &choice)) {
+		if (scanf("%d", &choice)) 
 			if (choice > upper || choice < lower)
-			{
-				printf("Error: restrict input to %d - %d.\n", lower, upper);
-				printf("Try again: ");
-			}
+				printf("It looks like you enered a number to high or too low. Choose an option from %d to %d.\n", lower, upper);
 			else
 			{
 				printf("\n");
 				flag = false;
 			}
-		}
 		else
 		{
 			scanf("%c", &junk); //consumes the char mistakenly entered
-			printf("Error: restrict input to an integer (1, 2, 3, etc.)\n");
+			printf("It looks like you accidentally entered a non-number. Try again)\n");
 		}
 	}
+	scanf("%c", &junk);//consumes newline
 	return choice;
 } //COMPLETE
 int get_race(char myrace[SIZE], char mysubrace[SIZE], int *sub_race){
@@ -863,37 +859,37 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int *sub_race){
 		choice_info = 0;
 		choice_made = false;
 
-		{printf("what race will you play? races marked with an * may not be allowed consult your DM\n");
+		{printf("What race would you like to play? (Races marked with an * may not be allowed consult your DM)\n");
 		printf("1.\t*Aarakocra\t16.\tHalf-Orc\n2.\t*Aasimar\t17.\tHuman\n3.\t*Bugbear\t18.\t*Human, Variant\n4.\t*Changeling\t19.\t*Kenku\n5.\tDragonborn");
 		printf("\t20.\t*Kobold\n6.\tDwarf\t\t21.\t*Lizardfolk\n7.\tElf\t\t22.\t*Minotaur\n8\t*Firbolg\t23.\t*Orc\n9.\t*Genasi\t\t24.\t*Shifter\n10.\tGnome");
-		printf("\t\t25.\t* Tabaxi\n11.\t* Goblin\t26.\tTiefling\n12.\t* Goliath\t27.\t*triton\n13.\t*Hobgoblin\t28.\t*Warforged\n14.\tHalf-Elf\t29.\tYuan-ti Pureblood\n");
+		printf("\t\t25.\t*Tabaxi\n11.\t*Goblin\t26.\tTiefling\n12.\t*Goliath\t27.\t*triton\n13.\t*Hobgoblin\t28.\t*Warforged\n14.\tHalf-Elf\t29.\tYuan-ti Pureblood\n");
 		printf("15.\tHalfling\t30.\tI need more info\n");
+		
 		choice_race = get_int(1, 30); }
-		//PRINT STATEMENT TO GET RACE
+		
 		while (choice_race == 30 && choice_info != 7) {
-			{puts("What would you like to know more about?:");
-			puts("1. ability modifications (strength, con, etc.)");
-			puts("2. racial properties (age, size, speed)");
-			puts("3. cantrips, feats, and spells");
-			puts("4. Languages");
-			puts("5. special features (attacks, breath weapon, etc.)");
-			puts("6. where to find more information");
-			puts("7. I'm ready to choose");
+			{puts("What would you like to know more about?");
+			printf("1.\tWhat effect does each race have on abilities? (strength, dexterity, etc.)\n");
+			printf("2.\tWhat about racial properties (age, size, speed, etc.)\n");
+			printf("3.\tWhat cantrips, feats, and spells does each race have\n");
+			printf("4.\tWhat Languages do they speak?\n");
+			printf("5.\tWhat about special features like attacks, breath weapon, etc.?\n");
+			printf("6.\tWhere can I find more information?\n");
+			printf("7.\tI'm ready to choose!\n");
 			choice_info = get_int(1, 7); }
-			//print menu 2 get decision 2
-
-			switch (choice_info) { //SWITCH 1
+			
+			switch (choice_info) {
     			case 1: {
-    				printf("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS\n");
-    				printf("Aarakocra\t\t0\t0\t+2\t0\t0\t\1\n");
-    				printf("Aasimar, Fallen\t\t0\t\t0\t0\t0\t+1\t0\n");
-    				printf("Aasimar, Protctor\t\t0\t0\t0\t0\t0\t+1\n");
-    				printf("Aasimar, Revenant\t\t0\t+1\t0\t0\t0\t0\n");
-    				printf("Aasimar, Scourge\t\t0\t+1\t0\t0\t0\t0\n");
-    				printf("Bugbear\t\t0\t0\t+1\t0\t+2\t0\n");
+    				printf("\t\t\tCHA\tCON\tDEX\tINT\tSTR\tWIS\n");
+    				printf("Aarakocra\t\t0\t0\t+2\t0\t0\t1\n");
+    				printf("Aasimar, Fallen\t\t0\t0\t0\t0\t+1\t0\n");
+    				printf("Aasimar, Protector\t0\t0\t0\t0\t0\t+1\n");
+    				printf("Aasimar, Revenant\t0\t+1\t0\t0\t0\t0\n");
+    				printf("Aasimar, Scourge\t0\t+1\t0\t0\t0\t0\n");
+    				printf("Bugbear\t\t\t0\t0\t+1\t0\t+2\t0\n");
     				printf("Changeling\t\t+1\t0\t+1\t0\t0\t0\n");
     				printf("Dragonborn\t\t+1\t0\t0\t0\t+2\t0\n");
-    				printf("Dragonborn, Revenant\t\t+1\t0\t0\t0\t+1\t0\n");
+    				printf("Dragonborn, Revenant\t+1\t0\t0\t0\t+1\t0\n");
     				printf("Dwarf, Gold\t\t0\t+2\t0\t0\t0\t+1\n");
     				printf("Dwarf, Gray\t\t0\t+2\t0\t0\t+1\t0\n");
     				printf("Dwarf, Hill\t\t0\t+2\t0\t0\t0\t+1\n");
@@ -903,32 +899,30 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int *sub_race){
     				printf("Elf, Dark\t\t+1\t0\t+2\t0\t0\t0\n");
     				printf("Elf, High\t\t0\t0\t+2\t+1\t0\t0\n");
     				printf("Elf, Moon\t\t0\t0\t+2\t+1\t0\t0\n");
-    
     				pause();
-    				printf("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS\n");
-    				printf("Elf, Revenant\t\t0\t1\t0\t0\t0\n");
+    				printf("\t\t\tCHA\tCON\tDEX\tINT\tSTR\tWIS\n");
+    				printf("Elf, Revenant\t\t0\t1\t0\t0\t0\t0\n");
     				printf("Elf, Sun\t\t0\t0\t+2\t+1\t0\t0\n");
     				printf("Elf, Wood\t\t0\t0\t+2\t0\t0\t+1\n");
-    				printf("Firbolg\t\t0\t0\t0\t0\t+1\t+2\n");
+    				printf("Firbolg\t\t\t0\t0\t0\t0\t+1\t+2\n");
     				printf("Genasi, Air\t\t0\t+2\t+1\t0\t0\t0\n");
     				printf("Genasi, Earth\t\t0\t+2\t0\t0\t+1\t0\n");
     				printf("Genasi, Fire\t\t0\t+2\t0\t+1\t0\t0\n");
-    				printf("Genasi, Revenant\t\t0\t+1\t0\t0\t0\t0\n");
+    				printf("Genasi, Revenant\t0\t+1\t0\t0\t0\t0\n");
     				printf("Genasi, Water\t\t0\t+2\t0\t0\t0\t+1\n");
     				printf("Deep Gnome\t\t0\t0\t+1\t+2\t0\t0\n");
     				printf("Gnome, Forest\t\t0\t0\t+1\t+2\t0\t0\n");
     				printf("Gnome, Revenant\t\t0\t+1\t0\t0\t0\t0\n");
     				printf("Gnome, Rock\t\t0\t+1\t0\t+2\t0\t0\n");
-    				printf("Gnome, Svirfneblin\t\t0\t0\t0\t+2\t0\t0\n");
-    				printf("Goblin\t\t0\t+1\t+2\t0\t0\t0\n");
-    				printf("Goliath\t\t0\t+1\t0\t0\t+2\t0\n");
+    				printf("Gnome, Svirfneblin\t0\t0\t0\t+2\t0\t0\n");
+    				printf("Goblin\t\t\t0\t+1\t+2\t0\t0\t0\n");
+    				printf("Goliath\t\t\t0\t+1\t0\t0\t+2\t0\n");
     				printf("Hobgoblin\t\t0\t+2\t0\t+1\t0\t0\n");
-    				printf("Half-Elf\t\t+2\t0\t0\t0\t0\t0->Choose two different abilities to increase by one\n");
+    				printf("Half-Elf\t\t+2\t0\t0\t0\t0\t0 (Pick 2 more to increase by one)\n");
+    				pause();
+    			    printf("\t\t\tCHA\tCON\tDEX\tINT\tSTR\tWIS");
     				printf("Halfling, Lightfoot\t\t+1\t0\t+2\t0\t0\t0\n");
     				printf("Halfling, Stout\t\t0\t+1\t+2\t0\t0\t0\n");
-    
-    				pause();
-    				puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
     				printf("Halfling, Strongheart\t\t0\t+1\t+2\t0\t0\t0\n");
     				printf("Halfling, Revenant\t\t0\t+1\t0\t0\t0\t0\n");
     				printf("Half-Elf\t\t2\t0\t0\t0\t0\t0 -> increase two abilities of your choice by 1 each\n");
@@ -939,19 +933,18 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int *sub_race){
     				printf("Kenku\t\t0\t0\t+2\t0\t0\t+1\n");
     				printf("Kobold\t\t0\t0\t+2\t0\t-2\t0\n");
     				printf("Lizardfolk\t\t0\t+2\t0\t0\t0\t+1\n");
-    				printf("MInotaur\t\t0\t0\t0\t0\t0\t+1\t0\n");//
+    				printf("MInotaur\t\t0\t0\t0\t0\t0\t+1\t0\n");
     				printf("Orc\t\t0\t+1\t0\t-2\t+2\t0\n");
-    				printf("Shifter, Beasthide\t\t0\t+1\t+1\t0\t0\t0\n");//
-    				printf("Shifter, Cliffwalk\t\t0\t0\t+2\t0\t0\t0\n");//
-    				printf("Shifter, Longstride\t\t0\t0\t+2\t0\t0\t0\n");//
-    				printf("Shifter, Longtooth\t\t0\t0\t+1\t0\t+1\t0\n");//
+    				printf("Shifter, Beasthide\t\t0\t+1\t+1\t0\t0\t0\n");
+    				printf("Shifter, Cliffwalk\t\t0\t0\t+2\t0\t0\t0\n");
+    				printf("Shifter, Longstride\t\t0\t0\t+2\t0\t0\t0\n");
+    				printf("Shifter, Longtooth\t\t0\t0\t+1\t0\t+1\t0\n");
+    				pause();
+    				printf("\t\t\tCHA\tCON\tDEX\tINT\tSTR\tWIS");
     				printf("Shifter, Razorclaw\t\t0\t0\t+2\t0\t0\t0\n");
     				printf("Shifter, Revenant\t\t0\t+1\t0\t0\t0\t0\n");
     				printf("Shifter, Wildhunt\t\t0\t0\t+1\t0\t0\t+1");
     				printf("Tabaxi\t\t+1\t0\t+2\t0\t0\t0\n");
-    
-    				pause();
-    				puts("\t\tCHARISMA\tCON\tDEX\tINT\tSTR\tWIS");
     				printf("Tiefling\t\t+2\t0\t0\t+1\t0\t0\n");
     				printf("Tiefling, Abyssal\t\t0\t+2\t0\t0\t0\t0\n");
     				printf("Tiefling, Infernal\t\t0\t+1\t0\t+1\t0\t0\n");
@@ -1723,9 +1716,8 @@ void get_String(bool flag, char new_string[], char string_type[]) {
 			new_string[n] = '\0';// eliminates the newline character
 } //COMPLETE
 void pause() {
-	puts("Press [Enter] to continue . . .");
-	getchar();
-	getchar();
+    puts("Press [ENTER] to continue . . .");
+    getchar();
 } //COMPLETE
 void print_class(int class) {
 	switch (class) {
