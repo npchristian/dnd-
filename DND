@@ -74,55 +74,49 @@ int main() {
 
 /*********** FUNCTION DEFINITIONS***********/
 
-
-
 Character create_Character() {
 	/*********** VARIABLE DECLARATIONS***********/
-	char junk;					//consumes newline character
 	Character new_Character;    //newly created character returned
 
 	int choice =0;		            //stores user decision
-	int* sub_race;				//used to 
 
 	/********** GET THE STATS ******************/
 	do {
+	    
 		/*********** GET NAME ***********/
 		if (choice == 0 || choice == 1) {
-			puts("Please enter your character's name: ");
+			printf("Please enter your character's name: ");
 			if (choice ==0)
     			get_String(true, new_Character.name, "character's name");
     		else
-    		    get_String(false, new_Character.name, "character's name");
+    		    get_String(false, new_Character.name, "character's name"); //consumes newline from previous entries
 		}
 
 		/*********** GET LEVEL*********/
 		if (choice == 0 || choice == 2) {
-			printf("What level will %s be (1-20)? ", new_Character.name);   //prompt for level
-			new_Character.level = get_int(1, 20);                           //get level
-		}
+			printf("What level will %s be (1-20)? ", new_Character.name);
+			new_Character.level = get_int(1, 20);}
 
 		/*********** GET RACE*********/
 		if (choice == 0 || choice == 3)
-			new_Character.race = get_race(new_Character.racename, new_Character.subracename, &new_Character.subrace);         //get race
+			new_Character.race = get_race(new_Character.racename, new_Character.subracename, &new_Character.subrace);
 
-			/*********** GET CLASS*********/
+		/*********** GET CLASS*********/
 		if (choice == 0 || choice == 4) printf("class selection in development\n");
-		//	new_Character.class = get_class();                              //get class
+		//	new_Character.class = get_class();
 
 		/*********** GET ABILITIES ***********/
-		if (choice == 0 || choice == 5){
-		    printf("yes");
-			new_Character = get_Abilities(new_Character);}
+		if (choice == 0 || choice == 5)
+			new_Character = get_Abilities(new_Character);
 
-    printf("%d", choice);
-		/********** PRINT FINAL STATS *******/
-		printf("Would Would you like to do\n");
-		printf("1.\tchange my name (%s)\n", new_Character.name);
-		printf("2.\tchange my level (%d)\n", new_Character.level);
-		printf("3.\tchange my race (%s)\n", new_Character.racename);
-		printf("4.\tchange my class (TBD)\n");
-		printf("5.\tchange my abilities (cha %d, con %d, dex %d,int %d, str %d, wis %d)\n", new_Character.charisma, new_Character.constitution, new_Character.dexterity, new_Character.intelligence, new_Character.strength, new_Character.wisdom);
-		printf("6.\tI'm done print my character\n");
+   		/********** PRINT FINAL STATS *******/
+		puts("We have finished the character creation process. What would Would you like to do?");
+		printf("1.\tChange my name\t(You selected: %s).\n", new_Character.name);
+		printf("2.\tChange my level\t(You selected: %d).\n", new_Character.level);
+		printf("3.\tChange my race\t(You selected %s with sub race: %s).\n", new_Character.racename, new_Character.subracename);
+		printf("4.\tChange my class\t(You selected: TBD).\n");
+		printf("5.\tChange my abilities\t(You selected: charisma %d, constitution %d, dexterity %d,intelligence %d, strength %d, wisdom %d).\n", new_Character.charisma, new_Character.constitution, new_Character.dexterity, new_Character.intelligence, new_Character.strength, new_Character.wisdom);
+		printf("6.\tI'm done print my character.\n");
         choice = get_int(1, 6);
 	} while (choice != 6);
 
@@ -135,7 +129,6 @@ Character get_Abilities(Character new_Char) {
 
 	bool stats_rolled = false;							//check if stats have already been rolled
 	int rolled_stats[6], stats[6];						//stores user stats
-	int method, roll_method, choice;					//stores user decisions
 	int	reset;											//initialize reset to false
 	int count, count2;									//used in for loops
 	int temp;											//used to sort highest to lowest
@@ -145,36 +138,32 @@ Character get_Abilities(Character new_Char) {
 	/*********** GET 6 ABILITIES***********/
 	do {
 		new_Char.charisma = new_Char.constitution = new_Char.dexterity = new_Char.intelligence = new_Char.strength = new_Char.wisdom = 0;
-		puts("Which method would you like to use to compute your stats?\n Bonuses due to race and other factors will be added later.");
-		printf("1.\tRoll for my stats\n2.\tPoint buy\n3.\tUse 15, 14, 13, 12, 10, 8\n");
-		method = get_int(1, 3);
-
-		switch (method) {
-
-		case 1: {
-			puts("We will begin by rolling your stats as if you were level 1. Stat modifiers due");
-			puts("to level, race, and other factors will be added later. You may roll your dice");
-			puts("(4d6 drop lowest) or the module can roll it for you. How would you like to");
-			puts("compute your stats?");
-			printf("1.\tI will roll and manually enter my stats\n2.\tRoll my dice for me\n");
-			roll_method = get_int(1, 2);  //Explain program and ask for input
-
-			if (roll_method == 1) {
-				puts("Enter your charisma:");
-				new_Char.charisma = get_int(3, 18);
-				puts("Enter your Constitution:");
-				new_Char.constitution = get_int(3, 18);
-				puts("Enter your dexterity:");
-				new_Char.dexterity = get_int(3, 18);
-				puts("Enter your intelligence:");
-				new_Char.intelligence = get_int(3, 18);
-				puts("Enter your strenth:");
-				new_Char.strength = get_int(3, 18);
-				puts("Enter your wisdom:");
-				new_Char.wisdom = get_int(3, 18);
-			} //prompt user for the stats
-
-			else {
+		puts("Which method would you like to use to compute your stats?\nBonuses due to race and other factors will be added later.");
+		printf("1.\tRoll for my stats.\n2.\tPoint buy system.\n3.\tUse 15, 14, 13, 12, 10, 8.\n");
+    
+        switch(get_int(1,3)){
+    		case 1: {
+    			puts("We will begin by rolling your stats as if you were level 1.");
+    			puts("Stat modifiers due to level, race, and other factors will be added later.");
+    			puts("You may roll your dice (4d6 drop lowest) or the module can roll it for you.");
+    			puts("How would you like to compute your stats?");
+    			printf("1.\tI will roll and manually enter my stats\n2.\tRoll my dice for me\n");
+	
+	 			if (get_int(1,2) == 1) {
+    				printf("Enter your charisma: ");
+    				new_Char.charisma = get_int(3, 18);
+    				printf("Enter your Constitution: ");
+    				new_Char.constitution = get_int(3, 18);
+    				printf("Enter your dexterity: ");
+    				new_Char.dexterity = get_int(3, 18);
+    				printf("Enter your intelligence: ");
+    				new_Char.intelligence = get_int(3, 18);
+    				printf("Enter your strenth: ");
+    				new_Char.strength = get_int(3, 18);
+    				printf("Enter your wisdom: ");
+    				new_Char.wisdom = get_int(3, 18);
+    			} 
+			    else {
 				if (!stats_rolled) {										//if stats have not already been rolled
 					srand(time(NULL));										//seed with time and rolla gain
 					for (count = 0; count < 6; count++)
@@ -192,627 +181,608 @@ Character get_Abilities(Character new_Char) {
 					printf("1.\tCharisma\n2.\tConstitution\n3.\tDexterity\n4.\tIntelligence\n5.\tStrength\n6.\tWisdom\n");
 					//prompt user for stat selections
 
-					choice = get_int(1, 6);
-
-					switch (choice) {
-					case 1:
-						if (new_Char.charisma == 0) {
-							new_Char.charisma = rolled_stats[count];
-							count++;
-						}
-						else
-							printf("Error: charisma already given value: %d.\n", new_Char.charisma);
+					switch (get_int(1, 6)) {
+    					case 1:
+    						if (new_Char.charisma == 0) {
+    							new_Char.charisma = rolled_stats[count];
+    							count++;
+    						}
+    						else
+    							printf("Error: charisma already given value: %d.\n", new_Char.charisma);
+					break;
+    					case 2:
+    						if (new_Char.constitution == 0) {
+    							new_Char.constitution = rolled_stats[count];
+    							count++;
+    						}
+    						else
+    							printf("Error: constitution already given value: %d.\n", new_Char.constitution);
 						break;
-					case 2:
-						if (new_Char.constitution == 0) {
-							new_Char.constitution = rolled_stats[count];
-							count++;
-						}
-						else
-							printf("Error: constitution already given value: %d.\n", new_Char.constitution);
+    					case 3:
+    						if (new_Char.dexterity == 0) {
+    							new_Char.dexterity = rolled_stats[count];
+    							count++;
+    						}
+    						else
+    							printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
 						break;
-					case 3:
-						if (new_Char.dexterity == 0) {
-							new_Char.dexterity = rolled_stats[count];
-							count++;
-						}
-						else
-							printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
+    					case 4:
+    						if (new_Char.intelligence == 0) {
+    							new_Char.intelligence = rolled_stats[count];
+    							count++;
+    						}
+    						else
+    							printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
 						break;
-					case 4:
-						if (new_Char.intelligence == 0) {
-							new_Char.intelligence = rolled_stats[count];
-							count++;
-						}
-						else
-							printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
+    					case 5:
+    						if (new_Char.strength == 0) {
+    							new_Char.strength = rolled_stats[count];
+    							count++;
+    						}
+    						else
+    							printf("Error: strength already given value: %d.\n", new_Char.strength);
 						break;
-					case 5:
-						if (new_Char.strength == 0) {
-							new_Char.strength = rolled_stats[count];
-							count++;
-						}
-						else
-							printf("Error: strength already given value: %d.\n", new_Char.strength);
-						break;
-					case 6:
-						if (new_Char.wisdom == 0) {
-							new_Char.wisdom = rolled_stats[count];
-							count++;
-						}
-						else
-							printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
+    					case 6:
+    						if (new_Char.wisdom == 0) {
+    							new_Char.wisdom = rolled_stats[count];
+    							count++;
+    						}
+    						else
+    							printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
 						break;
 					}
 				}
 			}
 			break; }
-		case 2: {
+	    	case 2: {
 			points = 27;
 			count = 0;
-			puts("You have a total of 27 points to spend on your ability scores. The cost of each is displayed below. ");
+			puts("You have a total of 27 points to spend on your ability scores. The cost of each is displayed below.");
 			while (count < 6) {
-				printf("You have %d points left\nWhat would you like to buy?\n", points);
-				printf("SELECTION\tSCORE\tCOST\n1.\t\t9\t0\n2.\t\t9\t1\n3.\t\t10\t2\n4.\t\t11\t3\n5.\t\t12\t4\n6.\t\t13\t5\n7.\t\t14\t7\n");
-				printf("8.\t\t15\t9\n");
-				choice = get_int(1, 8);
-				switch (choice) {
-				case 1:
-					switch (get_assignment(8)) {
-					case 1:
-						if (new_Char.charisma == 0) {
-							new_Char.charisma = 8;
-							count++;
-						}
-						else
-							printf("Error: charisma already given value: %d.\n", new_Char.charisma);
-						break;
-					case 2:
-						if (new_Char.constitution == 0) {
-							new_Char.constitution = 8;
-							count++;
-						}
-						else
-							printf("Error: constitution already given value: %d.\n", new_Char.constitution);
-						break;
-					case 3:
-						if (new_Char.dexterity == 0) {
-							new_Char.dexterity = 8;
-							count++;
-						}
-						else
-							printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
-						break;
-					case 4:
-						if (new_Char.intelligence == 0) {
-							new_Char.intelligence = 8;
-							count++;
-						}
-						else
-							printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
-						break;
-					case 5:
-						if (new_Char.strength == 0) {
-							new_Char.strength = 8;
-							count++;
-						}
-						else
-							printf("Error: strength already given value: %d.\n", new_Char.strength);
-						break;
-					case 6:
-						if (new_Char.wisdom == 0) {
-							new_Char.wisdom = 8;
-							count++;
-						}
-						else
-							printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
-						break;
-					}
-					break;
-				case 2: {
-					if (points < 1)
-						printf("Error: a score of 9 costs 1 point. You have no points left.\n");
-					else {
-						switch (get_assignment(9)) {
-						case 1:
-							if (new_Char.charisma == 0) {
-								new_Char.charisma = 9;
-								points = points - 1;
-								count++;
-							}
-							else
-								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
-							break;
-						case 2:
-							if (new_Char.constitution == 0) {
-								new_Char.constitution = 9;
-								points = points - 1;
-								count++;
-							}
-							else
-								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
-							break;
-						case 3:
-							if (new_Char.dexterity == 0) {
-								new_Char.dexterity = 9;
-								points = points - 1;
-								count++;
-							}
-							else
-								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
-							break;
-						case 4:
-							if (new_Char.intelligence == 0) {
-								new_Char.intelligence = 9;
-								points = points - 1;
-								count++;
-							}
-							else
-								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
-							break;
-						case 5:
-							if (new_Char.strength == 0) {
-								new_Char.strength = 9;
-								points = points - 1;
-								count++;
-							}
-							else
-								printf("Error: strength already given value: %d.\n", new_Char.strength);
-							break;
-						case 6:
-							if (new_Char.wisdom == 0) {
-								new_Char.wisdom = 9;
-								points = points - 1;
-								count++;
-							}
-							else
-								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
-							break;
-						}
-						break;
-					}
-					break; }
-				case 3: {
-					if (points < 2)
-						printf("Error: a score of 10 costs 2 points. You only have %d points.\n", points);
-					else {
-						switch (get_assignment(10)) {
-						case 1:
-							if (new_Char.charisma == 0) {
-								new_Char.charisma = 10;
-								points = points - 2;
-								count++;
-							}
-							else
-								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
-							break;
-						case 2:
-							if (new_Char.constitution == 0) {
-								new_Char.constitution = 10;
-								points = points - 2;
-								count++;
-							}
-							else
-								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
-							break;
-						case 3:
-							if (new_Char.dexterity == 0) {
-								new_Char.dexterity = 10;
-								points = points - 2;
-								count++;
-							}
-							else
-								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
-							break;
-						case 4:
-							if (new_Char.intelligence == 0) {
-								new_Char.intelligence = 10;
-								points = points - 2;
-								count++;
-							}
-							else
-								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
-							break;
-						case 5:
-							if (new_Char.strength == 0) {
-								new_Char.strength = 10;
-								points = points - 2;
-								count++;
-							}
-							else
-								printf("Error: strength already given value: %d.\n", new_Char.strength);
-							break;
-						case 6:
-							if (new_Char.wisdom == 0) {
-								new_Char.wisdom = 10;
-								points = points - 2;
-								count++;
-							}
-							else
-								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
-							break;
-						}
-					}
-					break; }
-				case 4: {
-					if (points < 3)
-						printf("Error: a score of 11 costs 3 points. You only have %d points.\n", points);
-					else {
-						switch (get_assignment(11)) {
-						case 1:
-							if (new_Char.charisma == 0) {
-								new_Char.charisma = 11;
-								points = points - 3;
-								count++;
-							}
-							else
-								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
-							break;
-						case 2:
-							if (new_Char.constitution == 0) {
-								new_Char.constitution = 11;
-								points = points - 3;
-								count++;
-							}
-							else
-								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
-							break;
-						case 3:
-							if (new_Char.dexterity == 0) {
-								new_Char.dexterity = 11;
-								points = points - 3;
-								count++;
-							}
-							else
-								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
-							break;
-						case 4:
-							if (new_Char.intelligence == 0) {
-								new_Char.intelligence = 11;
-								points = points - 3;
-								count++;
-							}
-							else
-								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
-							break;
-						case 5:
-							if (new_Char.strength == 0) {
-								new_Char.strength = 11;
-								points = points - 3;
-								count++;
-							}
-							else
-								printf("Error: strength already given value: %d.\n", new_Char.strength);
-							break;
-						case 6:
-							if (new_Char.wisdom == 0) {
-								new_Char.wisdom = 11;
-								points = points - 3;
-								count++;
-							}
-							else
-								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
-							break;
-						}
-					}
-					break; }
-				case 5: {
-					if (points < 4)
-						printf("Error: a score of 12 costs 4 points. You only have %d points.\n", points);
-					else {
-						switch (get_assignment(12)) {
-						case 1:
-							if (new_Char.charisma == 0) {
-								new_Char.charisma = 12;
-								points = points - 4;
-								count++;
-							}
-							else
-								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
-							break;
-						case 2:
-							if (new_Char.constitution == 0) {
-								new_Char.constitution = 12;
-								points = points - 4;
-								count++;
-							}
-							else
-								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
-							break;
-						case 3:
-							if (new_Char.dexterity == 0) {
-								new_Char.dexterity = 12;
-								points = points - 4;
-								count++;
-							}
-							else
-								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
-							break;
-						case 4:
-							if (new_Char.intelligence == 0) {
-								new_Char.intelligence = 12;
-								points = points - 4;
-								count++;
-							}
-							else
-								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
-							break;
-						case 5:
-							if (new_Char.strength == 0) {
-								new_Char.strength = 12;
-								points = points - 4;
-								count++;
-							}
-							else
-								printf("Error: strength already given value: %d.\n", new_Char.strength);
-							break;
-						case 6:
-							if (new_Char.wisdom == 0) {
-								new_Char.wisdom = 12;
-								points = points - 4;						points = points - 4;
-								count++;
-							}
-							else
-								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
-							break;
-						}
-					}
-					break; }
-				case 6: {
-					if (points < 5)
-						printf("Error: a score of 13 costs 5 points. You only have %d points.\n", points);
-					else {
-						switch (get_assignment(13)) {
-						case 1:
-							if (new_Char.charisma == 0) {
-								new_Char.charisma = 13;
-								points = points - 5;
-								count++;
-							}
-							else
-								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
-							break;
-						case 2:
-							if (new_Char.constitution == 0) {
-								new_Char.constitution = 13;
-								points = points - 5;
-								count++;
-							}
-							else
-								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
-							break;
-						case 3:
-							if (new_Char.dexterity == 0) {
-								new_Char.dexterity = 13;
-								points = points - 5;
-								count++;
-							}
-							else
-								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
-							break;
-						case 4:
-							if (new_Char.intelligence == 0) {
-								new_Char.intelligence = 13;
-								points = points - 5;
-								count++;
-							}
-							else
-								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
-							break;
-						case 5:
-							if (new_Char.strength == 0) {
-								new_Char.strength = 13;
-								points = points - 5;
-								count++;
-							}
-							else
-								printf("Error: strength already given value: %d.\n", new_Char.strength);
-							break;
-						case 6:
-							if (new_Char.wisdom == 0) {
-								new_Char.wisdom = 13;
-								points = points - 5;
-								count++;
-							}
-							else
-								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
-							break;
-						}
-					}
-					break; }
-				case 7: {
-					if (points < 7)
-						printf("Error: a score of 14 costs 7 points. You only have %d points.\n", points);
-					else {
-						switch (get_assignment(14)) {
-						case 1:
-							if (new_Char.charisma == 0) {
-								new_Char.charisma = 14;
-								points = points - 7;
-								count++;
-							}
-							else
-								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
-							break;
-						case 2:
-							if (new_Char.constitution == 0) {
-								new_Char.constitution = 14;
-								points = points - 7;
-								count++;
-							}
-							else
-								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
-							break;
-						case 3:
-							if (new_Char.dexterity == 0) {
-								new_Char.dexterity = 14;
-								points = points - 7;
-								count++;
-							}
-							else
-								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
-							break;
-						case 4:
-							if (new_Char.intelligence == 0) {
-								new_Char.intelligence = 14;
-								points = points - 7;
-								count++;
-							}
-							else
-								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
-							break;
-						case 5:
-							if (new_Char.strength == 0) {
-								new_Char.strength = 14;
-								points = points - 7;
-								count++;
-							}
-							else
-								printf("Error: strength already given value: %d.\n", new_Char.strength);
-							break;
-						case 6:
-							if (new_Char.wisdom == 0) {
-								new_Char.wisdom = 14;
-								points = points - 7;
-								count++;
-							}
-							else
-								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
-							break;
-						}
-					}
-					break; }
-				case 8:
-					if (points < 9)
-						printf("Error: a score of 15 costs 9 points. You only have %d points.\n", points);
-					else {
-
-						switch (get_assignment(15)) {
-						case 1:
-							if (new_Char.charisma == 0) {
-								new_Char.charisma = 15;
-								points = points - 9;
-								count++;
-							}
-							else
-								printf("Error: charisma already given value: %d.\n", new_Char.charisma);
-							break;
-						case 2:
-							if (new_Char.constitution == 0) {
-								new_Char.constitution = 15;
-								points = points - 9;
-								count++;
-							}
-							else
-								printf("Error: constitution already given value: %d.\n", new_Char.constitution);
-							break;
-						case 3:
-							if (new_Char.dexterity == 0) {
-								new_Char.dexterity = 15;
-								points = points - 9;
-								count++;
-							}
-							else
-								printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
-							break;
-						case 4:
-							if (new_Char.intelligence == 0) {
-								new_Char.intelligence = 15;
-								points = points - 9;
-								count++;
-							}
-							else
-								printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
-							break;
-						case 5:
-							if (new_Char.strength == 0) {
-								new_Char.strength = 15;
-								points = points - 9;
-								count++;
-							}
-							else
-								printf("Error: strength already given value: %d.\n", new_Char.strength);
-							break;
-						case 6:
-							if (new_Char.wisdom == 0) {
-								new_Char.wisdom = 15;
-								points = points - 9;
-								count++;
-							}
-							else
-								printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
-							break;
-						}
-					}
-					break;
-				}
-			}
-			break; }
-		case 3:
+			    if (count>0)
+    				printf("You have %d points left. What would you like to buy?\n", points);
+				printf("SELECTION\tSCORE\tCOST\n1.\t\t9\t0\n2.\t\t9\t1\n3.\t\t10\t2\n4.\t\t11\t3\n5.\t\t12\t4\n6.\t\t13\t5\n7.\t\t14\t7\n8.\t\t15\t9\n");
+				switch (get_int(1,8)) {
+    				case 1:{
+    					switch (get_assignment(8)) {
+    					case 1:{
+    						if (new_Char.charisma == 0) {
+    							new_Char.charisma = 8;
+    							count++;    						}
+    						else
+    							printf("Error: charisma was already given the value of %d.\n", new_Char.charisma);
+    						break;}
+    					case 2:{
+    						if (new_Char.constitution == 0) {
+    							new_Char.constitution = 8;
+    							count++;
+    						}
+    						else
+    							printf("Error: constitution was already given the value of %d.\n", new_Char.constitution);
+    						break;}
+    					case 3:{
+    						if (new_Char.dexterity == 0) {
+    							new_Char.dexterity = 8;
+    							count++;
+    						}
+    						else
+    							printf("Error: dexterity was already given the value of %d.\n", new_Char.dexterity);
+    						break;}
+    					case 4:{
+    						if (new_Char.intelligence == 0) {
+    							new_Char.intelligence = 8;
+    							count++;
+    						}
+    						else
+    							printf("Error: intelligence was already given the value of %d.\n", new_Char.intelligence);
+    						break;}
+    					case 5:{
+    						if (new_Char.strength == 0) {
+    							new_Char.strength = 8;
+    							count++;
+    						}
+    						else
+    							printf("Error: strength was already given value of %d.\n", new_Char.strength);
+    						break;}
+    					case 6:{
+    						if (new_Char.wisdom == 0) {
+    							new_Char.wisdom = 8;
+    							count++;}
+    						else
+    							printf("Error: wisdom was already given the value of %d.\n", new_Char.wisdom);
+				    	break;}
+				    break;}}
+		            case 2:{
+    					if (points < 1)
+    						puts("Error: a score of 9 costs 1 point. You have no points left.");
+    					else {
+    						switch (get_assignment(9)) {
+        						case 1:{
+        							if (new_Char.charisma == 0){
+        								new_Char.charisma = 9;
+        								points = points - 1;
+        								count++;}
+        							else
+        								printf("Error: charisma was already given the value of %d.\n", new_Char.charisma);
+        						break;}
+        						case 2:{
+        							if (new_Char.constitution == 0) {
+        								new_Char.constitution = 9;
+        								points = points - 1;
+        								count++;}
+        							else
+        								printf("Error: constitution was already given the value of %d.\n", new_Char.constitution);
+        						break;}
+    				    		case 3:{
+    							if (new_Char.dexterity == 0) {
+    								new_Char.dexterity = 9;
+    								points = points - 1;
+    								count++;}
+    							else
+    								printf("Error: dexterity was already given the value of %d.\n", new_Char.dexterity);
+    							break;}
+    						case 4:{
+    							if (new_Char.intelligence == 0) {
+    								new_Char.intelligence = 9;
+    								points = points - 1;
+    								count++;
+    							}
+    							else
+    								printf("Error: intelligence was already given the value: %d.\n", new_Char.intelligence);
+    							break;}
+    						case 5:{
+    							if (new_Char.strength == 0) {
+    								new_Char.strength = 9;
+    								points = points - 1;
+    								count++;
+    							}
+    							else
+    								printf("Error: strength was already given the value of %d.\n", new_Char.strength);
+    							break;}
+    						case 6:{
+    							if (new_Char.wisdom == 0) {
+    								new_Char.wisdom = 9;
+    								points = points - 1;
+    								count++;
+    							}
+    							else
+    								printf("Error: wisdom was already given the valueof %d.\n", new_Char.wisdom);
+    							break;}
+    						}
+    						break;
+    					}
+    				break; }
+    				case 3:{
+    					if (points < 2)
+    						printf("Error: a score of 10 costs 2 points. You only have %d points.\n", points);
+    					else {
+    						switch (get_assignment(10)) {
+        						case 1:{
+        							if (new_Char.charisma == 0) {
+        								new_Char.charisma = 10;
+        								points = points - 2;
+        								count++;}
+        							else
+        								printf("Error: charisma was already given the value of %d.\n", new_Char.charisma);
+        						break;}
+    						case 2:{
+    							if (new_Char.constitution == 0) {
+    								new_Char.constitution = 10;
+    								points = points - 2;
+    								count++;}
+    							else
+    								printf("Error: constitution was already given the value of %d.\n", new_Char.constitution);
+    							break;}
+    						case 3:{
+    							if (new_Char.dexterity == 0) {
+    								new_Char.dexterity = 10;
+    								points = points - 2;
+    								count++;
+    							}
+    							else
+    								printf("Error: dexterity was already given the value: %d.\n", new_Char.dexterity);
+    						break;}
+    						case 4:{
+    							if (new_Char.intelligence == 0) {
+    								new_Char.intelligence = 10;
+    								points = points - 2;
+    								count++;
+    							}
+    							else
+    								printf("Error: intelligence was already given the value of %d.\n", new_Char.intelligence);
+    						break;}
+    						case 5:{
+    							if (new_Char.strength == 0) {
+    								new_Char.strength = 10;
+    								points = points - 2;
+    								count++;
+    							}
+    							else
+    								printf("Error: strength was already given the value of %d.\n", new_Char.strength);
+    						break;}
+    						case 6:{
+    							if (new_Char.wisdom == 0) {
+    								new_Char.wisdom = 10;
+    								points = points - 2;
+    								count++;
+    							}
+    							else
+    								printf("Error: wisdom was already given the value of %d.\n", new_Char.wisdom);
+    							break;}
+    						}
+    					}
+    				break; }
+    				case 4:{
+    					if (points < 3)
+    						printf("Error: a score of 11 costs 3 points. You only have %d points.\n", points);
+    					else {
+    						switch (get_assignment(11)) {
+    						case 1:{
+    							if (new_Char.charisma == 0) {
+    								new_Char.charisma = 11;
+    								points = points - 3;
+    								count++;}
+    							else
+    								printf("Error: charisma was already given the value of %d.\n", new_Char.charisma);
+    						break;}
+    						case 2:{
+    							if (new_Char.constitution == 0) {
+    								new_Char.constitution = 11;
+    								points = points - 3;
+    								count++;
+    							}
+    							else
+    								printf("Error: constitution was already given the value: %d.\n", new_Char.constitution);
+    							break;}
+    						case 3:{
+    							if (new_Char.dexterity == 0) {
+    								new_Char.dexterity = 11;
+    								points = points - 3;
+    								count++;
+    							}
+    							else
+    								printf("Error: dexterity was already given the value of %d.\n", new_Char.dexterity);
+    							break;}
+    						case 4:{
+    							if (new_Char.intelligence == 0) {
+    								new_Char.intelligence = 11;
+    								points = points - 3;
+    								count++;
+    							}
+    							else
+    								printf("Error: intelligence was already given the value of %d.\n", new_Char.intelligence);
+    							break;}
+    						case 5:{
+    							if (new_Char.strength == 0) {
+    								new_Char.strength = 11;
+    								points = points - 3;
+    								count++;
+    							}
+    							else
+    								printf("Error: strength was already given the value of %d.\n", new_Char.strength);
+    							break;}
+    						case 6:{
+    							if (new_Char.wisdom == 0) {
+    								new_Char.wisdom = 11;
+    								points = points - 3;
+    								count++;
+    							}
+    							else
+    								printf("Error: wisdom was already given the value of %d.\n", new_Char.wisdom);
+    							break;}
+    						}
+    					}
+    				break; }
+    				case 5:{
+    					if (points < 4)
+    						printf("Error: a score of 12 costs 4 points. You only have %d points.\n", points);
+    					else {
+    						switch (get_assignment(12)) {
+        						case 1:{
+        							if (new_Char.charisma == 0) {
+        								new_Char.charisma = 12;
+        								points = points - 4;
+        								count++;
+        							}
+        							else
+        								printf("Error: charisma was already given the value of %d.\n", new_Char.charisma);
+        							break;}
+        						case 2:{
+        							if (new_Char.constitution == 0) {
+        								new_Char.constitution = 12;
+        								points = points - 4;
+        								count++;
+        							}
+        							else
+        								printf("Error: constitution was already given the value of %d.\n", new_Char.constitution);
+        						break;}
+        						case 3:{
+        							if (new_Char.dexterity == 0) {
+        								new_Char.dexterity = 12;
+        								points = points - 4;
+        								count++;
+        							}
+        							else
+        								printf("Error: dexterity was already given the value of %d.\n", new_Char.dexterity);
+        					    break;}
+        						case 4:{
+        							if (new_Char.intelligence == 0) {
+        								new_Char.intelligence = 12;
+        								points = points - 4;
+        								count++;
+        							}
+        							else
+        								printf("Error: intelligence was already given the value of %d.\n", new_Char.intelligence);
+        						break;}
+        						case 5:{
+        							if (new_Char.strength == 0) {
+        								new_Char.strength = 12;
+        								points = points - 4;
+        								count++;
+        							}
+        							else
+        								printf("Error: strength was already given the value of %d.\n", new_Char.strength);
+        						break;}
+    					    	case 6:{
+        							if (new_Char.wisdom == 0) {
+        								new_Char.wisdom = 12;
+        								points = points - 4;						points = points - 4;
+        								count++;
+        							}
+        							else
+    								printf("Error: wisdom was already given the value of %d.\n", new_Char.wisdom);
+    						    break;}
+    						}
+    					}
+    				break; }
+    				case 6:{
+    					if (points < 5)
+    						printf("Error: a score of 13 costs 5 points. You only have %d points.\n", points);
+    					else {
+    						switch (get_assignment(13)) {
+        						case 1:{
+        							if (new_Char.charisma == 0) {
+        								new_Char.charisma = 13;
+        								points = points - 5;
+        								count++;
+        							}
+        							else
+        								printf("Error: charisma was already given the value of %d.\n", new_Char.charisma);
+        						break;}
+        						case 2:{
+        							if (new_Char.constitution == 0) {
+        								new_Char.constitution = 13;
+        								points = points - 5;
+        								count++;
+        							}
+        							else
+        								printf("Error: constitution was already given the value of %d.\n", new_Char.constitution);
+        							break;}
+        						case 3:{
+        							if (new_Char.dexterity == 0) {
+        								new_Char.dexterity = 13;
+        								points = points - 5;
+        								count++;
+        							}
+        							else
+        								printf("Error: dexterity was already given the value of %d.\n", new_Char.dexterity);
+        						break;}
+        						case 4:{
+        							if (new_Char.intelligence == 0) {
+        								new_Char.intelligence = 13;
+        								points = points - 5;
+        								count++;
+        							}
+        							else
+        								printf("Error: intelligence was already given the value of %d.\n", new_Char.intelligence);
+        							break;}
+        						case 5:{
+        							if (new_Char.strength == 0) {
+        								new_Char.strength = 13;
+        								points = points - 5;
+        								count++;
+        							}
+        							else
+        								printf("Error: strength was already given the value of %d.\n", new_Char.strength);
+        							break;}
+        						case 6:{
+        							if (new_Char.wisdom == 0) {
+        								new_Char.wisdom = 13;
+        								points = points - 5;
+        								count++;
+        							}
+        							else
+        								printf("Error: wisdom was already given the value: %d.\n", new_Char.wisdom);
+        							break;}
+        						}
+        					}
+    				break; }
+    				case 7:{
+    					if (points < 7)
+    						printf("Error: a score of 14 costs 7 points. You only have %d points.\n", points);
+    					else {
+    						switch (get_assignment(14)) {
+        						case 1:{
+        							if (new_Char.charisma == 0) {
+        								new_Char.charisma = 14;
+        								points = points - 7;
+        								count++;
+        							}
+        							else
+        								printf("Error: charisma was already given the value of %d.\n", new_Char.charisma);
+    							break;}
+        						case 2:{
+        							if (new_Char.constitution == 0) {
+        								new_Char.constitution = 14;
+        								points = points - 7;
+        								count++;
+        							}
+        							else
+        								printf("Error: constitution was already given the value of %d.\n", new_Char.constitution);
+    							break;}
+        						case 3:{
+        							if (new_Char.dexterity == 0) {
+        								new_Char.dexterity = 14;
+        								points = points - 7;
+        								count++;
+        							}
+        							else
+        								printf("Error: dexterity was already given the value of  %d.\n", new_Char.dexterity);
+    							break;}
+        						case 4:{
+        							if (new_Char.intelligence == 0) {
+        								new_Char.intelligence = 14;
+        								points = points - 7;
+        								count++;
+        							}
+        							else
+        								printf("Error: intelligence was already given the value of %d.\n", new_Char.intelligence);
+    							break;}
+        						case 5:{
+        							if (new_Char.strength == 0) {
+        								new_Char.strength = 14;
+        								points = points - 7;
+        								count++;
+        							}
+        							else
+        								printf("Error: strength was already given the value of %d.\n", new_Char.strength);
+    							break;}
+        						case 6:{
+        							if (new_Char.wisdom == 0) {
+        								new_Char.wisdom = 14;
+        								points = points - 7;
+        								count++;
+        							}
+        							else
+        								printf("Error: wisdom was already given the value of %d.\n", new_Char.wisdom);
+    							break;}
+    						}
+    					}
+    				break; }
+    				case 8:{
+    					if (points < 9)
+    						printf("Error: a score of 15 costs 9 points. You only have %d points.\n", points);
+    					else {
+    						switch (get_assignment(15)) {
+        						case 1:{
+        							if (new_Char.charisma == 0) {
+        								new_Char.charisma = 15;
+        								points = points - 9;
+        								count++;
+        							}
+        							else
+        								printf("Error: charisma was already given the value of %d.\n", new_Char.charisma);
+    							break;}
+        						case 2:{
+        							if (new_Char.constitution == 0) {
+        								new_Char.constitution = 15;
+        								points = points - 9;
+        								count++;
+        							}
+        							else
+        								printf("Error: constitution was already given the value of %d.\n", new_Char.constitution);
+    							break;}
+        						case 3:{
+        							if (new_Char.dexterity == 0) {
+        								new_Char.dexterity = 15;
+        								points = points - 9;
+        								count++;
+        							}
+        							else
+        								printf("Error: dexterity was already given the value of %d.\n", new_Char.dexterity);
+    							break;}
+        						case 4:{
+        							if (new_Char.intelligence == 0) {
+        								new_Char.intelligence = 15;
+        								points = points - 9;
+        								count++;
+        							}
+        							else
+        								printf("Error: intelligence was already given the value of %d.\n", new_Char.intelligence);
+    							break;}
+        						case 5:{
+        							if (new_Char.strength == 0) {
+        								new_Char.strength = 15;
+        								points = points - 9;
+        								count++;
+        							}
+        							else
+        								printf("Error: strength was already given the value of %d.\n", new_Char.strength);
+    							break;}
+    						case 6:{
+    							if (new_Char.wisdom == 0) {
+    								new_Char.wisdom = 15;
+    								points = points - 9;
+    								count++;
+    							}
+    							else
+    								printf("Error: wisdom was already given the value of %d.\n", new_Char.wisdom);
+    							break;}
+    						}
+    					}
+    					break;
+    				}
+    			break; }
+			} //end while count<6
+		case 3:{
 			count = 0;
 			stats[0] = 15; stats[1] = 14; stats[2] = 13; stats[3] = 12; stats[4] = 10; stats[5] = 8;
 			while (count < 6) {
-				printf("Where will you assign your %d roll?\n", stats[count]);
-				printf("1.\tCharisma\n2.\tConstitution\n3.\tDexterity\n4.\tIntelligence\n5.\tStrength\n6.\tWisdom\n");
-				//prompt user for stat selections
+				printf("Where will you assign the %d?\n", stats[count]);
+				printf("1.\tCharisma.\n2.\tConstitution.\n3.\tDexterity.\n4.\tIntelligence.\n5.\tStrength.\n6.\tWisdom.\n");
 
-				choice = get_int(1, 6);
-
-				switch (choice) {
-				case 1:
-					if (new_Char.charisma == 0) {
-						new_Char.charisma = stats[count];
-						count++;
-					}
-					else
-						printf("Error: charisma already given value: %d.\n", new_Char.charisma);
-					break;
-				case 2:
+				switch (get_int(1,6)){
+    				case 1:{
+    					if (new_Char.charisma == 0) {
+    						new_Char.charisma = stats[count];
+    						count++;}
+    					else
+    						printf("Error: charisma was already given the value of %d.\n", new_Char.charisma);
+					break;}
+				case 2:{
 					if (new_Char.constitution == 0) {
 						new_Char.constitution = stats[count];
-						count++;
-					}
+						count++;}
 					else
-						printf("Error: constitution already given value: %d.\n", new_Char.constitution);
-					break;
-				case 3:
+						printf("Error: constitution was already given the value of %d.\n", new_Char.constitution);
+					break;}
+				case 3:{
 					if (new_Char.dexterity == 0) {
 						new_Char.dexterity = stats[count];
-						count++;
-					}
+						count++;}
 					else
-						printf("Error: dexterity already given value: %d.\n", new_Char.dexterity);
-					break;
-				case 4:
+						printf("Error: dexterity was already given the value of %d.\n", new_Char.dexterity);
+					break;}
+				case 4:{
 					if (new_Char.intelligence == 0) {
 						new_Char.intelligence = stats[count];
-						count++;
-					}
+						count++;}
 					else
-						printf("Error: intelligence already given value: %d.\n", new_Char.intelligence);
-					break;
-				case 5:
+						printf("Error: intelligence was already given the value of %d.\n", new_Char.intelligence);
+					break;}
+				case 5:{
 					if (new_Char.strength == 0) {
 						new_Char.strength = stats[count];
 						count++;
 					}
 					else
-						printf("Error: strength already given value: %d.\n", new_Char.strength);
-					break;
-				case 6:
+						printf("Error: strength was already given the value of %d.\n", new_Char.strength);
+					break;}
+				case 6:{
 					if (new_Char.wisdom == 0) {
 						new_Char.wisdom = stats[count];
-						count++;
-					}
+						count++;}
 					else
-						printf("Error: wisdom already given value: %d.\n", new_Char.wisdom);
-					break;
+						printf("Error: wisdom was already given the value of %d.\n", new_Char.wisdom);
+					break;}
 				}
 			}
-			break;
+		break;
 		}
 		reset = check_Abilities(new_Char);
-	} while (reset == 2);
+	}
+	    }
+	}while (reset == 2);
 
 	return new_Char; //return the new character & stats.
 } //COMPLETE
