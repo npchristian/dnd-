@@ -45,19 +45,20 @@ typedef struct {
 Character create_Character();							//generic call to create a character
 Character get_Abilities(Character new_Char);			//gets the 5 stats for the character
 
-//int Check_Abilities(Character new_character);           //checks that entered stats are correct
+int check_Abilities(Character new_character);           //checks that entered stats are correct
 int dice_roll(int sides);                               //roles an n sided dice
 int four_d_6_drop_lowest();                             //sorts four dice rolls, drops lowest, and sums remaining 3
 int get_assignment(int score);							//used in the point buy process
 int get_class(); //ADD CLASSES FROM OTHER BOOKS         //returns the class chosen by user
 int get_int(int upper, int lower);						//returns an integer entered by user
 int get_race(char myrace[SIZE], char mysubrace[SIZE],
-			 int *sub_race);								//returns the race chosen by user
+			 int *sub_race);							//returns the race chosen by user
 int get_Abil_Mods(int stat);                            //returns character stat mod for a given stat
 int get_sub_race(int race);                             // get the sub race
 int select_race();
 
-void get_String(char new_string[], char string_type[]); //returns a string entered by user
+void get_String(bool flag, char new_string[],
+                char string_type[]);                    //returns a string entered by user
 void pause();
 void print_class(int class);							//prints the class for user verification
 void print_race(int race, int sub_race);				//prints the race and sub-race for user verificatioN
@@ -73,6 +74,8 @@ int main() {
 
 /*********** FUNCTION DEFINITIONS***********/
 
+
+
 Character create_Character() {
 	/*********** VARIABLE DECLARATIONS***********/
 	char junk;					//consumes newline character
@@ -86,7 +89,10 @@ Character create_Character() {
 		/*********** GET NAME ***********/
 		if (choice == 0 || choice == 1) {
 			puts("Please enter your character's name: ");
-			get_String(new_Character.name, "character's name");
+			if (choice ==0)
+    			get_String(true, new_Character.name, "character's name");
+    		else
+    		    get_String(false, new_Character.name, "character's name");
 		}
 
 		/*********** GET LEVEL*********/
@@ -100,18 +106,25 @@ Character create_Character() {
 			new_Character.race = get_race(new_Character.racename, new_Character.subracename, &new_Character.subrace);         //get race
 
 			/*********** GET CLASS*********/
-		if (choice == 0 || choice == 5)
+		if (choice == 0 || choice == 4) printf("class selection in development\n");
 		//	new_Character.class = get_class();                              //get class
 
 		/*********** GET ABILITIES ***********/
-		if (choice == 0 || choice == 6)
-			new_Character = get_Abilities(new_Character);
+		if (choice == 0 || choice == 5){
+		    printf("yes");
+			new_Character = get_Abilities(new_Character);}
 
-
+    printf("%d", choice);
 		/********** PRINT FINAL STATS *******/
-		//choice = get_int(print_Sats(new_Character));
-
-	} while (choice != 7);
+		printf("Would Would you like to do\n");
+		printf("1.\tchange my name (%s)\n", new_Character.name);
+		printf("2.\tchange my level (%d)\n", new_Character.level);
+		printf("3.\tchange my race (%s)\n", new_Character.racename);
+		printf("4.\tchange my class (TBD)\n");
+		printf("5.\tchange my abilities (cha %d, con %d, dex %d,int %d, str %d, wis %d)\n", new_Character.charisma, new_Character.constitution, new_Character.dexterity, new_Character.intelligence, new_Character.strength, new_Character.wisdom);
+		printf("6.\tI'm done print my character\n");
+        choice = get_int(1, 6);
+	} while (choice != 6);
 
 		return new_Character; //return newly created character
 
@@ -240,8 +253,8 @@ Character get_Abilities(Character new_Char) {
 			puts("You have a total of 27 points to spend on your ability scores. The cost of each is displayed below. ");
 			while (count < 6) {
 				printf("You have %d points left\nWhat would you like to buy?\n", points);
-				printf("SELECTION\tSCORE\tCOST\n1.\t\t8\t0\n2.\t\t9\t1\n3.\t\t10\t2\n4.\t\t11\t3\n5.\t\t12\t4\n6.\t\t13\t5\n7.\t\t14\t6\n");
-				printf("8.\t\t15\t7\n");
+				printf("SELECTION\tSCORE\tCOST\n1.\t\t9\t0\n2.\t\t9\t1\n3.\t\t10\t2\n4.\t\t11\t3\n5.\t\t12\t4\n6.\t\t13\t5\n7.\t\t14\t7\n");
+				printf("8.\t\t15\t9\n");
 				choice = get_int(1, 8);
 				switch (choice) {
 				case 1:
@@ -980,14 +993,14 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int *sub_race){
     				printf("RACE\t\t\tAGE\tALIGMENT\tSIZE\tSPEED\tSIGHT\n");
     				printf("Aarakocra\t\t\t3-30\tgood\tmedium\t25, 50(fly)\tnormal ->cannot fly while wearing heavy or medium armor\n");
     				printf("Aasimar\t\t\t18-160\tvaries\tmedium\t30\tdarkvision\n");
-    				printf("Bugbear\t\t\t16-80\tvaries\medium\t30\tdarkvision\n");
+    				printf("Bugbear\t\t\t16-80\tvaries\tmedium\t30\tdarkvision\n");
     				printf("Changeling\t\t\tnot provided\tvaries\tmedium\t30\tnormal\n");
     				printf("Deep Gnome\t\t\t18-250\tvaries\tsmall\t25\tsuperior darkvision\n");
     				printf("Dragonborne\t\t\t15=80\tvaries\tmedium\t30\tnormal\n");
     				printf("Dwarf, all\t\t\t18-350\tvaries\tmedium\t25\tdarkvision\n");
     				printf("Dwarf, Gray\t\t\t18-350\tvaries\tmedium\t25\tSuperior darkvision\n");
-    				printf("Elf, all\t\t\t100-350\tvaries\tmedium\t30\darkvision\n");
-    				printf("Elf, Dark\t\t\t100-350\tvaries\tmedium\t30\superior darkvision\n");
+    				printf("Elf, all\t\t\t100-350\tvaries\tmedium\t30\tdarkvision\n");
+    				printf("Elf, Dark\t\t\t100-350\tvaries\tmedium\t30\tsuperior darkvision\n");
     				printf("Firbolg\t\t\t50-500\tvaries\tmedium\t30\tnormal\n");
     				printf("Genasi, all\t\t\t18-120\tvaries\tmedium\t30\tnormal\n");
     				printf("Genasi, Fire\t\t\t18-120\tvaries\tmedium\t30\tdarkvision\n");
@@ -1267,8 +1280,8 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int *sub_race){
     				strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
-    			case 2: {
+    			break;}
+    			case 2:{
     				printf("The Aasimar has the following sub races select one:\n");
     				printf("1.\tFallen Aasimar\n2.\tProtector Aasimar\n3.\tScourge Aasimar\n4.\tRevenant\n5.\tgo back\n");
     				choice_sub = get_int(1, 5);
@@ -1290,19 +1303,19 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int *sub_race){
     							break; 
     					break;}
     				}
-    			break;
-    			case 3:
+    			break;}
+    			case 3:{
     				strcpy(myrace, "Bugbear");
     				strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
-    			case 4:
+    			break;}
+    			case 4:{
     				strcpy(myrace, "Changeling");
     				strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
+    			break;}
     			case 5:{
     				printf("The Dragonborn has the following ancestries to choose from select one:\n");
     				printf("1.\t Black\n2.\tBlue\n3.\tBrass\n4. Bronze\n5.\tCoppor\n6.\tGold\n7.\tGreen\n8.\tRed\n9.\tSilver\n10.\tWhite\n11.\t*Revenant\n12.\tgo back\n");
@@ -1346,8 +1359,8 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int *sub_race){
     					    break;
     					}
     				}
-    			}
-    			break;
+    			
+    			break;}
     			case 6:{
     			    printf("The Dwarf has the following sub-races to choose from select one:\n");
     				printf("1.\t*Gold Dwarf\n2.\tGray Dwarf\n3.\tHill Dwarf\n4. Mountain Dwarf\n5.\t*Shield Dwarf\n6.\t*Revenant\n7.\tgo back\n");
@@ -1377,7 +1390,7 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int *sub_race){
     				    break;}
     	           }
     			}
-    			case 7: {
+    			case 7:{
     			    printf("The Elf has the following sub-races to choose from select one:\n");
     				printf("1.\tDark Elf (Drow)\n2.\tHigh Elf\n3.\t*Moon Elf\n4.\t*Sun Elf\n5.\tWood Elf\n6.\t*Revenant\n7.\tgo back\n");
     		    	choice_sub = get_int(1,7);
@@ -1406,12 +1419,12 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int *sub_race){
     				    break;}
     	           }
     			}	
-    			case 8:	
+    			case 8:{
     			    strcpy(myrace, "Firbolg");
     				strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
+    			break;}
     			case 9:{
     			    printf("The Genasi has the following sub-races to choose from select one:\n");
     				printf("1.\tAir Genasi\n2.\tEarth Genasi\n3.\tFire Genasi\n4.\tWater Genasi\n5.\tRevenant\n6.\tgo back\n");
@@ -1464,30 +1477,30 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int *sub_race){
     				    break;}
     	           }
     			}
-    			case 11:
+    			case 11:{
                     strcpy(myrace, "Goblin");
     				strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
-    			case 12:
+    			break;}
+    			case 12:{
     			    strcpy(myrace, "Goliath");
     				strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
-    			case 13:
+    			break;}
+    			case 13:{
     			    strcpy(myrace, "Hobgoblin"); break;
         			strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
-    			case 14:
+    			break;}
+    			case 14:{
         			strcpy(myrace, "Half-Elf");
     				strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
+    			break;}
     			case 15:{
     			    printf("The Halfling has the following sub races to choose from select one:\n");
     		        puts("Choose between the following");
@@ -1512,54 +1525,54 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int *sub_race){
         				break;}
     	           }
     			}
-    			case 16:
+    			case 16:{
         			strcpy(myrace, "Half-Orc");
         			strcpy(mysubrace, "none");
         			choice_race = 0;
         			choice_made = true;
-    			break;
-    			case 17:
+    			break;}
+    			case 17:{
     			    strcpy(myrace, "Human");
     			    strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
-    			case 18:
+    			break;}
+    			case 18:{
     			    strcpy(myrace, "Human, Variant");
     			    strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
-    			case 19:
+    			break;}
+    			case 19:{
     			    strcpy(myrace, "Kenku");
     			    strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
-    			case 20:
+    			break;}
+    			case 20:{
     			    strcpy(myrace, "Kobold");
     			    strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
-    			case 21:
+    			break;}
+    			case 21:{
     			    strcpy(myrace, "Lizardfolk");
     			    strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
-    			case 22:
+    			break;}
+    			case 22:{
     			    strcpy(myrace, "Minotaur");
     			    strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
-    			case 23:
+    			break;}
+    			case 23:{
     			    strcpy(myrace, "Orc");
     			    strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
-    			break;
+    			break;}
     			case 24:{
     			    printf("The Shifter has the following sub races to choose from select one:\n");
     		        puts("Choose between the following");
@@ -1594,52 +1607,60 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int *sub_race){
     	           }
     			}
     			case 25:{
+    			    strcpy(myrace, "Tabaxi");
+    			    strcpy(mysubrace, "none");
+    				choice_race = 0;
+    				choice_made = true;
+    			break;}
+    			case 26:{
     			    printf("The Tiefling has the following sub races to choose from select one:\n");
     		        puts("Choose between the following");
-        			printf("1.\tno sub race\n2.\t*Abyssal\n3.\t*Infernal4.\tRevenant\n5.\tgo back\n");
+        			printf("1.\tno sub race\n2.\t*Abyssal\n3.\t*Infernal\n4.\tRevenant\n5.\tgo back\n");
     		    	choice_sub = get_int(1,5);
-    	            if(choice_sub !=8){
-    				    strcpy(myrace, "Shifter");
+    	            if(choice_sub !=5){
+    				    strcpy(myrace, "Tiefling");
     					choice_made = true;
     					switch (choice_sub) {
         					case 1:
-        						strcpy(mysubrace, "Beasthide");
+        						strcpy(mysubrace, "none");
         						break;
         					case 2:
-        						strcpy(mysubrace, "Cliffalk");
+        						strcpy(mysubrace, "Abyssal");
         						break;
         					case 3:
-        						strcpy(mysubrace, "Longstride");
+        						strcpy(mysubrace, "Infernal");
         						break;
         					case 4:
-        						strcpy(mysubrace, "Longtooth");
+        						strcpy(mysubrace, "Revenant");
         						break;
-        					case 5:
-        					    strcpy(mysubrace, "Razorclaw");
-        					  break;
-        					case 6:
-        					    strcpy(mysubrace, "Revenant");
-        					break;
-        					case 7:
-        					    strcpy(mysubrace, "Wildhunt");
-        					break;
         				break;}
     	           }
-    			}
-    			break;
-    			case 26:
-    			    strcpy(myrace, "Teifling");
+    			
+    			break;}
+    			case 27:{
+                    strcpy(myrace, "triton");
+    			    strcpy(mysubrace, "none");
+    			    choice_race = 0;
+    			    choice_made = true;
+    			break;}
+    			case 28:{
+    			    strcpy(myrace, "Yuan-ti Pureblood");
     			    strcpy(mysubrace, "none");
     				choice_race = 0;
     				choice_made = true;
     			break;
-    			case 27: strcpy(myrace, "triton"); break;
-    			case 28: strcpy(myrace, "Yuan-ti Pureblood"); break;
-    			case 29: strcpy(myrace, "Warforged"); break;
+    			case 29:
+    			    strcpy(myrace, "Warforged");
+    			    strcpy(mysubrace, "none");
+    				choice_race = 0;
+    				choice_made = true;
+    			break;
     			case 30: break;
     		}
+    		}//end sub race switch
     	}while (!choice_made);
-	return choice_race;
+*sub_race = choice_made;
+return choice_race;
 }
 
 int get_Abil_Mods(int stat) {
@@ -1721,23 +1742,15 @@ int four_d_6_drop_lowest() {
 	return (dice[0] + dice[1] + dice[2]); //return total
 } //COMPLETE
 
-void get_String(char new_string[], char string_type[]) {
+void get_String(bool flag, char new_string[], char string_type[]) {
 	int n, choice;
 	char junk;
-	do {
-		fgets(new_string, SIZE, stdin);
-		for (n = 0; n < 50 && new_string[n] != "\0"; n++)
-			if (new_string[n] == '\n')
-				new_string[n] = '\0';// eliminates the newline character
-
-		printf("You selected %s.", new_string);
-		printf("\nUse this for your %s?\n1.\tyes\n2.\tno\n", string_type);
-		choice = get_int(1, 2);
-		scanf("%c", &junk); //consumes newline
-		if (choice == 2)
-			printf("Enter your %s again: \n", string_type);
-
-	} while (choice != 1);
+	if (!flag) 
+	    scanf("%c", &junk);
+	fgets(new_string, SIZE, stdin);
+	for (n = 0; n < 50 && new_string[n] != "\0"; n++)
+		if (new_string[n] == '\n')
+			new_string[n] = '\0';// eliminates the newline character
 } //COMPLETE
 void pause() {
 	puts("Press [Enter] to continue . . .");
