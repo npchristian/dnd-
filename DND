@@ -1053,7 +1053,7 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Firbolg\t\t\tCommon, Elvish, and Giant\n");
 				printf("Genasi\t\t\tCommon and Primordial\n");
 				printf("Gnome, all\t\tCommon and Gnomish\n");
-				printf("Gnome, Svirfneblin\t\Common, Gnomish, and Undercommon\n");
+				printf("Gnome, Svirfneblin\tCommon, Gnomish, and Undercommon\n");
 				printf("Goblin\t\t\tCommon and Goblin\n");
 				printf("Goliath\t\t\tCommon and Giant\n");
 				printf("Halfling\t\tCommon and Halfling\n");
@@ -1076,9 +1076,9 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				break;
 			}
 			case 5: {
-				printf("RACE\tPROPERTY\n");
-				printf("Aarakocra\tProficient: unarmed strikes & strikes deal 1d4 damage\n");
-				printf("Aasimar, all\tresistance: necrotic & radiant damage\n");
+				printf("RACE\t\tPROPERTY\n");
+				printf("Aarakocra\t\tproficient with unarmed strikes & strikes deal 1d4 damage\n");
+				printf("Aasimar, all\t\tresistance to necrotic & radiant damage\n");
 				printf("Aasimar, all\theal for HP equal to your level once per long rest\n");
 				printf("Aasimar, Protector\ttemporary flight and add radiant damage equal to level (at level 3)\n");
 				printf("Aasimar, Scourge\tshed light & deal radiant damage to everyone nearby (at leel 3)\n");
@@ -1096,6 +1096,8 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Dwarf, all\tproficiency with the battleaxe, handaxe, throwing hammer, and warhammer\n");
 				printf("Dwarf, all\tproficiency with the artisan's tools of your choice: smith's, brewer's, or mason's tools");
 				printf("Dwarf, all\typroficient in history checks with origin of stonework and add 2X proficiency bonus\n");
+				pause();
+				printf("RACE\t\tPROPERTY\n");
 				printf("Dwarf, Gray\tadvantage on saving throws against illusions and being charmed or paralyzed\n");
 				printf("Dwarf, Gray\tdisadvantage on attack rolls and perception checks in sunlight\n");
 				printf("Dwarf, Gold\thit point maximum increases by 1 per level\n");
@@ -1110,11 +1112,13 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Elf, Dark\tproficiency with rapiers, shortswords, and hand crossbows\n");
 				printf("Elf, Dark\tdisadvantage on attack rolls and perception checks in sunlight\n");
 				printf("Elf, High\tproficiency with the longsword, shortsword, shortbow, and longbow\n");
-				printf("Firbolg\t\magically become invisible until the start of your next turn or until you attack\n");
+				printf("Firbolg\t\tmagically become invisible until the start of your next turn or until you attack\n");
 				printf("Firbolg\tyou count as large when determining your carrying capacity and weigh you can move\n");
 				printf("Firbolg\tspeak to beasts and plants but cannot understand them\n");
 				printf("Genasi, Air\thold your breath indefinitely unless you are incapacitated\n");
 				printf("Genasi, Earth\tmove across difficult terrain made of earth at normal speed\n");
+				pause();
+				printf("RACE\t\tPROPERTY\n");
 				printf("Genasi, Fire\tties to the Elemental Plane of Fire makes your dark vision unusual\n");
 				printf("Genasi, Fire\t\resistance to fire\n");
 				printf("Genasi, Water\tresistance to acid\n");
@@ -1134,6 +1138,8 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Halfling\tadvantage on saving throws against being frightened\n");
 				printf("Halfling\tcan move through the space of a creature larger than you\n");
 				printf("Halfling\tcan re-roll 1 on an attack, ability, or saving throw once\n");
+				pause();
+				printf("RACE\t\tPROPERTY\n");
 				printf("Halfling, Lightfoot\tcan attempt to hide even when only obscured a creature larger than you\n");
 				printf("Halfling, Stout\tadvantage on saving throws against being poisoned and resistance to poison\n");
 				printf("Half-Elf\tadvantage on saving throws against being charmed\n");
@@ -1142,7 +1148,7 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Half-Orc\tproficient in intimidation\n");
 				printf("Half-Orc\twhen reduced to 0 HP you may drop to 1 HP instead once per long rest\n");
 				printf("Half-Orc\twhen you score a critical hit with a melee weapon add a third dice to the damage roll\n");
-				printf("Hobgoblin\t\proficient with two martial weapons of your choice and in light armor\n");
+				printf("Hobgoblin\t\tproficient with two martial weapons of your choice and in light armor\n");
 				printf("Hobgoblin\tif you miss an attack, add a one for every ally nearby (max 5)\n");
 				printf("Human, Variant\tgain one feat of your choice at level 1\n");
 				printf("Kenku\t\tadvantage on forgery related checks\n");
@@ -1153,6 +1159,8 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Kobold\tdisadvantage on attack rolls and perception checks in sunlight\n");
 				printf("Lizardfolk\tbite for 1d6 piercing damage + strength modifier\n");
 				printf("Lizardfolk\tcan harvest bone/hide from certain corpses, and craft weapons/armor\n");
+			    pause();
+				printf("RACE\t\tPROPERTY\n");
 				printf("Lizardfolk\tcan hold your breath for up to 15 minutes\n");
 				printf("Lizardfolk\tselect 2 proficiencies: animal handling, nature, perception, stealth, survival\n");
 				printf("Lizardfolk\twhen unarmored your armor rating is 13 plus your dexterity modifier\n");
