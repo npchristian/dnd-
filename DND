@@ -1000,12 +1000,13 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Lizardfolk\t\t14-60\tvaries\t\tmedium\t30\t\tno\n");
 				printf("Minotaur\t\t17-150\tvaries\t\tmedium\t30\t\tno\n");
 				printf("Orc\t\t\t12-50\tvaries\t\tmedium\t30\t\tyes\n");
-				printf("Shifter\t\t\tN/A\tvaries\t\tmedium\t30\t\tyes");
+				printf("Shifter\t\t\tN/A\tvaries\t\tmedium\t30\t\tyes\n");
 				printf("Tabaxi\t\t\t18-75\tvaries\t\tmedium\t30, 20 (climb)\tyes\n");
 				printf("Tiefling\t\t18-80\tvaries\t\tmedium\t30\t\tyes\n");
 				printf("Triton\t\t\t15-200\tvaries\t\tmedium\t30, 30 (swim)\tno\n");
 				printf("Warforged\t\tN/A\tvaries\t\tmedium\t30\t\tno\n");
 				printf("Yuan-Ti Pureblood\t18-75\tvaries\t\tmedium\t30\t\tyes\n");
+				pause();
 			break;}
 			case 3: {
 				printf("RACE/SUBRACE\t\tPROPERTY\n");
@@ -1026,6 +1027,11 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Genasi, Water\tCreate or Destroy Water (at level 3)\n");
 				printf("Gnome, Forest\tMinor Illusion\n");
 				printf("Human, Variant\tone feat of your choice\n");
+				printf("Shifter, Beasthide\tgain temp HP (level+con mod) & +1 AC\n");
+				printf("Shifter, Cliffwalk\tgain temp HP (level +con mod) & 30ft climb speed\n");
+				printf("Shifter, Longstride\tgain temp HP (level+con mod) & bonus dash\n");
+				printf("Shifter, Longtooth\tgain temp HP (level+con mod) & bite for extra damage\n");
+				printf("Shifter, Razorclaw\t")
 				printf("Tiefling\tThaumaturgy\n");
 				printf("Tiefling\tHellish Rebuke (at level 3) (spell level 2)\n");
 				printf("Tiefling\tDarkness (at level 5)\n");
@@ -1040,6 +1046,7 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Yuan-ti Pureblood\tPoison Spray\n");
 				printf("Yuan-ti Pureblood\tAnimal Friendship\n");
 				printf("Yuan-ti Pureblood\tSuggestion\n\n");
+				pause();
 				break; }
 			case 4: {
 				printf("RACE\t\t\tLANGUAGES\n");
@@ -1075,7 +1082,8 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Tiefling, Infernal\tCommon and Infernal\n");
 				printf("Triton\t\t\tCommon and Primordial\n");
 				printf("Yuan-ti Pureblood\tCommon, Abyssal, and Draconic\n");
-				break;
+				pause();
+			break;
 			}
 			case 5: {
 				printf("RACE\t\t\tPROPERTY\n");
@@ -1167,6 +1175,13 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Lizardfolk\t\tselect 2 proficiencies: animal handling, nature, perception, stealth, survival\n");
 				printf("Lizardfolk\t\twhen unarmored your armor rating is 13 plus your dexterity modifier\n");
 				printf("Lizardfolk\t\tcan bite with a bonus action and gain temporary HP\n");
+				printf("Minotaur\t\tproficient with unarmed strikes(horns)\n");
+				printf("Minotaur\t\tattack with horns for 1d10\n");
+				printf("Minotaur\t\tadvantage on shoving (not against being shoved)\n");
+				printf("Minotaur\t\twhen dashing, can melee attack with horns as a bonus action\n");
+				printf("Minotaur\t\twhen attacking you can attempt to shove as a bonus action\n");
+				printf("Minotaur\t\tcan perfectly recall any path you have traveled\n");
+				printf("Minotaur\t\tproficient with navigagtor's tools and water vehicles\n");
 				printf("Orc\t\t\tmove up to 30 ft as a bonus action towards an enemy\n");
 				printf("Orc\t\t\tproficient in the intimidation skill\n");
 				printf("Orc\t\t\tyou count as large when determining your carrying capacity and weight you can move\n");
@@ -1175,12 +1190,15 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Tabaxi\t\t\tcan claw for 1d4 + strength modifier\n");
 				printf("Tiefling\t\tresistance to fire damage\n");
 				printf("Tiefling, Abyssal\tmaximum HP increases by 1/2 your level (minimum 1)\n");
+				pause();
+				printf("RACE\t\t\tPROPERTY\n");
 				printf("Tiefling, Infernal\tresistance to fire damage\n");
 				printf("Triton\t\t\tcan breathe in air and water\n");
 				printf("Triton\t\t\tresistance to cold damage and ignore drawbacks from deep and underwater environments\n");
 				printf("Triton\t\t\tcan communicate simple ideas with beasts who breathe water\n");
 				printf("Yuan-ti Pureblood\tdvantage against saving throws against spells and other magical affects\n");
 				printf("Yuan-ti Pureblood\timmune to poison damage and the poisoned condition\n");
+				pause();
 				break;
 			}
 			case 6: {
