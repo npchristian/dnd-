@@ -939,7 +939,6 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Halfling, Stout\t\t0\t+1\t+2\t0\t0\t0\n");
 				printf("Halfling, Strongheart\t0\t+1\t+2\t0\t0\t0\n");
 				printf("Halfling, Revenant\t0\t+1\t0\t0\t0\t0\n");
-				printf("Half-Elf\t\t2\t0\t0\t0\t0\t0 (pick 2 more to increase by 1)\n");
 				printf("Half-Orc\t\t0\t+1\t0\t0\t+2\t0\n");
 				printf("Hobgoblin\t\t0\t+2\t0\t+1\t0\t0\n");
 				printf("Human\t\t\t+1\t+1\t+1\t+1\t+1\t+1\n");
@@ -988,17 +987,20 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Gnome, Svifneblin\t18-500\tvaries\t\tsmall\t25\t\tsuperior\n");
 				printf("Goblin\t\t\t8-60\tvaries\t\tsmall\t30\t\tyes\n");
 				printf("Goliath\t\t\t18-70\tvaries\t\tmedium\t30\t\tno\n");
-				printf("Halfling\t\t20-250\tvaries\t\tsmall\t25\t\tno\n");
+				printf("Half-Elf\t\t20-180\tvaries\t\tmedium\t30\t\tyes\n");
+				
 				pause();
 				printf("RACE\t\t\tAGE\tALIGMENT\tSIZE\tSPEED\t\tDARKVISION\n");
-				printf("Half-Elf\t\t20-180\tvaries\t\tmedium\t30\t\tyes\n");
+                printf("Halfling\t\t20-250\tvaries\t\tsmall\t25\t\tno\n");
 				printf("Half-Orc\t\t40-75\tvaries\t\tmedium\t30\t\tyes\n");
 				printf("Hobgoblin\t\t19-75\tvaries\t\tmedium\t30\t\tyes\n");
 				printf("Human\t\t\t18-75\tvaries\t\tmedium\t30\t\tno\n");
 				printf("Kenku\t\t\t12-60\tvaries\t\tmedium\t30\t\tno\n");
 				printf("Kobold\t\t\t6-120\tvaries\t\tsmall\t30\t\tyes\n");
 				printf("Lizardfolk\t\t14-60\tvaries\t\tmedium\t30\t\tno\n");
+				printf("Minotaur\t\t17-150\tvaries\t\tmedium\t30\t\tno\n");
 				printf("Orc\t\t\t12-50\tvaries\t\tmedium\t30\t\tyes\n");
+				printf("Shifter\t\t\tN/A\tvaries\t\tmedium\t30\t\tyes");
 				printf("Tabaxi\t\t\t18-75\tvaries\t\tmedium\t30, 20 (climb)\tyes\n");
 				printf("Tiefling\t\t18-80\tvaries\t\tmedium\t30\t\tyes\n");
 				printf("Triton\t\t\t15-200\tvaries\t\tmedium\t30, 30 (swim)\tno\n");
@@ -1076,26 +1078,26 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				break;
 			}
 			case 5: {
-				printf("RACE\t\tPROPERTY\n");
+				printf("RACE\t\t\tPROPERTY\n");
 				printf("Aarakocra\t\tproficient with unarmed strikes & strikes deal 1d4 damage\n");
 				printf("Aasimar, all\t\tresistance to necrotic & radiant damage\n");
-				printf("Aasimar, all\theal for HP equal to your level once per long rest\n");
+				printf("Aasimar, all\t\theal for HP equal to your level once per long rest\n");
 				printf("Aasimar, Protector\ttemporary flight and add radiant damage equal to level (at level 3)\n");
 				printf("Aasimar, Scourge\tshed light & deal radiant damage to everyone nearby (at leel 3)\n");
-				printf("Aasimar, Fallen\tnearby creatures who fail their save become afraid of you & add necrotic damage (at level 3)\n");
-				printf("Bugbear\twhen you make a melee attack your reach is 5ft greater than normal\n");
-				printf("Bugbear\tyou count as large when determining your carrying capacity and weight you can move\n");
-				printf("Bugbear\tproficient in stealth\n");
-				printf("Bugbear\tif you suprise a creature and hit it on your first turn you deal an extra 2d6 damage\n");
-				printf("Changeling\tproficient in the deception skill\n");
-				printf("Changeling\tpolymorph into a humanoid of your size that you have seen\n");
-				printf("Dragonborn\tchoose one draconic ancestry from page 34 of the Player's Handbook\n");
-				printf("Dragonborn\texhale destructive energy based on your ancestry to deal damage \n");
-				printf("Dragonborn\tresistance to the damage type associated with your Draconic Ancestry\n");
-				printf("Dwarf, all\tadvantage on saving throws against poison and resistance to poison damage\n");
-				printf("Dwarf, all\tproficiency with the battleaxe, handaxe, throwing hammer, and warhammer\n");
-				printf("Dwarf, all\tproficiency with the artisan's tools of your choice: smith's, brewer's, or mason's tools");
-				printf("Dwarf, all\typroficient in history checks with origin of stonework and add 2X proficiency bonus\n");
+				printf("Aasimar, Fallen\t\tnearby creatures who fail their save become afraid of you & add necrotic damage (at level 3)\n");
+				printf("Bugbear\t\t\twhen you make a melee attack your reach is 5ft greater than normal\n");
+				printf("Bugbear\t\t\tyou count as large when determining your carrying capacity and weight you can move\n");
+				printf("Bugbear\t\t\tproficient in stealth\n");
+				printf("Bugbear\t\t\tif you suprise a creature and hit it on your first turn you deal an extra 2d6 damage\n");
+				printf("Changeling\t\tproficient in the deception skill\n");
+				printf("Changeling\t\tpolymorph into a humanoid of your size that you have seen\n");
+				printf("Dragonborn\t\tchoose one draconic ancestry from page 34 of the Player's Handbook\n");
+				printf("Dragonborn\t\texhale destructive energy based on your ancestry to deal damage \n");
+				printf("Dragonborn\t\tresistance to the damage type associated with your Draconic Ancestry\n");
+				printf("Dwarf, all\t\tadvantage on saving throws against poison and resistance to poison damage\n");
+				printf("Dwarf, all\t\tproficiency with the battleaxe, handaxe, throwing hammer, and warhammer\n");
+				printf("Dwarf, all\t\tproficiency with the artisan's tools of your choice: smith's, brewer's, or mason's tools\n");
+				printf("Dwarf, all\t\tproficient in history checks with origin of stonework and add 2X proficiency bonus\n");
 				pause();
 				printf("RACE\t\tPROPERTY\n");
 				printf("Dwarf, Gray\tadvantage on saving throws against illusions and being charmed or paralyzed\n");
@@ -1105,7 +1107,7 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Dwarf, Mountain\tproficiency with light and medium armor\n");
 				printf("Dwarf, Shield\tproficiency with light and medium armor\n");
 				printf("Elf, all\tproficiency in perception\n");
-				printf("Elf, all\tadvantage on saving throws against being charmed");
+				printf("Elf, all\tadvantage on saving throws against being charmed\n");
 				printf("Elf, all\tcannot be put to sleep by nonmagical means\n");
 				printf("Elf, all\telves don't sleep instead meditate for four hours a day to gain a long rest\n");
 				printf("Gnome, Deep\tadvantage on all intelligence, wisdom, and charisma saving throws against magic\n");
@@ -1113,104 +1115,107 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Elf, Dark\tdisadvantage on attack rolls and perception checks in sunlight\n");
 				printf("Elf, High\tproficiency with the longsword, shortsword, shortbow, and longbow\n");
 				printf("Firbolg\t\tmagically become invisible until the start of your next turn or until you attack\n");
-				printf("Firbolg\tyou count as large when determining your carrying capacity and weigh you can move\n");
-				printf("Firbolg\tspeak to beasts and plants but cannot understand them\n");
+				printf("Firbolg\t\tyou count as large when determining your carrying capacity and weigh you can move\n");
+				printf("Firbolg\t\tspeak to beasts and plants but cannot understand them\n");
 				printf("Genasi, Air\thold your breath indefinitely unless you are incapacitated\n");
 				printf("Genasi, Earth\tmove across difficult terrain made of earth at normal speed\n");
 				pause();
-				printf("RACE\t\tPROPERTY\n");
-				printf("Genasi, Fire\tties to the Elemental Plane of Fire makes your dark vision unusual\n");
-				printf("Genasi, Fire\t\resistance to fire\n");
-				printf("Genasi, Water\tresistance to acid\n");
-				printf("Genasi, Water\tbreathe in air and water\n");
-				printf("Gnome, all\tadvantage on all intelligence, wisdom, and charisma saving throws against magic\n");
-				printf("Gnome, Forest\tcommunicate simple ideas with small or smaller beasts\n");
-				printf("Gnome, Rock\tadd double proficiency bonus to history checks on magic, alchemical, & technological items\n");
-				printf("Gnome, Rock\tproficient with tinker tools\n");
-				printf("Gnome, Rock\tcan construct a tiny clockwork device (see rules on page 37 of the Player's Handbook\n");
+				printf("RACE\t\t\tPROPERTY\n");
+				printf("Genasi, Fire\t\tties to the Elemental Plane of Fire makes your dark vision unusual\n");
+				printf("Genasi, Fire\t\tresistance to fire\n");
+				printf("Genasi, Water\t\tresistance to acid\n");
+				printf("Genasi, Water\t\tbreathe in air and water\n");
+				printf("Gnome, all\t\tadvantage on all intelligence, wisdom, and charisma saving throws against magic\n");
+				printf("Gnome, Forest\t\tcommunicate simple ideas with small or smaller beasts\n");
+				printf("Gnome, Rock\t\tadd double proficiency bonus to history checks on magic, alchemical, & technological items\n");
+				printf("Gnome, Rock\t\tproficient with tinker tools\n");
+				printf("Gnome, Rock\t\tcan construct a tiny clockwork device (see rules on page 37 of the Player's Handbook\n");
 				printf("Gnome, Svirfneblin\tadvantage on stealth checks to hide in rocky terrain\n");
-				printf("Goblin\tdeal extra damage (equal to level) against medium or larger create\n");
-				printf("Goblin\ttake the disengage or hide action as a bonus action\n");
-				printf("Goliath\tacclimated to high elevations and cold climates including above 20k feet\n");
-				printf("Goliath\tproficiency in athletics\n");
-				printf("Goliath\tyou count as large when determining your carrying capacity and weigh you can move\n");
-				printf("Goliath\tcan use your reaction to reduce the damage by 1d12 + constitution modifier\n");
-				printf("Halfling\tadvantage on saving throws against being frightened\n");
-				printf("Halfling\tcan move through the space of a creature larger than you\n");
-				printf("Halfling\tcan re-roll 1 on an attack, ability, or saving throw once\n");
+				printf("Goblin\t\t\tdeal extra damage (equal to level) against medium or larger create\n");
+				printf("Goblin\t\t\ttake the disengage or hide action as a bonus action\n");
+				printf("Goliath\t\t\tacclimated to high elevations and cold climates including above 20k feet\n");
+				printf("Goliath\t\t\tproficiency in athletics\n");
+				printf("Goliath\t\t\tyou count as large for your carrying capacity and weight you can move\n");
+				printf("Goliath\t\t\tcan use a reaction to reduce damage by 1d12 + con modifier\n");
+				printf("Halfling\t\tadvantage on saving throws against being frightened\n");
+				printf("Halfling\t\tcan move through the space of a creature larger than you\n");
+				printf("Halfling\t\tcan re-roll 1 on an attack, ability, or saving throw once\n");
 				pause();
-				printf("RACE\t\tPROPERTY\n");
-				printf("Halfling, Lightfoot\tcan attempt to hide even when only obscured a creature larger than you\n");
-				printf("Halfling, Stout\tadvantage on saving throws against being poisoned and resistance to poison\n");
-				printf("Half-Elf\tadvantage on saving throws against being charmed\n");
-				printf("Half-Elf\tcant be put to sleep by nonmagical means\n");
-				printf("Half-Elf\tselect two proficiencies in two skills\n");
-				printf("Half-Orc\tproficient in intimidation\n");
-				printf("Half-Orc\twhen reduced to 0 HP you may drop to 1 HP instead once per long rest\n");
-				printf("Half-Orc\twhen you score a critical hit with a melee weapon add a third dice to the damage roll\n");
+				printf("RACE\t\t\tPROPERTY\n");
+				printf("Halfling, Lightfoot\tcan attempt to hide even when obscured only by a creature larger than you\n");
+				printf("Halfling, Stout\t\tadvantage on saving throws against being poisoned and resistance to poison\n");
+				printf("Half-Elf\t\tadvantage on saving throws against being charmed\n");
+				printf("Half-Elf\t\tcan't be put to sleep by nonmagical means\n");
+				printf("Half-Elf\t\tselect two proficiencies in two skills\n");
+				printf("Half-Orc\t\tproficient in intimidation\n");
+				printf("Half-Orc\t\twhen reduced to 0 HP you may drop to 1 HP instead once per long rest\n");
+				printf("Half-Orc\t\twhen you score a critical hit with a melee weapon add a third dice to the damage roll\n");
 				printf("Hobgoblin\t\tproficient with two martial weapons of your choice and in light armor\n");
-				printf("Hobgoblin\tif you miss an attack, add a one for every ally nearby (max 5)\n");
-				printf("Human, Variant\tgain one feat of your choice at level 1\n");
-				printf("Kenku\t\tadvantage on forgery related checks\n");
-				printf("Kenku\tchoose 2 to be proficient in: acrobatics, deception, stealth, and sleight of hand\n");
-				printf("Kenku\tcan attempt to mimic sounds you have heard including voices\n");
-				printf("Kobold\tcause nearby allies to gain advantage on enemies within 10ft \n");
-				printf("Kobold\tadvantage against enemies who are standing next to an ally");
-				printf("Kobold\tdisadvantage on attack rolls and perception checks in sunlight\n");
-				printf("Lizardfolk\tbite for 1d6 piercing damage + strength modifier\n");
-				printf("Lizardfolk\tcan harvest bone/hide from certain corpses, and craft weapons/armor\n");
+				printf("Hobgoblin\t\tif you miss an attack, add a one for every ally nearby (max 5)\n");
+				printf("Human, Variant\t\tgain one feat of your choice at level 1\n");
+				printf("Kenku\t\t\tadvantage on forgery related checks\n");
+				printf("Kenku\t\t\tchoose 2 to be proficient in: acrobatics, deception, stealth, and sleight of hand\n");
+				printf("Kenku\t\t\ttcan attempt to mimic sounds you have heard including voices\n");
+				printf("Kobold\t\t\tcause nearby allies to gain advantage on enemies within 10ft \n");
+				printf("Kobold\t\t\tadvantage against enemies who are standing next to an ally\n");
+				printf("Kobold\t\t\tdisadvantage on attack rolls and perception checks in sunlight\n");
+				printf("Lizardfolk\t\tbite for 1d6 piercing damage + strength modifier\n");
+				printf("Lizardfolk\t\tcan harvest bone/hide from certain corpses, and craft weapons/armor\n");
 			    pause();
-				printf("RACE\t\tPROPERTY\n");
-				printf("Lizardfolk\tcan hold your breath for up to 15 minutes\n");
-				printf("Lizardfolk\tselect 2 proficiencies: animal handling, nature, perception, stealth, survival\n");
-				printf("Lizardfolk\twhen unarmored your armor rating is 13 plus your dexterity modifier\n");
-				printf("Lizardfolk\tcan bite with a bonus action and gain temporary HP\n");
-				printf("Orc\tmove up to 30 ft as a bonus action towards an enemy you can see or hear\n");
-				printf("Orc\tproficient in the intimidation skill\n");
-				printf("Orc\tyou count as large when determining your carrying capacity and weight you can move\n");
-				printf("Tabaxi\tcan double your speed in combatuntil the end of your turn\n");
-				printf("Revenant (subclass)\tsee Codex: Unearthed Arcana");
-				printf("Tabaxi\tcan claw for 1d4 + strength modifier\n");
-				printf("Tiefling\tresistance to fire damage\n");
+				printf("RACE\t\t\tPROPERTY\n");
+				printf("Lizardfolk\t\tcan hold your breath for up to 15 minutes\n");
+				printf("Lizardfolk\t\tselect 2 proficiencies: animal handling, nature, perception, stealth, survival\n");
+				printf("Lizardfolk\t\twhen unarmored your armor rating is 13 plus your dexterity modifier\n");
+				printf("Lizardfolk\t\tcan bite with a bonus action and gain temporary HP\n");
+				printf("Orc\t\t\tmove up to 30 ft as a bonus action towards an enemy\n");
+				printf("Orc\t\t\tproficient in the intimidation skill\n");
+				printf("Orc\t\t\tyou count as large when determining your carrying capacity and weight you can move\n");
+				printf("Revenant (subclass)\tsee Codex: Unearthed Arcana\n");
+				printf("Tabaxi\t\t\tcan double your speed in combat\n");
+				printf("Tabaxi\t\t\tcan claw for 1d4 + strength modifier\n");
+				printf("Tiefling\t\tresistance to fire damage\n");
 				printf("Tiefling, Abyssal\tmaximum HP increases by 1/2 your level (minimum 1)\n");
 				printf("Tiefling, Infernal\tresistance to fire damage\n");
-				printf("Triton\tcan breathe in air and water\n");
-				printf("Triton\tresistance to cold damage and ignore drawbacks from deep and underwater environments\n");
-				printf("Triton\t\tcan communicate simple ideas with beasts who breathe water\n");
+				printf("Triton\t\t\tcan breathe in air and water\n");
+				printf("Triton\t\t\tresistance to cold damage and ignore drawbacks from deep and underwater environments\n");
+				printf("Triton\t\t\tcan communicate simple ideas with beasts who breathe water\n");
 				printf("Yuan-ti Pureblood\tdvantage against saving throws against spells and other magical affects\n");
 				printf("Yuan-ti Pureblood\timmune to poison damage and the poisoned condition\n");
 				break;
 			}
 			case 6: {
+			    printf("RACE\t\t\tSOURCE\n");
 				printf("Aarakocra\t\tElemental Evil Player's Companion page 3\n");
-				printf("Aasimar\t\tVolo's Guide to Monsters page 104\n");
-				printf("Bugbear\t\tVolo's Guide to Monsters page 119\n");
+				printf("Aasimar\t\t\tVolo's Guide to Monsters page 104\n");
+				printf("Bugbear\t\t\tVolo's Guide to Monsters page 119\n");
 				printf("Changeling\t\tCodex: Unearthed Arcana page 3\n");
 				printf("Dragonborn\t\tPlayer's Handbook page 34\n");
-				printf("Dwarf\t\tPlayer's Handbook page 18\n");
-				printf("Elf\t\tPlayer's Handbook page 23\n");
-				printf("Firbolg\t\tVolo's Guide to Monsters page 107\n");
-				printf("Genasi\t\tElemental Evil Player's Companion page 3\n");
-				printf("Gnome\t\tPlayer's Handbook page 17\n");
+				printf("Dwarf\t\t\tPlayer's Handbook page 18\n");
+				printf("Elf\t\t\tPlayer's Handbook page 23\n");
+				printf("Firbolg\t\t\tVolo's Guide to Monsters page 107\n");
+				printf("Genasi\t\t\tElemental Evil Player's Companion page 3\n");
+				printf("Gnome\t\t\tPlayer's Handbook page 17\n");
 				printf("Gnome, Deep\t\tElemental Evil Player's Companion page 7\n");
-				printf("Goblin\t\tVolo's Guide to Monsters page 104\n");
-				printf("Goliath\t\tElemental Evil Player's Companion page 3 and Volo's Guide to Monsters page 108\n");
+				printf("Goblin\t\t\tVolo's Guide to Monsters page 104\n");
+				printf("Goliath\t\t\tElemental Evil Player's Companion page 3 and Volo's Guide to Monsters page 108\n");
 				printf("Halfling\t\tPlayer's Handbook page 36\n");
 				printf("Half-Elf\t\tPlayer's Handbook page 38\n");
 				printf("Half-Orc\t\tPlayer's Handbook page 40\n");
 				printf("Hobgoblin\t\tVolo's Guide to Monsters page 109\n");
-				printf("Human\t\tPlayer's Handbook page 29\n");
+				printf("Human\t\t\tPlayer's Handbook page 29\n");
 				printf("Human, Variant\t\tPlayer's Handbook page 29\n");
-				printf("Kenku\t\tVolo's Guide to Monsters page 109\n");
-				printf("Kobold\t\tVolo's Guide to Monsters page 119\n");
+				pause();
+				printf("RACE\t\t\tSOURCE\n");
+				printf("Kenku\t\t\tVolo's Guide to Monsters page 109\n");
+				printf("Kobold\t\t\tVolo's Guide to Monsters page 119\n");
 				printf("Lizardfolk\t\tVolo's Guide to Monsters page 112\n");
-				printf("Orc\t\tVolo's Guide to Monsters page 120\n");
-				printf("Tabaxi\t\tVolo's Guide to Monsters page 115\n");
+				printf("Orc\t\t\tVolo's Guide to Monsters page 120\n");
+				printf("Tabaxi\t\t\tVolo's Guide to Monsters page 115\n");
 				printf("Tiefling\t\tPlayer's Handbook page 42\n");
-				printf("Tiefling, Abyssal\t\tCodex: Unearthed Arcana page 10\n");
-				printf("Tiefling, Infernal\t\tCodex: Unearthed Arcana page 10\n");
-				printf("Triton\t\tVolo's Guide to Monsters page 117\n");
-				printf("Yuan-ti Pureblood\t\tVolo's Guide to Monsters page 120\n");
+				printf("Tiefling, Abyssal\tCodex: Unearthed Arcana page 10\n");
+				printf("Tiefling, Infernal\tCodex: Unearthed Arcana page 10\n");
+				printf("Triton\t\t\tVolo's Guide to Monsters page 117\n");
+				printf("Yuan-ti Pureblood\tVolo's Guide to Monsters page 120\n");
 				break; } //need to update this
 			case 7: {break; } // end case 7 user is ready
 			} //end switch(get_int(1, 7);)
@@ -1260,7 +1265,7 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 			break; }
 		case 5: {
 			printf("The Dragonborn has the following ancestries to choose from select one:\n");
-			printf("1.\t Black\n2.\tBlue\n3.\tBrass\n4. Bronze\n5.\tCoppor\n6.\tGold\n7.\tGreen\n8.\tRed\n9.\tSilver\n10.\tWhite\n11.\t*Revenant\n12.\tgo back\n");
+			printf("1.\t Black\n2.\tBlue\n3.\tBrass\n4.\tBronze\n5.\tCoppor\n6.\tGold\n7.\tGreen\n8.\tRed\n9.\tSilver\n10.\tWhite\n11.\t*Revenant\n12.\tgo back\n");
 			choice_sub = get_int(1, 12);
 			if (choice_sub != 12) {
 				strcpy(myrace, "Dragonborn");
@@ -1705,238 +1710,6 @@ void pause() {
 	puts("Press [ENTER] to continue . . .");
 	getchar();
 } //COMPLETE
-void print_class(int class) {
-	switch (class) {
-	case 1:
-		printf("Class:\tBarbarian\n");
-		break;
-	case 2:
-		printf("Class:\tBard\n");
-		break;
-	case 3:
-		printf("Class:\tCleric\n");
-		break;
-	case 4:
-		printf("Class:\tDruid\n");
-		break;
-	case 5:
-		printf("Class:\tFighter\n");
-		break;
-	case 6:
-		printf("Class:\tMonk\n");
-		break;
-	case 7:
-		printf("Class:\tPaladin\n");
-		break;
-	case 8:
-		printf("Class:\tRanger\n");
-		break;
-	case 9:
-		printf("Class:\tSorcerer\n");
-		break;
-	case 10:
-		printf("Class:\tWarlock\n");
-		break;
-	case 11:
-		printf("Class:\tWizard\n");
-		break;
-	}
-} //modify after adding all classes //modify after adding all races/sub-races
-void print_race(int race_int, int sub_race_int) {
-	switch (race_int) {
-	case 1:
-		printf("Race: Aarakocra\nSub Race: N/A\n");
-		break;
-	case 2:
-		printf("Race: Aasimar\n");
-		switch (sub_race_int) {
-		case 1:
-			printf("Sub Race: Protector Aasimar\n");
-			break;
-		case 2:
-			printf("Sub Race: Scourge Aasimar\n");
-			break;
-		case 3:
-			printf("Sub Race: Fallen Aasimar\n");
-			break;
-		}
-		break;
-	case 3:
-		printf("Race: Bugbear\nSub Race: N/A\n");
-		break;
-	case 4:
-		printf("Race: Dragonborn\n");
-		switch (sub_race_int) {
-		case 1:
-			printf("Sub Race: black\n");
-			break;
-		case 2:
-			printf("Sub Race: Blue\n");
-			break;
-		case 3:
-			printf("Sub Race: Brass\n");
-			break;
-		case 4:
-			printf("Sub Race: Bronze\n");
-			break;
-		case 5:
-			printf("Sub Race: Copper\n");
-			break;
-		case 6:
-			printf("Sub Race: Gold\n");
-			break;
-		case 7:
-			printf("Sub Race: Green\n");
-			break;
-		case 8:
-			printf("Sub Race: Red\n");
-			break;
-		case 9:
-			printf("Sub Race: Silver\n");
-			break;
-		case 10:
-			printf("Sub Race: White\n");
-			break;
-		}
-		break;
-	case 5:
-		printf("Race: Deep Gnome\nSub Race: N/A\n");
-		break;
-	case 6:
-		printf("Race: Dwarf\n");
-		switch (sub_race_int) {
-		case 1:
-			printf("Sub Race: Hill Dwarf\n");
-			break;
-		case 2:
-			printf("Sub Race: Mountain Dwarf\n");
-			break;
-		case 3:
-			printf("Sub Race: Shield Dwarf\n");
-			break;
-		case 4:
-			printf("Sub Race: Gold Dwarf\n");
-			break;
-		case 5:
-			printf("Sub Race: Gray Dwarf\n");
-			break;
-		}
-		break;
-	case 7:
-		printf("Race: Elf\n");
-		switch (sub_race_int) {
-		case 1:
-			printf("Sub Race: High-Elf\n");
-			break;
-		case 2:
-			printf("Sub Race : Wood-Elf\n");
-			break;
-		case 3:
-			printf("Sub Race: Dark-Elf (Drow)\n");
-			break;
-		case 4:
-			printf("Sub Race: Moon-Elf\n");
-			break;
-		case 5:
-			printf("Sub Race: Sun-Elf\n");
-			break;
-		}
-		break;
-	case 8:
-		printf("Race: Firbolg\nSub Race: N/A\n");
-		break;
-	case 9:
-		printf("Race: Genasi\n");
-		switch (sub_race_int) {
-		case 1:
-			printf("Sub Race: Air Genasi\n");
-			break;
-		case 2:
-			printf("Sub Race: Earth Genasi\n");
-			break;
-		case 3:
-			printf("Sub Race: Fire Genasi\n");
-			break;
-		case 4:
-			printf("Sub Race: Water Genasi\n");
-			break;
-		}
-		break;
-	case 10:
-		printf("Race: Gnome\n");
-		switch (sub_race_int) {
-		case 1:
-			printf("Sub Race: Forest Gnome\n");
-			break;
-		case 2:
-			printf("Sub Race: Rock Gnome\n");
-			break;
-		case 3:
-			printf("Sub Race: Deep Gnome\n");
-			break;
-		case 4:
-			printf("Sub Race: Svirfneblin\n");
-			break;
-		}
-		break;
-	case 11:
-		printf("Race: Goblin\nSub Race: N/A\n");
-		break;
-	case 12:
-		printf("Race: Goliath\nSub Race: N/A\n");
-		break;
-	case 13:
-		printf("Race: Hobgoblin\nSub Race: N/A\n");
-		break;
-	case 14:
-		printf("Race: Half-Elf\nSub Race: N/A\n");
-		break;
-	case 15:
-		printf("Race: Halfling\n");
-		switch (sub_race_int) {
-		case 1:
-			printf("Sub Race: Stout\n");
-			break;
-		case 2:
-			printf("Sub Race: Lightfoot\n");
-			break;
-		case 3:
-			printf("Sub Race: Strongheart\n");
-			break;
-		}
-		break;
-	case 16:
-		printf("Race: Half-Orc\nSub Race: N/A\n");
-		break;
-	case 17:
-		printf("Race: Human\nSub Race: N/A\n");
-		break;
-	case 18:
-		printf("Race: Kenku\nSub Race: N/A\n");
-		break;
-	case 19:
-		printf("Race: Kobold\nSub Race: N/A\n");
-		break;
-	case 20:
-		printf("Race: Lizardfolk\nSub Race: N/A\n");
-		break;
-	case 21:
-		printf("Race: Orc\nSub Race: N/A\n");
-		break;
-	case 22:
-		printf("Race: Tabaxi\nSub Race: N/A\n");
-		break;
-	case 23:
-		printf("Race: Tiefling\nSub Race: N/A\n");
-		break;
-	case 24:
-		printf("Race: Triton\nSub Race: N/A\n");;
-		break;
-	case 25:
-		printf("Race: Yuan-Ti Pureblood\nSub Race: N/A\n");
-		break;
-	}
-} //modify after adding all races and sub races
 void sort_array(int arr_size, int arr[6]) {
 	int count, count2, temp;
 	for (count = 0; count < arr_size; count++)
