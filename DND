@@ -1,39 +1,6 @@
 /**********5e Character creation and modificaiton module*********/
-/*
-	Finished: Codex, PHB Elemental Evil
-		Aarakocra
-		Aasimar
-		Changeling
-		Dragonborn
-		Dwarf, Hill
-		Dwarf, Mountain
-		Elf, Dark
-		Elf, High
-		Elf, Wood
-		Firbolg
-		Genasi
-		Gnome, Deep
-		Gnome, Forest
-		Gnome, Rock
-		Goliath
-		half Elf
-		half orc
-		Halfling, Lightfoot
-		Halfling, Stout
-		Kenku
-		Lizardfolk
-		Minotaur
-		Shifter
-		Tabaxi
-		Tiefling, none
-		Triton
-		Warforged
 
-
-
-	*/
-	/*********** LIBRARIES ***********/
-
+/*********** LIBRARIES ***********/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -1026,7 +993,7 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Half-Elf\t\t20-180\tvaries\t\tmedium\t30\t\tyes\n");
 				printf("Halfling\t\t20-250\tvaries\t\tsmall\t25\t\tno\n");
 				printf("Half-Orc\t\t40-75\tvaries\t\tmedium\t30\t\tyes\n");
-				printf("Hobgoblin\t\t19-75\tvaries\t\tmedium\t30\t\tyes\n");
+				printf("Hobgoblin\t\t8-75\tvaries\t\tmedium\t30\t\tyes\n");
 				printf("Human\t\t\t18-75\tvaries\t\tmedium\t30\t\tno\n");
 				printf("Kenku\t\t\t12-60\tvaries\t\tmedium\t30\t\tno\n");
 				printf("Kobold\t\t\t6-120\tvaries\t\tsmall\t30\t\tyes\n");
@@ -1074,8 +1041,8 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Triton\t\t\tcast one per long rest:\n");
 				printf("\t\t\t- Fog cloud\n\t\t\t- Gust of Wind(at level 3)\n\t\t\t- Wall of Water (at level 5)\n");
 				printf("Yuan-ti Pureblood\tPoison Spray\n");
-				printf("Yuan-ti Pureblood\tAnimal Friendship\n");
-				printf("Yuan-ti Pureblood\tSuggestion\n\n");
+				printf("Yuan-ti Pureblood\tAnimal Friendship (self only)\n");
+				printf("Yuan-ti Pureblood\tSuggestion (at level 3)\n\n");
 				pause();
 				break; }
 			case 4: {
@@ -1184,14 +1151,15 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Halfling\t\tcan re-roll 1 on an attack, ability, or saving throw once\n");
 				printf("Halfling, Lightfoot\tcan attempt to hide even when obscured only by a creature larger than you\n");
 				printf("Halfling, Stout\t\tadvantage on saving throws against being poisoned and resistance to poison\n");
+				printf("Halfling, Strongheart\tadvantage on saving throws against being poisoned and resistance to poison\n");
 				printf("Half-Elf\t\tadvantage on saving throws against being charmed\n");
 				printf("Half-Elf\t\tcan't be put to sleep by nonmagical means\n");
 				printf("Half-Elf\t\tselect two proficiencies in two skills\n");
 				printf("Half-Orc\t\tproficient in intimidation\n");
 				printf("Half-Orc\t\twhen reduced to 0 HP you may drop to 1 HP instead once per long rest\n");
 				printf("Half-Orc\t\twhen you score a critical hit with a melee weapon add a third dice to the damage roll\n");
-				printf("Hobgoblin\t\tproficient with two martial weapons of your choice and in light armor\n");
-				printf("Hobgoblin\t\tif you miss an attack, add a one for every ally nearby (max 5)\n");
+				printf("Hobgoblin\t\tproficient with two martial weapons of your choice and light armor\n");
+				printf("Hobgoblin\t\tif your attack roll misses add one to it for every ally nearby (max 5)\n");
 				printf("Human, Variant\t\tgain one feat of your choice at level 1\n");
 				printf("Human, Variant\t\tproficient in one more skill of your choice\n");
 				printf("Kenku\t\t\tadvantage on forgery and duplication related checks\n");
@@ -1238,7 +1206,7 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Triton\t\t\tcan communicate simple ideas with beasts who breathe water\n");
 				printf("Warforged\t\timmune to disease and do not need food/drink\n");
 				printf("warforged\t\tdo not need sleep, inactive state for 4 hours instead\n");
-				printf("Yuan-ti Pureblood\tdvantage against saving throws against spells and other magical affects\n");
+				printf("Yuan-ti Pureblood\tadvantage against saving throws against spells and other magical affects\n");
 				printf("Yuan-ti Pureblood\timmune to poison damage and the poisoned condition\n");
 				pause();
 				break;
@@ -1251,6 +1219,7 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Changeling\t\tCodex: Unearthed Arcana page 3\n");
 				printf("Dragonborn\t\tPlayer's Handbook page 32\n");
 				printf("Dwarf\t\t\tPlayer's Handbook page 18\n");
+				printf("Dwarf, Gray\t\tSword Coast Adventurer's Guy page 104\n");
 				printf("Elf, Dark\t\tPlayer's Handbook page 24\n");
 				printf("Elf, High\t\tPlayer's Handbook page 23\n");
 				printf("Elf, Wood\t\tPlayer's Handbook page 24\n");
@@ -1261,13 +1230,14 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Goblin\t\t\tVolo's Guide to Monsters page 119\n");
 				printf("Goliath\t\t\tElemental Evil Player's Companion page 10 and Volo's Guide to Monsters page 108\n");
 				printf("Halfling\t\tPlayer's Handbook page 26\n");
+				printf("Halfling, Strongheart\tSword Coast Adventurer's Guide page 109\n");
 				printf("Half-Elf\t\tPlayer's Handbook page 38\n");
-				printf("Half-Orc\t\tPlayer's Handbook page 40\n");
-				printf("Hobgoblin\t\tVolo's Guide to Monsters page 109\n");
-				printf("Human\t\t\tPlayer's Handbook page 29\n");
-				printf("Human, Variant\t\tPlayer's Handbook page 29\n");
 				pause();
 				printf("RACE\t\t\tSOURCE\n");
+				printf("Half-Orc\t\tPlayer's Handbook page 40\n");
+				printf("Hobgoblin\t\tVolo's Guide to Monsters page 119\n");
+				printf("Human\t\t\tPlayer's Handbook page 29\n");
+				printf("Human, Variant\t\tPlayer's Handbook page 29\n");
 				printf("Kenku\t\t\tVolo's Guide to Monsters page 109\n");
 				printf("Kobold\t\t\tVolo's Guide to Monsters page 119\n");
 				printf("Lizardfolk\t\tVolo's Guide to Monsters page 112\n");
