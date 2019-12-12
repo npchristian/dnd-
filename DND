@@ -1,17 +1,20 @@
 /**********5e Character creation and modificaiton module*********/
 /*
-	Finished: Codex & PHB
-	    Aarakocra  
+	Finished: Codex, PHB Elemental Evil
+		Aarakocra
 		Changeling
 		Dragonborn
 		Dwarf, Hill
 		Dwarf, Mountain
 		Elf, Dark
-		Elf, High 
+		Elf, High
 		Elf, Wood
+		Firbolg
+		Genasi
 		Gnome, Deep
 		Gnome, Forest
 		Gnome, Rock
+		Goliath
 		half Elf
 		half orc
 		Halfling, Lightfoot
@@ -22,9 +25,9 @@
 		Warforged
 
 
-		
+
 	*/
-/*********** LIBRARIES ***********/
+	/*********** LIBRARIES ***********/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -921,10 +924,10 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 			case 1: {
 				printf("\t\t\tCHA\tCON\tDEX\tINT\tSTR\tWIS\n");
 				printf("Aarakocra\t\t0\t0\t+2\t0\t0\t+1\n");
-				printf("Aasimar, Fallen\t\t0\t0\t0\t0\t+1\t0\n");
-				printf("Aasimar, Protector\t0\t0\t0\t0\t0\t+1\n");
+				printf("Aasimar, Fallen\t\t+2\t0\t0\t0\t+1\t0\n");
+				printf("Aasimar, Protector\t+2\t0\t0\t0\t0\t+1\n");
 				printf("Aasimar, Revenant\t0\t+1\t0\t0\t0\t0\n");
-				printf("Aasimar, Scourge\t0\t+1\t0\t0\t0\t0\n");
+				printf("Aasimar, Scourge\t+2\t+1\t0\t0\t0\t0\n");
 				printf("Bugbear\t\t\t0\t0\t+1\t0\t+2\t0\n");
 				printf("Changeling\t\t+1\t0\t+1\t0\t0\t0\n");
 				printf("Dragonborn\t\t+1\t0\t0\t0\t+2\t0\n");
@@ -1049,11 +1052,11 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Genasi, Fire\tBurning Hands (at level 3)\n");
 				printf("Genasi, Fire\tProduce Flame\n");
 				printf("Genasi, Water\tShape Water\n");
-				printf("Genasi, Water\tCreate or Destroy Water (at level 3)\n");
+				printf("Genasi, Water\tCreate or Destroy Water (at level 3) (spell level 2)\n");
 				printf("Gnome, Deep\tNondetection (target self)\n");
 				printf("Gnome, Deep\tBlindness/Deafness, Blur, Disguise Self\n");
 				printf("Gnome, Forest\tMinor Illusion\n");
-                printf("Tiefling\t\tThaumaturgy\n");
+				printf("Tiefling\tThaumaturgy\n");
 
 				pause();
 				printf("RACE/SUBRACE\t\tPROPERTY\n");
@@ -1112,9 +1115,9 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("RACE\t\t\tPROPERTY\n");
 				printf("Aarakocra\t\tproficient with unarmed strikes & strikes deal 1d4 damage\n");
 				printf("Aasimar, all\t\tresistance to necrotic & radiant damage\n");
-				printf("Aasimar, all\t\theal for HP equal to your level once per long rest\n");
+				printf("Aasimar, all\t\theal a creature for HP equal to your level once per long rest\n");
 				printf("Aasimar, Protector\ttemporary flight and add radiant damage equal to level (at level 3)\n");
-				printf("Aasimar, Scourge\tshed light & deal radiant damage to everyone nearby (at leel 3)\n");
+				printf("Aasimar, Scourge\tshed light & deal radiant damage to everyone nearby (at level 3)\n");
 				printf("Aasimar, Fallen\t\tnearby creatures who fail their save become afraid of you & add necrotic damage (at level 3)\n");
 				printf("Bugbear\t\t\twhen you make a melee attack your reach is 5ft greater than normal\n");
 				printf("Bugbear\t\t\tyou count as large when determining your carrying capacity and weight you can move\n");
@@ -1141,18 +1144,18 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Elf, all\tadvantage on saving throws against being charmed\n");
 				printf("Elf, all\tcannot be put to sleep by nonmagical means\n");
 				printf("Elf, all\telves don't sleep instead meditate for four hours a day to gain a long rest\n");
-                printf("Elf, Dark\tdisadvantage on attack rolls and perception checks in sunlight\n");
+				printf("Elf, Dark\tdisadvantage on attack rolls and perception checks in sunlight\n");
 				printf("Elf, Dark\tproficiency with rapiers, shortswords, and hand crossbows\n");
 				printf("Elf, High\tproficiency with the longsword, shortsword, longbow, and shortbow\n");
 				printf("Elf, Wood\tproficiency with the longsword, shortsword, longbow, and shortbow\n");
 				printf("Elf, Wood\tcan attempt to hide when lightly obscured by foilage, rain, snow, etc.\n");
 				printf("Firbolg\t\tmagically become invisible until the start of your next turn or until you attack\n");
-				printf("Firbolg\t\tyou count as large when determining your carrying capacity and weigh you can move\n");
+				printf("Firbolg\t\tyou count as large when determining your carrying capacity and weight you can move\n");
 				printf("Firbolg\t\tspeak to beasts and plants but cannot understand them\n");
 				pause();
 				printf("RACE\t\t\tPROPERTY\n");
-				printf("Genasi, Air\thold your breath indefinitely unless you are incapacitated\n");
-				printf("Genasi, Earth\tmove across difficult terrain made of earth at normal speed\n");
+				printf("Genasi, Air\t\thold your breath indefinitely unless you are incapacitated\n");
+				printf("Genasi, Earth\t\tmove across difficult terrain made of earth at normal speed\n");
 				printf("Genasi, Fire\t\tties to the Elemental Plane of Fire makes your dark vision unusual\n");
 				printf("Genasi, Fire\t\tresistance to fire\n");
 				printf("Genasi, Water\t\tresistance to acid\n");
@@ -1245,12 +1248,12 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Elf, Dark\t\tPlayer's Handbook page 24\n");
 				printf("Elf, High\t\tPlayer's Handbook page 23\n");
 				printf("Elf, Wood\t\tPlayer's Handbook page 24\n");
-				printf("Firbolg\t\t\tVolo's Guide to Monsters page 107\n");
-				printf("Genasi\t\t\tElemental Evil Player's Companion page 3\n");
+				printf("Firbolg\t\t\tVolo's Guide to Monsters page 106\n");
+				printf("Genasi\t\t\tElemental Evil Player's Companion page 7\n");
 				printf("Gnome\t\t\tPlayer's Handbook page 35\n");
 				printf("Gnome, Deep\t\tElemental Evil Player's Companion page 5\n");
 				printf("Goblin\t\t\tVolo's Guide to Monsters page 104\n");
-				printf("Goliath\t\t\tElemental Evil Player's Companion page 3 and Volo's Guide to Monsters page 108\n");
+				printf("Goliath\t\t\tElemental Evil Player's Companion page 10 and Volo's Guide to Monsters page 108\n");
 				printf("Halfling\t\tPlayer's Handbook page 26\n");
 				printf("Half-Elf\t\tPlayer's Handbook page 38\n");
 				printf("Half-Orc\t\tPlayer's Handbook page 40\n");
@@ -1264,7 +1267,7 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Lizardfolk\t\tVolo's Guide to Monsters page 112\n");
 				printf("Minotaur\t\tCodex: Unearthed Arcana page 4\n");
 				printf("Orc\t\t\tVolo's Guide to Monsters page 120\n");
-				printf("Shifter\t\tCodex: Unearthed Arcana page 7\n");	
+				printf("Shifter\t\tCodex: Unearthed Arcana page 7\n");
 				printf("Tabaxi\t\t\tVolo's Guide to Monsters page 115\n");
 				printf("Tiefling\t\tPlayer's Handbook page 42\n");
 				printf("Tiefling, Abyssal\tCodex: Unearthed Arcana page 10\n");
@@ -1776,3 +1779,4 @@ void sort_array(int arr_size, int arr[6]) {
 				arr[count2] = temp;
 			}
 } //COMPLETE
+	
