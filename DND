@@ -2,6 +2,7 @@
 /*
 	Finished: Codex, PHB Elemental Evil
 		Aarakocra
+		Aasimar
 		Changeling
 		Dragonborn
 		Dwarf, Hill
@@ -19,9 +20,13 @@
 		half orc
 		Halfling, Lightfoot
 		Halfling, Stout
+		Kenku
+		Lizardfolk
 		Minotaur
 		Shifter
+		Tabaxi
 		Tiefling, none
+		Triton
 		Warforged
 
 
@@ -1066,7 +1071,7 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Tiefling, Infernal\tThaumaturgy\n");
 				printf("Tiefling, Infernal\tHellish Rebuke  (at level 3) (spell level 2)\n");
 				printf("Tiefling, Infernal\tDarkness (at level 5)\n");
-				printf("Triton\t\t\tControl Air and Water cast one per long rest:\n");
+				printf("Triton\t\t\tcast one per long rest:\n");
 				printf("\t\t\t- Fog cloud\n\t\t\t- Gust of Wind(at level 3)\n\t\t\t- Wall of Water (at level 5)\n");
 				printf("Yuan-ti Pureblood\tPoison Spray\n");
 				printf("Yuan-ti Pureblood\tAnimal Friendship\n");
@@ -1189,20 +1194,20 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Hobgoblin\t\tif you miss an attack, add a one for every ally nearby (max 5)\n");
 				printf("Human, Variant\t\tgain one feat of your choice at level 1\n");
 				printf("Human, Variant\t\tproficient in one more skill of your choice\n");
-				printf("Kenku\t\t\tadvantage on forgery related checks\n");
+				printf("Kenku\t\t\tadvantage on forgery and duplication related checks\n");
 				printf("Kenku\t\t\tchoose 2 to be proficient in: acrobatics, deception, stealth, and sleight of hand\n");
-				printf("Kenku\t\t\ttcan attempt to mimic sounds you have heard including voices\n");
+				printf("Kenku\t\t\tcan attempt to mimic sounds you have heard including voices\n");
 				printf("Kobold\t\t\tcause nearby allies to gain advantage on enemies within 10ft \n");
 				printf("Kobold\t\t\tadvantage against enemies who are standing next to an ally\n");
 				pause();
 				printf("RACE\t\t\tPROPERTY\n");
 				printf("Kobold\t\t\tdisadvantage on attack rolls and perception checks in sunlight\n");
 				printf("Lizardfolk\t\tbite for 1d6 piercing damage + strength modifier\n");
-				printf("Lizardfolk\t\tcan harvest bone/hide from certain corpses, and craft weapons/armor\n");
+				printf("Lizardfolk\t\tcan harvest bone/hide from certain corpses and craft weapons/armor with it\n");
 				printf("Lizardfolk\t\tcan hold your breath for up to 15 minutes\n");
 				printf("Lizardfolk\t\tselect 2 proficiencies: animal handling, nature, perception, stealth, survival\n");
 				printf("Lizardfolk\t\twhen unarmored your armor rating is 13 plus your dexterity modifier\n");
-				printf("Lizardfolk\t\tcan bite with a bonus action and gain temporary HP\n");
+				printf("Lizardfolk\t\tcan bite with a bonus action and gain temporary HP once per long rest\n");
 				printf("Minotaur\t\tproficient with unarmed strikes(horns)\n");
 				printf("Minotaur\t\tattack with horns for 1d10\n");
 				printf("Minotaur\t\tadvantage on shoving (not against being shoved)\n");
@@ -1222,8 +1227,9 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Shifter, Longtooth\tgain temp HP (level+con mod) & bite for extra damage\n");
 				printf("Shifter, Razorclaw\tbonus action unarmed strike using dex\n");
 				printf("Shifter, Wildhunt\tgain advantage on all wisdom saves and checks\n");
-				printf("Tabaxi\t\t\tcan double your speed in combat\n");
+				printf("Tabaxi\t\t\tcan double your speed in combat - recharges when you move 0 feet\n");
 				printf("Tabaxi\t\t\tcan claw for 1d4 + strength modifier\n");
+				printf("Tabaxi\t\t\tproficiency in perception and stealth skills\n");
 				printf("Tiefling\t\tresistance to fire damage\n");
 				printf("Tiefling, Abyssal\tmaximum HP increases by 1/2 your level (minimum 1)\n");
 				printf("Tiefling, Infernal\tresistance to fire damage\n");
@@ -1252,7 +1258,7 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Genasi\t\t\tElemental Evil Player's Companion page 7\n");
 				printf("Gnome\t\t\tPlayer's Handbook page 35\n");
 				printf("Gnome, Deep\t\tElemental Evil Player's Companion page 5\n");
-				printf("Goblin\t\t\tVolo's Guide to Monsters page 104\n");
+				printf("Goblin\t\t\tVolo's Guide to Monsters page 119\n");
 				printf("Goliath\t\t\tElemental Evil Player's Companion page 10 and Volo's Guide to Monsters page 108\n");
 				printf("Halfling\t\tPlayer's Handbook page 26\n");
 				printf("Half-Elf\t\tPlayer's Handbook page 38\n");
@@ -1267,14 +1273,15 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 				printf("Lizardfolk\t\tVolo's Guide to Monsters page 112\n");
 				printf("Minotaur\t\tCodex: Unearthed Arcana page 4\n");
 				printf("Orc\t\t\tVolo's Guide to Monsters page 120\n");
-				printf("Shifter\t\tCodex: Unearthed Arcana page 7\n");
-				printf("Tabaxi\t\t\tVolo's Guide to Monsters page 115\n");
+				printf("Shifter\t\t\tCodex: Unearthed Arcana page 7\n");
+				printf("Tabaxi\t\t\tVolo's Guide to Monsters page 113\n");
 				printf("Tiefling\t\tPlayer's Handbook page 42\n");
 				printf("Tiefling, Abyssal\tCodex: Unearthed Arcana page 10\n");
 				printf("Tiefling, Infernal\tCodex: Unearthed Arcana page 10\n");
-				printf("Triton\t\t\tVolo's Guide to Monsters page 117\n");
+				printf("Triton\t\t\tVolo's Guide to Monsters page 116\n");
 				printf("Warforged\t\tCodex: Unearthed Arcana Page 8\n");
 				printf("Yuan-ti Pureblood\tVolo's Guide to Monsters page 120\n");
+				pause();
 				break; } //need to update this
 			case 7: {break; } // end case 7 user is ready
 			} //end switch(get_int(1, 7);)
@@ -1651,7 +1658,7 @@ int get_race(char myrace[SIZE], char mysubrace[SIZE], int* sub_race) {
 
 			break; }
 		case 27: {
-			strcpy(myrace, "triton");
+			strcpy(myrace, "Triton");
 			strcpy(mysubrace, "none");
 			choice_race = 0;
 			choice_made = true;
