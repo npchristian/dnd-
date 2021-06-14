@@ -1,0 +1,25 @@
+h1 {font-size: 40px;}
+h2 {font-size: 60px;}
+<b><h2><u><p style="color:#b7410e">DWARF</b></h2></u>
+<b><u><h1><p style="color:#b7410e">DWARF TRAITS</b><h1>/u>
+Your dwarf character has an assortment of inborn abilities, part and parcel of dwarven nature.
+&emsp;<b>Ability Score Increase</b>. Your constitution score increases by 2.
+&emsp;<b>Age</b>. Dwarves mature at the same rate as humans, but they're considered young until they reach the age of 50. On average, they live about 350 years.
+&emsp;<b>Alignment</b>. Most Dwarves are lawful, believing firmly in the benefits of a well-ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order.
+&emsp;<b>Size</b>.Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium.
+&emsp;<b>Speed</b>.Your base walking speed is 25 feet. Your speed is not reduced by wearing heavy armor.
+&emsp;<b>Darkvision</b>. Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in the dim light within 60 feet of you as if it were bright light, and in the darkness as if it were dim light. You can't discern color in darkness, only shades of gray.
+&emsp;<b>Dwarven Resilience</b>. You have advantage on saving throws against poison, and you have resistance against poison damage.
+&emsp;<b>Dwarvan Combat Training</b>. You have proficiency with the battleaxe, handaxe, light hammer, and warhammer.
+&emsp;<b>Tool Proficiency</b>. You gain proficiency with the artisan's tools of your choice: smith's tools, brewer's supplies, or mason's tools.
+&emsp;<b>Stonecunning</b>. Whenever you make an intelligence (history) check related to the origin of the stonework, you are considered proficient in the history skill and add double your proficiency bonus to the check, instead of your normal oroficiency bonus.
+&emsp;<b>Languages</b>. You can speak, read, and write common and dwarvish. Dwarvish is full of hard consonents and gutteral sounds, and those characteristics spill over into whatever other language a dwarf might speak.
+&emsp;<b>Subrace</b>. Two main subraces of dwarves populate the worlds of D&D: hill dwarves and mountain dwarves. Choose one of these subraces.
+<b><h1><p style="color:#b7410e">HILL DWARF</b></h1>
+As a Hill Dwarf, you have keen senses, deep intuition, and remarkable resilience. The gold dwarves of Faerun in their mighty southern kingdom are hill dwarves, as are the exiled Neidar and the debased Klar of Krynn in the Dragonlance setting.
+&emsp;<b>Ability Score Increase</b>. Your wisdom score increases by 1.
+&emsp;<b>Dwarvan Toughness</b>. Your hit point maximum increases by 1, and it increases by 2 every time you gain a level.
+<b><h1><p style="color:#b7410e">MOUNTAIN DWARF</b></h1>
+As a mountain dwarf, you’re strong and hardy, accustomed to a difficult life in rugged terrain. You’re probably on the tall side (for a dwarf) and tend toward light coloration. The shield dwarves of northern Faerun as well as the ruling Hylar clan and the noble Daewar clan of Dragonlance, are mountain dwarves.
+&emsp;<b>Ability Score Increase</b>. Your strength score increases by 2.
+&emsp;<b>Dwarvan Armor Training</b>. You have proficiency with light and medium armor.
